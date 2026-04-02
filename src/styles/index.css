@@ -1,0 +1,41 @@
+@import './fonts.css';
+/* tailwind css generated file temporarily disabled */
+@import './theme.css';
+
+/* Global mobile UX improvements */
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* Prevent text overflow on small screens */
+@media (max-width: 767px) {
+  * {
+    word-break: break-word;
+  }
+}
+
+/* Scrollbar styling for dark theme */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(2, 10, 28, 0.8);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 51, 160, 0.4);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 51, 160, 0.7);
+}
