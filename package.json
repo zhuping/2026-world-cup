@@ -4,11 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "predev": "tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.generated.css",
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "prebuild": "tailwindcss -i src/styles/tailwind.css -o src/styles/tailwind.generated.css"
+    "start": "next start"
   },
   "dependencies": {
     "next": "^14.0.0",
@@ -72,18 +70,11 @@
     "vaul": "1.1.2"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "4.1.12",
-    "@vitejs/plugin-react": "4.7.0",
     "tailwindcss": "4.1.12",
-    "vite": "6.3.5",
     "typescript": "^5.6.3",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@types/node": "^20.11.17"
   },
-  "pnpm": {
-    "overrides": {
-      "vite": "6.3.5"
-    }
-  }
+  "pnpm": {}
 }

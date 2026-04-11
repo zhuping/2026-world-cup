@@ -17,7 +17,7 @@
  *   3. Call from Server Components or `generateStaticParams` directly.
  */
 
-import { venues as _venues, Venue } from '../../src/app/data/venues';
+import { venues as _venues, Venue } from '../../app/data/venues';
 // Re-export the type so consumers import from the service, not the data layer
 export type { Venue };
 

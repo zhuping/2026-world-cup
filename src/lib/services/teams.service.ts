@@ -29,7 +29,7 @@ import {
   BracketRound,
   BracketMatch,
   Team,
-} from '../../src/app/data/teams';
+} from '../../app/data/teams';
 
 // Re-export types from service layer
 export type { Group, BracketRound, BracketMatch, Team };

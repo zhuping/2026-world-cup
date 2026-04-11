@@ -1,5 +1,5 @@
 @import './fonts.css';
-/* tailwind css generated file temporarily disabled */
+@import './tailwind.css';
 @import './theme.css';
 
 /* Global mobile UX improvements */
