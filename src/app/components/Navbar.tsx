@@ -1,5 +1,6 @@
 'use client'; // Next.js directive — no-op in Vite, marks client boundary for migration
 
+import Link from 'next/link';
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { TRANSLATIONS, LangCode } from '../i18n/translations';
@@ -279,9 +280,56 @@ function LangSwitcher({
           minWidth: '170px',
           animation: 'dropdownIn 0.18s ease',
         }}>
-          {langOptions.map(([code, data]) => (
-            <LangOption key={code} code={code} data={data} current={lang} setLang={setLang} />
-          ))}
+          {langOptions.map(([code, data]) => {
+            const isActive = code === lang;
+            const currentPath = typeof window !== 'undefined' ? window.location.pathname : '/';
+            // Strip any existing language prefix (e.g., /zh, /en, /es) from the start of the path
+            const strippedPath = currentPath.replace(/^\/(zh|en|ja|ko|pt|es)(\/|$)/, '/');
+            // Re-construct the URL. If the code is 'en' (default), we just use the stripped path.
+            const newPath = code === 'en' ? strippedPath : `/${code}${strippedPath === '/' ? '' : strippedPath}`;
+            
+            return (
+              <a
+                key={code}
+                href={newPath}
+                style={{ textDecoration: 'none', display: 'block' }}
+                onClick={(e) => {
+                  // Let the browser perform a hard navigation to the new language URL.
+                  // This ensures Next.js Server Components receive the new `lang` parameter
+                  // and re-render everything with the correct translation context.
+                }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '10px',
+                    width: '100%',
+                    padding: '9px 12px',
+                    background: isActive ? 'rgba(0,51,160,0.28)' : 'transparent',
+                    border: 'none',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    transition: 'background 0.15s',
+                  }}
+                  onMouseEnter={e => !isActive && (e.currentTarget.style.background = 'rgba(255,255,255,0.06)')}
+                  onMouseLeave={e => !isActive && (e.currentTarget.style.background = 'transparent')}
+                >
+                  <span style={{ fontSize: '18px', lineHeight: 1, width: '22px' }}>{data.langFlag}</span>
+                  <span style={{
+                    fontFamily: "'Rajdhani', sans-serif",
+                    fontSize: '15px',
+                    fontWeight: isActive ? 700 : 500,
+                    color: isActive ? '#FFFFFF' : 'rgba(255,255,255,0.6)',
+                    letterSpacing: '0.5px',
+                    flex: 1,
+                    textAlign: 'left',
+                  }}>{data.langName}</span>
+                  {isActive && <span style={{ color: '#009A44', fontSize: '14px' }}>✓</span>}
+                </div>
+              </a>
+            );
+          })}
         </div>
       )}
     </div>
@@ -360,6 +408,9 @@ export function Navbar() {
 
   const isSolid = scrolled || menuOpen;
 
+  // Compute home URL based on language to keep users in the same locale
+  const homeHref = lang === 'en' ? '/' : `/${lang}`;
+
   return (
     <header ref={navRef} style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200 }}>
       {/* Announcement bar — always visible */}
@@ -387,15 +438,14 @@ export function Navbar() {
         }}>
 
           {/* ── Logo ─────────────────────────────────────────────── */}
-          <div
-            onClick={() => { window.scrollTo({ top: 0, behavior: 'smooth' }); setMenuOpen(false); }}
+          <Link
+            href={homeHref}
             style={{
               display: 'flex', alignItems: 'center',
               gap: isWide ? '14px' : '10px',
               cursor: 'pointer', flexShrink: 0,
               textDecoration: 'none',
             }}
-            role="link"
             aria-label="FIFA World Cup 2026 Home"
           >
             {/* Badge */}
@@ -453,7 +503,7 @@ export function Navbar() {
                 }}>2026</div>
               </>
             )}
-          </div>
+          </Link>
 
           {/* ── Desktop Nav ──────────────────────────────────────── */}
           {!isTablet && (

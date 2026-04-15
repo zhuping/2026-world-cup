@@ -26,15 +26,16 @@ export function Tournament() {
   };
 
   const groupStatusItems = [
-    { label: t.tournament.completedLabel, value: t.tournament.completedValue, color: '#009A44' },
-    { label: t.tournament.groupsLabel, value: t.tournament.groupsValue, color: '#0033A0' },
-    { label: t.tournament.qualifiedLabel, value: t.tournament.qualifiedValue, color: '#D72828' },
+    { label: t.group.statsTeams, value: '48', color: '#009A44' },
+    { label: t.group.statsGroups, value: '12', color: '#0033A0' },
+    { label: t.group.statsMatches, value: '72', color: '#D72828' },
+    { label: t.group.statsQualifiers, value: '32', color: '#C0A020' },
   ];
 
   const knockoutStatusItems = [
-    { label: t.knockout.roundOf16, value: t.tournament.statusDone, color: '#009A44' },
-    { label: t.knockout.quarterFinals, value: t.tournament.statusDone, color: '#009A44' },
-    { label: t.knockout.semiFinals, value: t.tournament.statusUpcoming, color: '#D72828' },
+    { label: t.knockout.roundOf16, value: t.tournament.statusTBD, color: '#C0A020' },
+    { label: t.knockout.quarterFinals, value: t.tournament.statusTBD, color: '#C0A020' },
+    { label: t.knockout.semiFinals, value: t.tournament.statusTBD, color: '#C0A020' },
     { label: t.knockout.final, value: t.tournament.statusTBD, color: '#C0A020' },
   ];
 

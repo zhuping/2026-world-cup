@@ -2,10 +2,10 @@
 import { HelmetProvider } from 'react-helmet-async'
 import { LanguageProvider } from './contexts/LanguageContext'
 
-export default function Providers({ children }: { children: any }) {
+export default function Providers({ children, initialLang }: { children: any, initialLang?: string }) {
   return (
     <HelmetProvider>
-      <LanguageProvider>{children}</LanguageProvider>
+      <LanguageProvider initialLang={initialLang}>{children}</LanguageProvider>
     </HelmetProvider>
   )
 }

@@ -26,44 +26,27 @@ import { SEOHead } from './components/SEOHead';
 import { Navbar } from './components/Navbar';
 import { VenueMap } from './components/VenueMap';
 import { Tournament } from './components/Tournament';
-import { Footer } from './components/Footer';
+import { HomeContent } from './components/HomeContent';
+import { ClientLayout } from './components/ClientLayout';
 
 export default function App() {
   return (
-    <HelmetProvider>
-      <LanguageProvider>
-        {/* SEO meta tags — all <head> management */}
-        <SEOHead />
+    <ClientLayout>
+      <VenueMap />
 
-        <div style={{
-          minHeight: '100vh',
-          background: '#020A1B',
-          fontFamily: "'Inter', sans-serif",
-          overflowX: 'hidden',
-        }}>
-          {/* Fixed header: AnnouncementBar (32px) + NavBar (72px) = 104px offset */}
-          <Navbar />
+      {/* Section divider — tricolor strip */}
+      <div
+        aria-hidden="true"
+        style={{
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent 0%, #D72828 20%, #0033A0 50%, #009A44 80%, transparent 100%)',
+          opacity: 0.6,
+        }}
+      />
 
-          {/* Main content — top padding absorbs fixed header height */}
-          <main id="main-content" role="main">
-            <VenueMap />
-
-            {/* Section divider — tricolor strip */}
-            <div
-              aria-hidden="true"
-              style={{
-                height: '2px',
-                background: 'linear-gradient(90deg, transparent 0%, #D72828 20%, #0033A0 50%, #009A44 80%, transparent 100%)',
-                opacity: 0.6,
-              }}
-            />
-
-            <Tournament />
-          </main>
-
-          <Footer />
-        </div>
-      </LanguageProvider>
-    </HelmetProvider>
+      <Tournament />
+      
+      <HomeContent />
+    </ClientLayout>
   );
 }

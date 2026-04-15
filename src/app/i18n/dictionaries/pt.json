@@ -1,0 +1,167 @@
+{
+  "home": {
+    "h1": "Seu guia definitivo para a Copa do Mundo FIFA 2026",
+    "intro": "A Copa do Mundo FIFA 2026 será a edição mais ampla e emocionante da história, sediada conjuntamente por Estados Unidos, Canadá e México. Este guia ajuda você a entender os fatos oficiais, visualizar todas as sedes em um mapa interativo e planejar melhor a viagem entre fusos horários e cidades.",
+    "factsTitle": "O que sabemos: fatos oficiais",
+    "facts": [
+      { "label": "Países-sede", "value": "Estados Unidos, Canadá e México." },
+      { "label": "Datas do torneio", "value": "De 11 de junho a 19 de julho de 2026." },
+      { "label": "Formato expandido", "value": "48 seleções participantes (antes 32)." },
+      { "label": "Total de jogos", "value": "104 partidas no total." },
+      { "label": "Sedes", "value": "16 estádios (11 nos EUA, 3 no México, 2 no Canadá)." },
+      { "label": "Jogo de abertura", "value": "Estadio Azteca, Cidade do México, em 11 de junho de 2026." },
+      { "label": "A final", "value": "MetLife Stadium, Nova York/Nova Jersey, em 19 de julho de 2026." }
+    ],
+    "hubsTitle": "Explore nossos guias detalhados",
+    "hubs": [
+      {
+        "href": "/tournament-format",
+        "title": "Formato explicado",
+        "desc": "Como funciona o formato de 48 equipes, dos grupos à nova fase de 32.",
+        "cta": "Ler guia →",
+        "color": "#009A44"
+      },
+      {
+        "href": "/venues",
+        "title": "Cidades-sede e estádios",
+        "desc": "Explore os 16 estádios nos EUA, Canadá e México.",
+        "cta": "Ver sedes →",
+        "color": "#D72828"
+      },
+      {
+        "href": "/travel-guide",
+        "title": "Planejamento de viagem",
+        "desc": "Fusos horários, distâncias, voos, transporte e estratégia de hospedagem.",
+        "cta": "Planejar →",
+        "color": "#0033A0"
+      }
+    ],
+    "mapTitle": "Mapa interativo e como usar",
+    "mapBody": "Use o mapa interativo (acima) para entender a distância entre as cidades-sede, agrupar seu roteiro por regiões e reduzir deslocamentos desnecessários de costa a costa. Ele é especialmente útil para quem pretende acompanhar uma seleção em várias sedes.",
+    "faqTitle": "Perguntas frequentes",
+    "faq": [
+      {
+        "q": "Quando os ingressos da Copa 2026 começam a ser vendidos?",
+        "a": "A FIFA ainda não anunciou a data exata. Em geral, as vendas começam no fim do ano anterior ao torneio (fim de 2025)."
+      },
+      {
+        "q": "Onde será a final da Copa do Mundo 2026?",
+        "a": "A final será no MetLife Stadium (Nova York/Nova Jersey) em 19 de julho de 2026."
+      },
+      {
+        "q": "Os estádios terão grama natural ou sintética?",
+        "a": "A FIFA exige que os jogos sejam disputados em grama natural. Estádios que usam gramado sintético instalarão grama natural temporária."
+      }
+    ],
+    "sourcesLabel": "Fontes",
+    "sourcesValue": "Comunicados oficiais da FIFA, comitês das cidades-sede e órgãos regionais de turismo.",
+    "lastUpdatedLabel": "Última atualização",
+    "lastUpdatedValue": "15 de abril de 2026"
+  },
+  "travelGuide": {
+    "metaTitle": "Guia de viagem da Copa 2026 | Planeje sua viagem",
+    "h1": "Guia de planejamento de viagem",
+    "intro": "Como o torneio acontece em três países e vários fusos horários, a logística da viagem é tão importante quanto os ingressos. Use este guia para montar rotas, reduzir deslocamentos longos e escolher hospedagem com estratégia.",
+    "tipsTitle": "Dicas essenciais para viajar entre sedes",
+    "tips": [
+      { "label": "Fusos horários", "body": "Os jogos abrangem os fusos do Pacífico, Montanha, Central e Leste. Confira o horário de acordo com onde você estiver hospedado." },
+      { "label": "Clima e estação", "body": "Junho–julho é verão. Espere calor e umidade em algumas cidades e noites mais amenas em outras." },
+      { "label": "Viagens entre cidades", "body": "Voos costumam ser a opção mais prática entre regiões. Hubs principais têm muitas conexões." },
+      { "label": "Aeroportos e transporte", "body": "Planeje o transporte em dias de jogo com antecedência e use transporte público quando possível para evitar congestionamento." },
+      { "label": "Hospedagem", "body": "Reserve cedo. Ficar perto de linhas de transporte geralmente é melhor do que ficar ao lado do estádio." }
+    ],
+    "lastUpdatedLabel": "Última atualização",
+    "lastUpdatedValue": "15 de abril de 2026",
+    "faq": [
+      {
+        "q": "Preciso de visto para viajar entre EUA, Canadá e México?",
+        "a": "Sim. As regras migratórias valem separadamente em cada país. Verifique requisitos de visto/ESTA/eTA conforme o seu passaporte."
+      }
+    ]
+  },
+  "tournamentFormat": {
+    "metaTitle": "Formato da Copa 2026 | 48 seleções explicado",
+    "h1": "Formato do torneio explicado (48 seleções)",
+    "intro": "A Copa 2026 expande para 48 seleções. Veja como funcionam grupos, classificação e o mata-mata.",
+    "sectionTitle": "Fase de grupos e lógica do mata-mata",
+    "bullets": [
+      { "label": "Fase de grupos", "body": "48 seleções são divididas em 12 grupos de 4. Cada equipe joga 3 partidas na fase de grupos." },
+      { "label": "Classificação", "body": "Os 2 primeiros de cada grupo avançam (24 seleções). As 8 melhores terceiras colocadas também avançam (8 seleções)." },
+      { "label": "Mata-mata", "body": "Há uma fase de 32, depois oitavas, quartas, semifinais e final." }
+    ],
+    "lastUpdatedLabel": "Última atualização",
+    "lastUpdatedValue": "15 de abril de 2026",
+    "faq": [
+      { "q": "Quantas seleções disputarão a Copa do Mundo 2026?", "a": "Serão 48 seleções pela primeira vez." },
+      { "q": "Quantos jogos cada seleção fará?", "a": "Cada equipe joga pelo menos 3. As finalistas farão 8 partidas no total." },
+      { "q": "O que é a nova fase de 32?", "a": "Como 32 seleções avançam da fase de grupos, é necessária uma rodada extra antes das oitavas." },
+      { "q": "Como funciona o sorteio dos grupos?", "a": "As seleções são distribuídas em potes com base no ranking da FIFA e sorteadas em 12 grupos com restrições geográficas." }
+    ]
+  },
+  "venues": {
+    "metaTitle": "Sedes da Copa 2026 | Guia oficial",
+    "h1": "Todas as sedes da Copa do Mundo 2026",
+    "introStrong": "O que você precisa saber:",
+    "introBody": "A Copa 2026 será disputada em três países e 16 estádios. Esta página ajuda você a localizar as sedes, entender sua importância e planejar viagens conforme as cidades e partidas.",
+    "faqTitle": "FAQ das sedes",
+    "faq": [
+      { "q": "Qual estádio vai receber a final?", "a": "A final será no MetLife Stadium (Nova York/Nova Jersey) em 19 de julho de 2026." },
+      { "q": "Onde será o jogo de abertura?", "a": "O Estadio Azteca (Cidade do México) receberá o jogo de abertura em 11 de junho de 2026." },
+      { "q": "Quantos jogos serão em cada país?", "a": "Os EUA terão a maioria (78), enquanto Canadá e México terão 13 cada." }
+    ],
+    "sourcesLabel": "Fontes",
+    "sourcesValue": "Anúncios oficiais de estádios da FIFA.",
+    "lastUpdatedLabel": "Última atualização",
+    "lastUpdatedValue": "15 de abril de 2026"
+  },
+  "stadiums": {
+    "azteca": {
+      "metaTitle": "Estadio Azteca | Sedes da Copa 2026",
+      "h1": "Estadio Azteca (Cidade do México)",
+      "introStrong": "Por que este estádio é importante:",
+      "introBody": "O Estadio Azteca é um dos palcos mais icônicos do futebol e receberá o jogo de abertura em 11 de junho de 2026. Sua altitude e história fazem dele um destino especial para torcedores.",
+      "faqTitle": "FAQ do Estadio Azteca",
+      "faq": [
+        { "q": "Qual é a capacidade do Estadio Azteca?", "a": "Para o torneio, a expectativa é em torno de 87.523." },
+        { "q": "Como chegar ao estádio a partir do centro da Cidade do México?", "a": "Uma opção comum é o Tren Ligero (VLT) até a estação Estadio Azteca, com conexão ao metrô." },
+        { "q": "O estádio passará por reformas?", "a": "São previstas melhorias para atender às exigências da FIFA preservando sua identidade histórica." }
+      ],
+      "sourcesLabel": "Fontes",
+      "sourcesValue": "FIFA e informações da sede de Cidade do México.",
+      "lastUpdatedLabel": "Última atualização",
+      "lastUpdatedValue": "15 de abril de 2026",
+      "schema": {
+        "name": "Estadio Azteca",
+        "address": { "addressLocality": "Mexico City", "addressCountry": "MX" },
+        "maximumAttendeeCapacity": 87523
+      }
+    },
+    "metlife": {
+      "metaTitle": "MetLife Stadium | Sede da final da Copa 2026",
+      "h1": "MetLife Stadium (Nova York/Nova Jersey)",
+      "introStrong": "Por que este estádio é importante:",
+      "introBody": "O MetLife Stadium receberá a final em 19 de julho de 2026. Sua proximidade com Nova York e grande capacidade o tornam uma sede-chave para o maior dia do torneio.",
+      "faqTitle": "FAQ do MetLife Stadium",
+      "faq": [
+        { "q": "Quando será a final da Copa 2026?", "a": "A final será em 19 de julho de 2026 no MetLife Stadium." },
+        { "q": "Qual é a capacidade do MetLife Stadium?", "a": "Aproximadamente 82.500." },
+        { "q": "Os jogos serão em gramado sintético?", "a": "Não. Será instalado gramado natural temporário para atender às normas da FIFA." }
+      ],
+      "sourcesLabel": "Fontes",
+      "sourcesValue": "FIFA e comitê anfitrião NY/NJ.",
+      "lastUpdatedLabel": "Última atualização",
+      "lastUpdatedValue": "15 de abril de 2026",
+      "schema": {
+        "name": "MetLife Stadium",
+        "address": {
+          "streetAddress": "1 MetLife Stadium Dr",
+          "addressLocality": "East Rutherford",
+          "addressRegion": "NJ",
+          "postalCode": "07073",
+          "addressCountry": "US"
+        },
+        "maximumAttendeeCapacity": 82500
+      }
+    }
+  }
+}

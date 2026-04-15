@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 import { LangCode, Translation, TRANSLATIONS, SUPPORTED_LANGS, detectLanguage } from '../i18n/translations';
 
 interface LanguageContextValue {
@@ -10,8 +10,19 @@ interface LanguageContextValue {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<LangCode>(detectLanguage);
+export function LanguageProvider({ children, initialLang }: { children: ReactNode, initialLang?: string }) {
+  const defaultLang = initialLang && SUPPORTED_LANGS.includes(initialLang as LangCode) 
+    ? (initialLang as LangCode) 
+    : detectLanguage();
+  
+  const [lang, setLangState] = useState<LangCode>(defaultLang);
+
+  // Update lang if initialLang changes (e.g. route navigation)
+  useEffect(() => {
+    if (initialLang && SUPPORTED_LANGS.includes(initialLang as LangCode)) {
+      setLangState(initialLang as LangCode);
+    }
+  }, [initialLang]);
 
   const setLang = useCallback((code: LangCode) => {
     setLangState(code);

@@ -280,10 +280,10 @@ export function KnockoutBracket() {
   const isMobile = useIsMobile();
 
   const progressItems = [
-    { label: t.knockout.progressR16, value: t.knockout.progressDone, color: '#009A44', icon: '✅' },
-    { label: t.knockout.progressQF, value: t.knockout.progressDone, color: '#009A44', icon: '✅' },
-    { label: t.knockout.progressSF, value: t.knockout.progressUpcoming, color: '#D72828', icon: '🔴' },
-    { label: t.knockout.progressFinal, value: t.knockout.progressDate, color: '#C0A020', icon: '🏆' },
+    { label: t.knockout.progressR16, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
+    { label: t.knockout.progressQF, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
+    { label: t.knockout.progressSF, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
+    { label: t.knockout.progressFinal, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
   ];
 
   return (
