@@ -196,7 +196,7 @@ export function VenueMap() {
     <section
       id="venues"
       style={{
-        minHeight: '100vh',
+        // minHeight: '100vh',
         background: 'linear-gradient(180deg, #020A1B 0%, #030F24 60%, #020A1B 100%)',
         position: 'relative',
         overflow: 'hidden',
@@ -242,7 +242,7 @@ export function VenueMap() {
       </div>
 
       {/* Map Container */}
-      <div style={{ position: 'relative', width: '100%', maxWidth: '1200px', padding: '0 clamp(8px, 3vw, 24px)' }}>
+      <div style={{ position: 'relative', width: '100%' }}>
 
         {/* Desktop tooltip */}
         {!isMobile && hoveredVenue && (
