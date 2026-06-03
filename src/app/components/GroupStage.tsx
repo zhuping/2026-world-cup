@@ -1,6 +1,7 @@
 import { groups } from '../data/teams';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { getTeamName } from '../i18n/teamNames';
 
 function GroupCard({ groupName, teamIndexes }: { groupName: string; teamIndexes: number[] }) {
   const { t, lang } = useLanguage();
@@ -30,7 +31,7 @@ function GroupCard({ groupName, teamIndexes }: { groupName: string; teamIndexes:
       <div style={{ padding: '10px 12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
         {teamIndexes.map((i) => {
           const team = group?.teams?.[i];
-          const label = team ? (lang === 'zh' ? team.nameZh : team.nameEn) : t.knockout.tbd;
+          const label = team ? getTeamName(team.nameEn, lang as any) : t.knockout.tbd;
           const flag = team?.flag || '❓';
           return (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: isMobile ? '8px 10px' : '9px 12px', borderRadius: '10px', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
