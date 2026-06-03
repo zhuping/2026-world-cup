@@ -8,6 +8,7 @@ export interface Translation {
     tournament: string;
     groupStage: string;
     knockout: string;
+    schedule: string;
     menu: string;
     close: string;
     language: string;
@@ -86,6 +87,20 @@ export interface Translation {
     legendFinal: string;
     venueLabel: string;
   };
+  schedule: {
+    sectionTitle: string;
+    sectionSubtitle: string;
+    matchdayLabel: string;
+    noMatches: string;
+    todayBtn: string;
+    localTimeNote: string;
+    simultaneousLabel: string;
+    matchesCount: string;
+    groupLabel: string;
+    venueLabel: string;
+    prevDay: string;
+    nextDay: string;
+  };
   footer: {
     disclaimer: string;
     venuesUSA: string;
@@ -102,6 +117,7 @@ const zh: Translation = {
     tournament: '赛事进程',
     groupStage: '小组赛',
     knockout: '淘汰赛',
+    schedule: '赛程',
     menu: '菜单',
     close: '关闭',
     language: '语言',
@@ -180,6 +196,20 @@ const zh: Translation = {
     legendFinal: '决赛',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: '小组赛赛程',
+    sectionSubtitle: 'Group Stage Schedule',
+    matchdayLabel: '第 {n} 轮',
+    noMatches: '本日暂无比赛',
+    todayBtn: '今天',
+    localTimeNote: '比赛时间已转换为您的本地时间',
+    simultaneousLabel: '同组同时进行',
+    matchesCount: '{n} 场比赛',
+    groupLabel: '第 {name} 组',
+    venueLabel: '场馆',
+    prevDay: '上一天',
+    nextDay: '下一天',
+  },
   footer: {
     disclaimer: '仅供信息展示参考用途',
     venuesUSA: '11座美国场馆',
@@ -196,6 +226,7 @@ const en: Translation = {
     tournament: 'Tournament',
     groupStage: 'Group Stage',
     knockout: 'Knockout',
+    schedule: 'Schedule',
     menu: 'Menu',
     close: 'Close',
     language: 'Language',
@@ -274,8 +305,22 @@ const en: Translation = {
     legendFinal: 'Final',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: 'Group Stage Schedule',
+    sectionSubtitle: 'Daily Match Schedule',
+    matchdayLabel: 'Matchday {n}',
+    noMatches: 'No matches on this day',
+    todayBtn: 'Today',
+    localTimeNote: 'Times shown in your local timezone',
+    simultaneousLabel: 'Simultaneous',
+    matchesCount: '{n} matches',
+    groupLabel: 'Group {name}',
+    venueLabel: 'Venue',
+    prevDay: 'Previous day',
+    nextDay: 'Next day',
+  },
   footer: {
-    disclaimer: 'For informational purposes only',
+    disclaimer: 'For display purposes only · Simulated match data',
     venuesUSA: '11 USA Venues',
     venuesCanada: '2 Canada Venues',
     venuesMexico: '3 Mexico Venues',
@@ -290,6 +335,7 @@ const ja: Translation = {
     tournament: 'トーナメント',
     groupStage: 'グループステージ',
     knockout: 'ノックアウト',
+    schedule: 'スケジュール',
     menu: 'メニュー',
     close: '閉じる',
     language: '言語',
@@ -368,8 +414,22 @@ const ja: Translation = {
     legendFinal: '決勝',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: 'グループステージ 試合日程',
+    sectionSubtitle: 'Daily Match Schedule',
+    matchdayLabel: '第{n}節',
+    noMatches: '本日は試合がありません',
+    todayBtn: '今日',
+    localTimeNote: '時刻はお使いのタイムゾーンに変換されています',
+    simultaneousLabel: '同時開催',
+    matchesCount: '{n}試合',
+    groupLabel: 'グループ{name}',
+    venueLabel: '会場',
+    prevDay: '前の日',
+    nextDay: '次の日',
+  },
   footer: {
-    disclaimer: '情報提供目的のみ',
+    disclaimer: '表示目的のみ · シミュレーションデータ',
     venuesUSA: 'アメリカ 11会場',
     venuesCanada: 'カナダ 2会場',
     venuesMexico: 'メキシコ 3会場',
@@ -384,6 +444,7 @@ const ko: Translation = {
     tournament: '토너먼트',
     groupStage: '조별리그',
     knockout: '결선',
+    schedule: '일정',
     menu: '메뉴',
     close: '닫기',
     language: '언어',
@@ -462,8 +523,22 @@ const ko: Translation = {
     legendFinal: '결승',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: '조별리그 일정',
+    sectionSubtitle: 'Daily Match Schedule',
+    matchdayLabel: '{n}라운드',
+    noMatches: '오늘은 경기가 없습니다',
+    todayBtn: '오늘',
+    localTimeNote: '현지 시간으로 표시됩니다',
+    simultaneousLabel: '동시 진행',
+    matchesCount: '{n}경기',
+    groupLabel: '{name}조',
+    venueLabel: '경기장',
+    prevDay: '이전 날',
+    nextDay: '다음 날',
+  },
   footer: {
-    disclaimer: '정보 제공 목적',
+    disclaimer: '전시 목적으로만 사용 · 시뮬레이션 데이터',
     venuesUSA: '미국 11개 경기장',
     venuesCanada: '캐나다 2개 경기장',
     venuesMexico: '멕시코 3개 경기장',
@@ -478,6 +553,7 @@ const pt: Translation = {
     tournament: 'Torneio',
     groupStage: 'Fase de Grupos',
     knockout: 'Eliminatórias',
+    schedule: 'Calendário',
     menu: 'Menu',
     close: 'Fechar',
     language: 'Idioma',
@@ -556,8 +632,22 @@ const pt: Translation = {
     legendFinal: 'Final',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: 'Calendário da Fase de Grupos',
+    sectionSubtitle: 'Daily Match Schedule',
+    matchdayLabel: 'Rodada {n}',
+    noMatches: 'Sem partidas neste dia',
+    todayBtn: 'Hoje',
+    localTimeNote: 'Horários exibidos no seu fuso horário local',
+    simultaneousLabel: 'Simultâneo',
+    matchesCount: '{n} partidas',
+    groupLabel: 'Grupo {name}',
+    venueLabel: 'Estádio',
+    prevDay: 'Dia anterior',
+    nextDay: 'Próximo dia',
+  },
   footer: {
-    disclaimer: 'Apenas para fins informativos',
+    disclaimer: 'Apenas para fins de exibição · Dados simulados',
     venuesUSA: '11 Estádios nos EUA',
     venuesCanada: '2 Estádios no Canadá',
     venuesMexico: '3 Estádios no México',
@@ -572,6 +662,7 @@ const es: Translation = {
     tournament: 'Torneo',
     groupStage: 'Fase de Grupos',
     knockout: 'Eliminatorias',
+    schedule: 'Calendario',
     menu: 'Menú',
     close: 'Cerrar',
     language: 'Idioma',
@@ -650,8 +741,22 @@ const es: Translation = {
     legendFinal: 'Final',
     venueLabel: '📍',
   },
+  schedule: {
+    sectionTitle: 'Calendario Fase de Grupos',
+    sectionSubtitle: 'Daily Match Schedule',
+    matchdayLabel: 'Jornada {n}',
+    noMatches: 'No hay partidos este día',
+    todayBtn: 'Hoy',
+    localTimeNote: 'Horarios en tu zona horaria local',
+    simultaneousLabel: 'Simultáneo',
+    matchesCount: '{n} partidos',
+    groupLabel: 'Grupo {name}',
+    venueLabel: 'Estadio',
+    prevDay: 'Día anterior',
+    nextDay: 'Día siguiente',
+  },
   footer: {
-    disclaimer: 'Solo con fines informativos',
+    disclaimer: 'Solo con fines de visualización · Datos simulados',
     venuesUSA: '11 Estadios en EE.UU.',
     venuesCanada: '2 Estadios en Canadá',
     venuesMexico: '3 Estadios en México',

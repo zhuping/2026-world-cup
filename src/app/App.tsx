@@ -20,12 +20,9 @@
  */
 
 import '../styles/fonts.css';
-import { HelmetProvider } from 'react-helmet-async';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { SEOHead } from './components/SEOHead';
-import { Navbar } from './components/Navbar';
 import { VenueMap } from './components/VenueMap';
 import { Tournament } from './components/Tournament';
+import { MatchSchedule } from './components/MatchSchedule';
 import { HomeContent } from './components/HomeContent';
 import { ClientLayout } from './components/ClientLayout';
 
@@ -33,6 +30,18 @@ export default function App() {
   return (
     <ClientLayout>
       <VenueMap />
+
+      {/* Section divider — tricolor strip */}
+      <div
+        aria-hidden="true"
+        style={{
+          height: '2px',
+          background: 'linear-gradient(90deg, transparent 0%, #D72828 20%, #0033A0 50%, #009A44 80%, transparent 100%)',
+          opacity: 0.6,
+        }}
+      />
+
+      <MatchSchedule />
 
       {/* Section divider — tricolor strip */}
       <div

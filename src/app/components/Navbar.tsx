@@ -1,10 +1,12 @@
 'use client'; // Next.js directive — no-op in Vite, marks client boundary for migration
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { TRANSLATIONS, LangCode } from '../i18n/translations';
 import { useIsMobile, useMediaQuery } from '../hooks/useIsMobile';
+import wc26Logo from '../../assets/images/WC26_Logo.avif';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const ANNOUNCEMENT_MSGS = [
@@ -395,7 +397,7 @@ export function Navbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
       // Active section detection
-      const sections = ['venues', 'tournament'];
+      const sections = ['venues', 'schedule', 'tournament'];
       for (const id of sections) {
         const el = document.getElementById(id);
         if (el) {
@@ -441,6 +443,7 @@ export function Navbar() {
 
   const navLinks = [
     { label: t.nav.venueMap, sublabel: 'VENUES', id: 'venues' },
+    { label: t.nav.schedule, sublabel: 'SCHEDULE', id: 'schedule' },
     { label: t.nav.groupStage, sublabel: 'GROUP STAGE', id: 'tournament' },
     { label: t.nav.knockout, sublabel: 'KNOCKOUT', id: 'tournament' },
   ];
@@ -487,46 +490,18 @@ export function Navbar() {
             }}
             aria-label="FIFA World Cup 2026 Home"
           >
-            {/* Badge */}
-            <div style={{
-              width: isWide ? '52px' : isMobile ? '36px' : '44px',
-              height: isWide ? '52px' : isMobile ? '36px' : '44px',
-              borderRadius: '50%',
-              background: 'conic-gradient(from 120deg, #D72828 0deg, #D72828 120deg, #0033A0 120deg, #0033A0 240deg, #009A44 240deg, #009A44 360deg)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              boxShadow: '0 0 20px rgba(0,51,160,0.55), 0 0 40px rgba(0,51,160,0.2)',
-              flexShrink: 0,
-              position: 'relative',
-            }}>
-              <div style={{
-                position: 'absolute', inset: '3px', borderRadius: '50%',
-                background: 'rgba(2,8,24,0.7)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}>
-                <span style={{ fontSize: isWide ? '24px' : isMobile ? '18px' : '22px', lineHeight: 1 }}>⚽</span>
-              </div>
-            </div>
-
-            {/* Text block */}
-            <div>
-              <div style={{
-                fontFamily: "'Bebas Neue', sans-serif",
-                fontSize: isUltraWide ? '28px' : isWide ? '24px' : isMobile ? '17px' : '22px',
-                letterSpacing: isWide ? '3px' : '2px',
-                color: '#FFFFFF',
-                lineHeight: 1,
-              }}>FIFA WORLD CUP</div>
-              <div style={{
-                fontFamily: "'Rajdhani', sans-serif",
-                fontSize: isUltraWide ? '13px' : isWide ? '12px' : isMobile ? '9px' : '11px',
-                letterSpacing: isWide ? '3px' : '2px',
-                background: 'linear-gradient(90deg, #D72828, #FFFFFF 40%, #009A44)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                textTransform: 'uppercase',
-                fontWeight: 700,
-              }}>USA · CANADA · MEXICO 2026</div>
-            </div>
+            <Image
+              src={wc26Logo}
+              alt="FIFA World Cup 2026"
+              priority
+              style={{
+                width: 'auto',
+                height: isWide ? '52px' : isMobile ? '38px' : '46px',
+                display: 'block',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 6px 16px rgba(0,0,0,0.35))',
+              }}
+            />
 
             {/* Wide screen: separator + year badge */}
             {isWide && !isMobile && (
@@ -650,7 +625,7 @@ export function Navbar() {
         }}>
           <div style={{ padding: '16px 20px 24px', maxWidth: maxW, margin: '0 auto' }}>
             {/* Nav links */}
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr 1fr', gap: '4px', marginBottom: '20px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr 1fr' : '1fr 1fr 1fr 1fr', gap: '4px', marginBottom: '20px' }}>
               {navLinks.map((item, i) => (
                 <button
                   key={i}
@@ -667,7 +642,7 @@ export function Navbar() {
                   onMouseLeave={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.04)')}
                 >
                   <span style={{ fontSize: '20px' }}>
-                    {i === 0 ? '🗺️' : i === 1 ? '📊' : '🏆'}
+                    {i === 0 ? '🗺️' : i === 1 ? '📅' : i === 2 ? '📊' : '🏆'}
                   </span>
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '17px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.2 }}>{item.label}</div>
