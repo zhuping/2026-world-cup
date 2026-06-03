@@ -11,8 +11,9 @@ const teamNamesMap: Record<string, Partial<Record<LangCode, string>>> = {
   'Japan':                 { zh: '日本',           ja: '日本',           ko: '일본',             es: 'Japón',          pt: 'Japão' },
   'Guatemala':             { zh: '危地马拉',       ja: 'グアテマラ',     ko: '과테말라',         es: 'Guatemala',      pt: 'Guatemala' },
   'Mexico':                { zh: '墨西哥',         ja: 'メキシコ',       ko: '멕시코',           es: 'México',         pt: 'México' },
-  'Poland':                { zh: '波兰',           ja: 'ポーランド',     ko: '폴란드',           es: 'Polonia',        pt: 'Polônia' },
-  'Cameroon':              { zh: '喀麦隆',         ja: 'カメルーン',     ko: '카메룬',           es: 'Camerún',        pt: 'Camarões' },
+  'Poland':                { zh: '波兰',           ja: 'ポーランド',     ko: '폴론드',           es: 'Polonia',        pt: 'Polônia' },
+  'Cameroon':              { zh: '喀麦隆',         ja: 'カメルーン',     ko: '칼메룬',           es: 'Camerún',        pt: 'Camarões' },
+  'Bosnia & Herzegovina':  { zh: '波黑',           ja: 'ボスニア・ヘルツェゴビナ', ko: '보스니아 헤르체고비나', es: 'Bosnia y Herzegovina', pt: 'Bósnia e Herzegovina' },
   'Trinidad & Tobago':     { zh: '特立尼达和多巴哥', ja: 'トリニダード・トバゴ', ko: '트리니다드 토바고', es: 'Trinidad y Tobago', pt: 'Trinidad e Tobago' },
   'Brazil':                { zh: '巴西',           ja: 'ブラジル',       ko: '브라질',           es: 'Brasil',         pt: 'Brasil' },
   'Germany':               { zh: '德国',           ja: 'ドイツ',         ko: '독일',             es: 'Alemania',       pt: 'Alemanha' },
@@ -25,7 +26,7 @@ const teamNamesMap: Record<string, Partial<Record<LangCode, string>>> = {
   'Spain':                 { zh: '西班牙',         ja: 'スペイン',       ko: '스페인',           es: 'España',         pt: 'Espanha' },
   'Colombia':              { zh: '哥伦比亚',       ja: 'コロンビア',     ko: '콜롬비아',         es: 'Colombia',       pt: 'Colômbia' },
   'Egypt':                 { zh: '埃及',           ja: 'エジプト',       ko: '이집트',           es: 'Egipto',         pt: 'Egito' },
-  'El Salvador':           { zh: '萨尔瓦多',       ja: 'エルサルバドル', ko: '엘살바도르',       es: 'El Salvador',    pt: 'El Salvador' },
+  'El Salvador':           { zh: '萨尔瓦多',       ja: 'エルサルバドル', ko: '엘살로바도르',       es: 'El Salvador',    pt: 'El Salvador' },
   'England':               { zh: '英格兰',         ja: 'イングランド',   ko: '잉글랜드',         es: 'Inglaterra',     pt: 'Inglaterra' },
   'Netherlands':           { zh: '荷兰',           ja: 'オランダ',       ko: '네덜란드',         es: 'Países Bajos',   pt: 'Países Baixos' },
   'Iraq':                  { zh: '伊拉克',         ja: 'イラク',         ko: '이라크',           es: 'Irak',           pt: 'Iraque' },
@@ -50,11 +51,44 @@ const teamNamesMap: Record<string, Partial<Record<LangCode, string>>> = {
   'Chile':                 { zh: '智利',           ja: 'チリ',           ko: '칠레',             es: 'Chile',          pt: 'Chile' },
   'Algeria':               { zh: '阿尔及利亚',     ja: 'アルジェリア',   ko: '알제리',           es: 'Argelia',        pt: 'Argélia' },
   'South Africa':          { zh: '南非',           ja: '南アフリカ',     ko: '남아프리카공화국', es: 'Sudáfrica',      pt: 'África do Sul' },
+  // --- 新增：缺失的球队 ---
+  'Czechia':               { zh: '捷克',           ja: 'チェコ',         ko: '체코',             es: 'Chequia',        pt: 'Chéquia' },
+  'Qatar':                 { zh: '卡塔尔',         ja: 'カタール',       ko: '카타르',           es: 'Catar',          pt: 'Catar' },
+  'Haiti':                 { zh: '海地',           ja: 'ハイチ',         ko: '아이티',           es: 'Haití',          pt: 'Haiti' },
+  'Scotland':              { zh: '苏格兰',         ja: 'スコットランド', ko: '스코틀랜드',       es: 'Escocia',        pt: 'Escócia' },
+  'Paraguay':              { zh: '巴拉圭',         ja: 'パラグアイ',     ko: '파라과이',         es: 'Paraguay',       pt: 'Paraguai' },
+  'Curaçao':               { zh: '库拉索',         ja: 'キュラソー',     ko: '퀴라소',           es: 'Curazao',        pt: 'Curaçao' },
+  'Sweden':                { zh: '瑞典',           ja: 'スウェーデン',   ko: '스웨덴',           es: 'Suecia',         pt: 'Suécia' },
+  'Tunisia':               { zh: '突尼斯',         ja: 'チュニジア',     ko: '튀니지',           es: 'Túnez',          pt: 'Tunísia' },
+  'Norway':                { zh: '挪威',           ja: 'ノルウェー',     ko: '노르웨이',         es: 'Noruega',        pt: 'Noruega' },
+  'Austria':               { zh: '奥地利',         ja: 'オーストリア',   ko: '오스트리아',       es: 'Austria',        pt: 'Áustria' },
+  'Jordan':                { zh: '约旦',           ja: 'ヨルダン',       ko: '요르단',           es: 'Jordania',       pt: 'Jordânia' },
+  'Cape Verde':            { zh: '佛得角',         ja: 'カーボベルデ',   ko: '칳베륵데',         es: 'Cabo Verde',     pt: 'Cabo Verde' },
+  "Cote d'Ivoire":         { zh: '科特迪瓦',       ja: 'コートジボワール', ko: '코트디부아르',     es: 'Costa de Marfil', pt: 'Costa do Marfim' },
+  'DR Congo':              { zh: '民主刚果',       ja: 'コンゴ民主共和国', ko: '콩고 민주 공화국', es: 'RD Congo',       pt: 'RD Congo' },
+  'Uzbekistan':            { zh: '乌兹别克斯坦',   ja: 'ウズベキスタン', ko: '우즈베키스탄',     es: 'Uzbekistán',     pt: 'Usbequistão' },
   'TBD':                   { zh: '待定',           ja: '未定',           ko: '미정',             es: 'Por definir',    pt: 'A definir' },
 };
 
+// FIFA / 数据源中的别名映射（key: 数据源使用的名称 → value: teamNamesMap 中的标准 key）
+const teamNameAliases: Record<string, string> = {
+  'Korea Republic': 'South Korea',
+  'Türkiye': 'Turkey',
+  "Côte d'Ivoire": "Cote d'Ivoire",
+  'Cabo Verde': 'Cape Verde',
+  'IR Iran': 'Iran',
+  'Congo DR': 'DR Congo',
+  'Bosnia and Herzegovina': 'Bosnia & Herzegovina',
+  'Curacao': 'Curaçao',
+};
+
+function normalizeTeamName(nameEn: string): string {
+  return teamNameAliases[nameEn] ?? nameEn;
+}
+
 export function getTeamName(nameEn: string, lang: LangCode): string {
-  const entry = teamNamesMap[nameEn];
+  const normalized = normalizeTeamName(nameEn);
+  const entry = teamNamesMap[normalized];
   if (!entry) return nameEn;
   return entry[lang] ?? entry['en'] ?? nameEn;
 }
@@ -72,7 +106,8 @@ const shortNamesMap: Record<string, Partial<Record<LangCode, string>>> = {
 };
 
 export function getShortTeamName(nameEn: string, lang: LangCode): string {
-  const short = shortNamesMap[nameEn]?.[lang];
+  const normalized = normalizeTeamName(nameEn);
+  const short = shortNamesMap[normalized]?.[lang];
   if (short) return short;
   return getTeamName(nameEn, lang);
 }
