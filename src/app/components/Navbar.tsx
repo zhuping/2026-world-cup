@@ -134,40 +134,79 @@ function Divider() {
   );
 }
 
+// Tournament key dates (UTC). Kickoff: opening match Mexico vs South Africa
+// at Estadio Azteca on 2026-06-11. Final: MetLife Stadium on 2026-07-19.
+const KICKOFF_UTC = Date.UTC(2026, 5, 11, 20, 0, 0); // Jun 11 2026 20:00 UTC
+const FINAL_UTC = Date.UTC(2026, 6, 19, 20, 0, 0);   // Jul 19 2026 20:00 UTC
+
+function computeCountdown(nowMs: number): { days: number; label: string } {
+  if (nowMs < KICKOFF_UTC) {
+    const days = Math.ceil((KICKOFF_UTC - nowMs) / (1000 * 60 * 60 * 24));
+    return { days, label: 'TO KICKOFF' };
+  }
+  if (nowMs < FINAL_UTC) {
+    const days = Math.ceil((FINAL_UTC - nowMs) / (1000 * 60 * 60 * 24));
+    return { days, label: 'TO FINAL' };
+  }
+  return { days: 0, label: 'FINISHED' };
+}
+
 function CountdownBadge() {
-  // Static countdown for demo — in Next.js use server-side date calculation
-  const targetDate = new Date('2026-07-19T20:00:00Z');
-  const now = new Date();
-  const diff = targetDate.getTime() - now.getTime();
-  const days = Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+  // Live countdown: compute on mount + refresh hourly to cross midnight smoothly.
+  // Use a `mounted` flag to avoid SSR/CSR hydration mismatches.
+  const [mounted, setMounted] = useState(false);
+  const [info, setInfo] = useState(() => computeCountdown(KICKOFF_UTC - 1));
+
+  useEffect(() => {
+    const tick = () => setInfo(computeCountdown(Date.now()));
+    tick();
+    setMounted(true);
+    const id = setInterval(tick, 60 * 1000); // refresh every minute
+    return () => clearInterval(id);
+  }, []);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '4px 12px',
-      background: 'rgba(215,40,40,0.12)',
-      border: '1px solid rgba(215,40,40,0.3)',
-      borderRadius: '8px',
-      cursor: 'default',
-    }}>
-      <span style={{
-        fontFamily: "'Bebas Neue', sans-serif",
-        fontSize: '20px',
-        color: '#FF5555',
-        letterSpacing: '1px',
-        lineHeight: 1,
-      }}>{days}</span>
-      <span style={{
-        fontFamily: "'Inter', sans-serif",
-        fontSize: '8px',
-        color: 'rgba(255,255,255,0.35)',
-        letterSpacing: '1px',
-        textTransform: 'uppercase',
-        lineHeight: 1,
-        marginTop: '1px',
-      }}>DAYS</span>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '4px 12px',
+        background: 'rgba(215,40,40,0.12)',
+        border: '1px solid rgba(215,40,40,0.3)',
+        borderRadius: '8px',
+        cursor: 'default',
+      }}
+      title={`${info.days} days ${info.label.toLowerCase()}`}
+      aria-live="polite"
+    >
+      <span
+        suppressHydrationWarning
+        style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: '20px',
+          color: '#FF5555',
+          letterSpacing: '1px',
+          lineHeight: 1,
+        }}
+      >
+        {mounted ? info.days : '—'}
+      </span>
+      <span
+        suppressHydrationWarning
+        style={{
+          fontFamily: "'Inter', sans-serif",
+          fontSize: '8px',
+          color: 'rgba(255,255,255,0.35)',
+          letterSpacing: '1px',
+          textTransform: 'uppercase',
+          lineHeight: 1,
+          marginTop: '1px',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {mounted ? info.label : 'DAYS'}
+      </span>
     </div>
   );
 }

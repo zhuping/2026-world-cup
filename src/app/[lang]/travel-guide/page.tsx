@@ -2,15 +2,17 @@ import React from 'react';
 import { ClientLayout } from '@/app/components/ClientLayout';
 import type { Metadata } from 'next';
 import { getDictionary } from '@/app/i18n/dictionary';
+import { buildMetadata } from '@/app/seo.metadata';
+import { buildUrl } from '@/app/seo.config';
 
 export async function generateMetadata({ params }: { params: { lang: string } }): Promise<Metadata> {
-  const dict = getDictionary(params.lang);
-  return { title: dict.travelGuide.metaTitle };
+  return buildMetadata({ locale: params.lang, path: '/travel-guide', pageKey: 'travelGuide' });
 }
 
 export default function TravelGuidePage({ params }: { params: { lang: string } }) {
   const dict = getDictionary(params.lang);
   const copy = dict.travelGuide;
+  const lang = params.lang || 'en';
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -20,12 +22,24 @@ export default function TravelGuidePage({ params }: { params: { lang: string } }
       acceptedAnswer: { '@type': 'Answer', text: item.a },
     })),
   };
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: buildUrl(lang, '/') },
+      { '@type': 'ListItem', position: 2, name: copy.h1, item: buildUrl(lang, '/travel-guide') },
+    ],
+  };
 
   return (
     <ClientLayout>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
       <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '100px 24px 60px', color: '#FFF', fontFamily: "'Inter', sans-serif", minHeight: '100vh' }}>
         <h1 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '56px', color: '#D72828', marginBottom: '24px' }}>
