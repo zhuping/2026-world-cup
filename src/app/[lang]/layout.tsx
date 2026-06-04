@@ -77,6 +77,12 @@ export default function RootLayout({
     <html lang={lang}>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3737000364381871"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta
           name="apple-mobile-web-app-status-bar-style"
