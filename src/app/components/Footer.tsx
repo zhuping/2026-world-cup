@@ -4,6 +4,9 @@ import { useIsMobile } from '../hooks/useIsMobile';
 export function Footer() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const copyrightText = t.footer.disclaimer
+    ? `© 2026 FIFA World Cup · ${t.footer.disclaimer}`
+    : '© 2026 FIFA World Cup';
 
   return (
     <footer style={{
@@ -42,7 +45,7 @@ export function Footer() {
       </div>
 
       <div style={{ fontFamily: "'Inter', sans-serif", fontSize: isMobile ? '10px' : '11px', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.5px' }}>
-        © 2026 FIFA World Cup · {t.footer.disclaimer}
+        {copyrightText}
       </div>
     </footer>
   );

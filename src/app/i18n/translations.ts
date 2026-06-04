@@ -320,7 +320,7 @@ const en: Translation = {
     nextDay: 'Next day',
   },
   footer: {
-    disclaimer: 'For display purposes only · Simulated match data',
+    disclaimer: 'For informational display purposes only',
     venuesUSA: '11 USA Venues',
     venuesCanada: '2 Canada Venues',
     venuesMexico: '3 Mexico Venues',
@@ -429,7 +429,7 @@ const ja: Translation = {
     nextDay: '次の日',
   },
   footer: {
-    disclaimer: '表示目的のみ · シミュレーションデータ',
+    disclaimer: '情報表示の参考用のみ',
     venuesUSA: 'アメリカ 11会場',
     venuesCanada: 'カナダ 2会場',
     venuesMexico: 'メキシコ 3会場',
@@ -538,7 +538,7 @@ const ko: Translation = {
     nextDay: '다음 날',
   },
   footer: {
-    disclaimer: '전시 목적으로만 사용 · 시뮬레이션 데이터',
+    disclaimer: '정보 제공 및 표시 참고용',
     venuesUSA: '미국 11개 경기장',
     venuesCanada: '캐나다 2개 경기장',
     venuesMexico: '멕시코 3개 경기장',
@@ -647,7 +647,7 @@ const pt: Translation = {
     nextDay: 'Próximo dia',
   },
   footer: {
-    disclaimer: 'Apenas para fins de exibição · Dados simulados',
+    disclaimer: 'Apenas para fins informativos e de referência visual',
     venuesUSA: '11 Estádios nos EUA',
     venuesCanada: '2 Estádios no Canadá',
     venuesMexico: '3 Estádios no México',
@@ -756,7 +756,7 @@ const es: Translation = {
     nextDay: 'Día siguiente',
   },
   footer: {
-    disclaimer: 'Solo con fines de visualización · Datos simulados',
+    disclaimer: 'Solo para fines informativos y de referencia visual',
     venuesUSA: '11 Estadios en EE.UU.',
     venuesCanada: '2 Estadios en Canadá',
     venuesMexico: '3 Estadios en México',
