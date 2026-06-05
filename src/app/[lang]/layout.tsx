@@ -77,6 +77,10 @@ export default function RootLayout({
     <html lang={lang}>
       <head>
         <link rel="icon" href="/favicon.ico" />
+        <meta
+          name="google-site-verification"
+          content="dHbujGMN1FTEUkgavQFQlH09EyMNfIYMBZrDeD8H680"
+        />
         <script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3737000364381871"
