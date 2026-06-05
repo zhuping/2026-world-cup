@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { venues, Venue } from '../data/venues';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -22,14 +22,11 @@ const COUNTRY_LABEL_COLOR: Record<string, string> = {
   Mexico: '#44DD88',
 };
 
+// Desktop tooltip card
 function VenueInfoCard({
   venue,
-  isMobile,
-  onClose,
 }: {
   venue: Venue;
-  isMobile: boolean;
-  onClose: () => void;
 }) {
   const { t, lang } = useLanguage();
   const color = COUNTRY_COLOR[venue.country];
@@ -38,21 +35,8 @@ function VenueInfoCard({
   const countryLabel = t.venue.countryLabels[venue.country];
   const flagMap: Record<string, string> = { USA: '🇺🇸', Canada: '🇨🇦', Mexico: '🇲🇽' };
 
-  const cardStyle: React.CSSProperties = isMobile
-    ? {
-        position: 'fixed',
-        bottom: '16px',
-        left: '12px',
-        right: '12px',
-        zIndex: 500,
-        animation: 'slideUp 0.22s ease',
-      }
-    : {
-        pointerEvents: 'none',
-      };
-
   return (
-    <div style={cardStyle}>
+    <div style={{ pointerEvents: 'none' }}>
       <div style={{
         background: 'rgba(4, 16, 40, 0.96)',
         backdropFilter: 'blur(16px)',
@@ -62,50 +46,251 @@ function VenueInfoCard({
         boxShadow: `0 8px 40px rgba(0,0,0,0.6), 0 0 0 1px ${color}30`,
       }}>
         <div style={{ height: '3px', borderRadius: '2px', background: `linear-gradient(90deg, ${color}, transparent)`, marginBottom: '10px' }} />
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '8px' }}>
-          <div style={{ flex: 1, minWidth: 0 }}>
-            {/* Country badge */}
-            <div style={{
-              display: 'inline-flex', alignItems: 'center', gap: '5px',
-              background: `${color}20`, border: `1px solid ${color}50`,
-              borderRadius: '4px', padding: '2px 8px', marginBottom: '7px',
-            }}>
-              <span style={{ fontSize: '11px' }}>{flagMap[venue.country]}</span>
-              <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '1px', color: labelColor, textTransform: 'uppercase' }}>{countryLabel}</span>
-            </div>
-            {/* Name */}
-            <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '17px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.25, marginBottom: '2px' }}>{venueName}</div>
-            {lang !== 'zh' && (
-              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px' }}>{venue.nameEn}</div>
-            )}
-            {lang === 'zh' && (
-              <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px' }}>{venue.nameEn}</div>
-            )}
-            {/* City */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '4px' }}>
-              <span style={{ color: labelColor, fontSize: '12px' }}>📍</span>
-              <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '13px', color: 'rgba(255,255,255,0.75)', fontWeight: 500 }}>{venue.cityZh} · {venue.city}</span>
-            </div>
-            {/* Address */}
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5, marginBottom: '8px' }}>{venue.address}</div>
-            {/* Capacity */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', letterSpacing: '1px', textTransform: 'uppercase' }}>{t.venue.capacity}</span>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '17px', color: labelColor, letterSpacing: '1px' }}>{venue.capacity.toLocaleString()}</span>
-            </div>
+        {venue.image && (
+          <div style={{
+            marginBottom: '10px',
+            borderRadius: '8px',
+            overflow: 'hidden',
+            border: `1px solid ${color}30`,
+            boxShadow: '0 4px 14px rgba(0,0,0,0.3)',
+          }}>
+            <img
+              src={venue.image.src}
+              alt={venueName}
+              style={{ width: '100%', height: '110px', objectFit: 'cover', display: 'block' }}
+            />
           </div>
-          {/* Close button (mobile) */}
-          {isMobile && (
-            <button onClick={onClose} style={{
-              background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
-              borderRadius: '50%', width: '28px', height: '28px', cursor: 'pointer',
-              color: 'rgba(255,255,255,0.6)', fontSize: '14px', flexShrink: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>✕</button>
+        )}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: '5px',
+            background: `${color}20`, border: `1px solid ${color}50`,
+            borderRadius: '4px', padding: '2px 8px', marginBottom: '7px',
+          }}>
+            <span style={{ fontSize: '11px' }}>{flagMap[venue.country]}</span>
+            <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '10px', fontWeight: 600, letterSpacing: '1px', color: labelColor, textTransform: 'uppercase' }}>{countryLabel}</span>
+          </div>
+          <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '17px', fontWeight: 700, color: '#FFFFFF', lineHeight: 1.25, marginBottom: '2px' }}>{venueName}</div>
+          {lang !== 'zh' && (
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px' }}>{venue.nameEn}</div>
           )}
+          {lang === 'zh' && (
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.4)', marginBottom: '8px' }}>{venue.nameEn}</div>
+          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginBottom: '4px' }}>
+            <span style={{ color: labelColor, fontSize: '12px' }}>📍</span>
+            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '13px', color: 'rgba(255,255,255,0.75)', fontWeight: 500 }}>{venue.cityZh} · {venue.city}</span>
+          </div>
+          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', lineHeight: 1.5, marginBottom: '8px' }}>{venue.address}</div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)', letterSpacing: '1px', textTransform: 'uppercase' }}>{t.venue.capacity}</span>
+            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '17px', color: labelColor, letterSpacing: '1px' }}>{venue.capacity.toLocaleString()}</span>
+          </div>
         </div>
       </div>
     </div>
+  );
+}
+
+// Mobile popup modal (bottom sheet style)
+function MobileVenuePopup({
+  venue,
+  onClose,
+}: {
+  venue: Venue;
+  onClose: () => void;
+}) {
+  const { t, lang } = useLanguage();
+  const color = COUNTRY_COLOR[venue.country];
+  const labelColor = COUNTRY_LABEL_COLOR[venue.country];
+  const venueName = lang === 'zh' ? venue.nameZh : venue.nameEn;
+  const countryLabel = t.venue.countryLabels[venue.country];
+  const flagMap: Record<string, string> = { USA: '🇺🇸', Canada: '🇨🇦', Mexico: '🇲🇽' };
+  const [closing, setClosing] = useState(false);
+
+  // Lock body scroll while popup is open
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => { document.body.style.overflow = ''; };
+  }, []);
+
+  const handleClose = () => {
+    if (closing) return;
+    setClosing(true);
+    setTimeout(() => onClose(), 280);
+  };
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        onClick={handleClose}
+        style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'rgba(0,0,0,0.6)',
+          backdropFilter: 'blur(4px)',
+          zIndex: 490,
+          animation: closing
+            ? 'backdropOut 0.2s ease forwards'
+            : 'backdropIn 0.2s ease',
+        }}
+      />
+
+      {/* Bottom sheet card */}
+      <div
+        onClick={e => e.stopPropagation()}
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 500,
+          animation: closing
+            ? 'sheetDown 0.28s cubic-bezier(0.32, 0, 0.67, 0) forwards'
+            : 'sheetUp 0.28s cubic-bezier(0.34, 1.2, 0.64, 1)',
+        }}
+      >
+        <div style={{
+          background: 'rgba(4, 14, 36, 0.98)',
+          backdropFilter: 'blur(24px)',
+          border: `1px solid ${color}50`,
+          borderBottom: 'none',
+          borderTopLeftRadius: '20px',
+          borderTopRightRadius: '20px',
+          padding: '0 0 env(safe-area-inset-bottom, 16px)',
+          boxShadow: `0 -8px 60px rgba(0,0,0,0.8), 0 0 0 1px ${color}20`,
+        }}>
+          {/* Drag handle */}
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px' }}>
+            <div style={{ width: '36px', height: '4px', borderRadius: '2px', background: 'rgba(255,255,255,0.18)' }} />
+          </div>
+
+          {/* Color accent bar */}
+          <div style={{ height: '2px', margin: '0 20px 16px', borderRadius: '2px', background: `linear-gradient(90deg, ${color}, transparent 70%)` }} />
+
+          <div style={{ padding: '0 20px 20px' }}>
+            {/* Header row */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                {/* Country badge */}
+                <div style={{
+                  display: 'inline-flex', alignItems: 'center', gap: '6px',
+                  background: `${color}22`, border: `1px solid ${color}55`,
+                  borderRadius: '6px', padding: '3px 10px', marginBottom: '8px',
+                }}>
+                  <span style={{ fontSize: '14px' }}>{flagMap[venue.country]}</span>
+                  <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '11px', fontWeight: 700, letterSpacing: '1.5px', color: labelColor, textTransform: 'uppercase' }}>{countryLabel}</span>
+                </div>
+
+                {/* Venue name */}
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '26px', letterSpacing: '1px', color: '#FFFFFF', lineHeight: 1.1, marginBottom: '2px' }}>{venueName}</div>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.4)', letterSpacing: '0.3px' }}>{venue.nameEn}</div>
+              </div>
+
+              {/* Close button */}
+              <button
+                onClick={handleClose}
+                style={{
+                  background: 'rgba(255,255,255,0.08)',
+                  border: '1px solid rgba(255,255,255,0.14)',
+                  borderRadius: '50%',
+                  width: '34px', height: '34px',
+                  cursor: 'pointer',
+                  color: 'rgba(255,255,255,0.55)',
+                  fontSize: '16px',
+                  flexShrink: 0,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  marginLeft: '12px',
+                  marginTop: '2px',
+                }}
+              >✕</button>
+            </div>
+
+            {/* Stadium image */}
+            {venue.image && (
+              <div style={{
+                marginBottom: '14px',
+                borderRadius: '12px',
+                overflow: 'hidden',
+                border: `1px solid ${color}30`,
+                boxShadow: `0 4px 20px rgba(0,0,0,0.35)`,
+              }}>
+                <img
+                  src={venue.image.src}
+                  alt={venueName}
+                  style={{
+                    width: '100%',
+                    height: '170px',
+                    objectFit: 'cover',
+                    display: 'block',
+                  }}
+                />
+              </div>
+            )}
+
+            {/* Info rows */}
+            <div style={{
+              background: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.07)',
+              borderRadius: '12px',
+              overflow: 'hidden',
+              marginBottom: '12px',
+            }}>
+              {/* City */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '12px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ fontSize: '16px', width: '22px', textAlign: 'center' }}>📍</span>
+                <div>
+                  <div style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '15px', fontWeight: 600, color: '#FFFFFF' }}>
+                    {lang === 'zh' ? venue.cityZh : venue.city}
+                  </div>
+                  {lang === 'zh' && (
+                    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.35)' }}>{venue.city}</div>
+                  )}
+                </div>
+              </div>
+
+              {/* Address */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', padding: '12px 14px', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+                <span style={{ fontSize: '16px', width: '22px', textAlign: 'center', marginTop: '1px' }}>🗺️</span>
+                <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '12px', color: 'rgba(255,255,255,0.45)', lineHeight: 1.5 }}>{venue.address}</div>
+              </div>
+
+              {/* Capacity */}
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '10px', padding: '12px 14px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <span style={{ fontSize: '16px', width: '22px', textAlign: 'center' }}>🏟️</span>
+                  <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '13px', color: 'rgba(255,255,255,0.45)', letterSpacing: '1px', textTransform: 'uppercase' }}>{t.venue.capacity}</span>
+                </div>
+                <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', color: labelColor, letterSpacing: '1px' }}>{venue.capacity.toLocaleString()}</span>
+              </div>
+            </div>
+
+            {/* Close hint */}
+            <div style={{ textAlign: 'center' }}>
+              <button
+                onClick={handleClose}
+                style={{
+                  background: `${color}20`,
+                  border: `1px solid ${color}40`,
+                  borderRadius: '10px',
+                  padding: '10px 0',
+                  width: '100%',
+                  cursor: 'pointer',
+                  fontFamily: "'Rajdhani', sans-serif",
+                  fontSize: '14px',
+                  fontWeight: 600,
+                  letterSpacing: '1px',
+                  color: labelColor,
+                }}
+              >
+                {t.venue.closeCard}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
   );
 }
 
@@ -139,8 +324,10 @@ function VenueMarker({
         }}
         onMouseEnter={() => onHover(venue)}
         onMouseLeave={onLeave}
-        onClick={() => onClick(venue)}
+        onClick={(e) => { e.stopPropagation(); onClick(venue); }}
       >
+        {/* Larger invisible hit area for easier tapping */}
+        <circle r="28" fill="transparent" />
         {/* Pulse ring */}
         <circle r="20" fill="none" stroke={color} strokeWidth="1" opacity="0.25">
           <animate attributeName="r" values="12;20;12" dur="2.5s" repeatCount="indefinite" />
@@ -248,7 +435,7 @@ export function VenueMap() {
         {!isMobile && hoveredVenue && (
           <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 20 }}>
             <div style={getTooltipStyle(hoveredVenue)}>
-              <VenueInfoCard venue={hoveredVenue} isMobile={false} onClose={() => {}} />
+              <VenueInfoCard venue={hoveredVenue} />
             </div>
           </div>
         )}
@@ -257,7 +444,6 @@ export function VenueMap() {
         <svg
           viewBox="0 0 960 540"
           style={{ width: '100%', height: 'auto', display: 'block', filter: 'drop-shadow(0 4px 32px rgba(0,0,0,0.6))' }}
-          onClick={() => { if (isMobile) setSelectedVenue(null); }}
         >
           <defs>
             <linearGradient id="oceanGrad" x1="0" y1="0" x2="0" y2="1">
@@ -350,9 +536,9 @@ export function VenueMap() {
         </div>
       </div>
 
-      {/* Mobile bottom sheet tooltip */}
+      {/* Mobile bottom sheet popup */}
       {isMobile && selectedVenue && (
-        <VenueInfoCard venue={selectedVenue} isMobile={true} onClose={() => setSelectedVenue(null)} />
+        <MobileVenuePopup key={selectedVenue.id} venue={selectedVenue} onClose={() => setSelectedVenue(null)} />
       )}
 
       <style>{`
@@ -360,9 +546,21 @@ export function VenueMap() {
           from { opacity: 0; transform: translateY(4px) scale(0.97); }
           to { opacity: 1; transform: translateY(0) scale(1); }
         }
-        @keyframes slideUp {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
+        @keyframes backdropIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        @keyframes backdropOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
+        @keyframes sheetUp {
+          from { transform: translateY(100%); }
+          to { transform: translateY(0); }
+        }
+        @keyframes sheetDown {
+          from { transform: translateY(0); }
+          to { transform: translateY(100%); }
         }
       `}</style>
     </section>

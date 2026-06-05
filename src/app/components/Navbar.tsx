@@ -6,7 +6,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { TRANSLATIONS, LangCode } from '../i18n/translations';
 import { useIsMobile, useMediaQuery } from '../hooks/useIsMobile';
-import wc26Logo from '../../assets/images/WC26_Logo.avif';
+import wc26Logo from '../../assets/images/logo/WC26_Logo.avif';
 
 // ─── Constants ───────────────────────────────────────────────────────────────
 const ANNOUNCEMENT_MSGS = [

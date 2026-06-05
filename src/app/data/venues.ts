@@ -1,3 +1,6 @@
+import { StaticImageData } from 'next/image';
+import { stadiumImages } from './stadiumImages';
+
 export interface Venue {
   id: number;
   nameZh: string;
@@ -9,6 +12,7 @@ export interface Venue {
   capacity: number;
   svgX: number;
   svgY: number;
+  image: StaticImageData;
 }
 
 // SVG coordinate system: viewBox="0 0 960 540"
@@ -27,6 +31,7 @@ export const venues: Venue[] = [
     capacity: 82500,
     svgX: 790,
     svgY: 241,
+    image: stadiumImages['MetLife Stadium'],
   },
   {
     id: 2,
@@ -39,6 +44,7 @@ export const venues: Venue[] = [
     capacity: 80000,
     svgX: 515,
     svgY: 325,
+    image: stadiumImages['AT&T Stadium'],
   },
   {
     id: 3,
@@ -51,6 +57,7 @@ export const venues: Venue[] = [
     capacity: 70240,
     svgX: 258,
     svgY: 312,
+    image: stadiumImages['SoFi Stadium'],
   },
   {
     id: 4,
@@ -63,6 +70,7 @@ export const venues: Venue[] = [
     capacity: 68500,
     svgX: 218,
     svgY: 276,
+    image: require('@/assets/images/stadiums/Levi\'s Stadium.webp'),
   },
   {
     id: 5,
@@ -75,6 +83,7 @@ export const venues: Venue[] = [
     capacity: 71000,
     svgX: 667,
     svgY: 314,
+    image: stadiumImages['Mercedes-Benz Stadium'],
   },
   {
     id: 6,
@@ -87,6 +96,7 @@ export const venues: Venue[] = [
     capacity: 76416,
     svgX: 548,
     svgY: 260,
+    image: stadiumImages['Arrowhead Stadium'],
   },
   {
     id: 7,
@@ -99,6 +109,7 @@ export const venues: Venue[] = [
     capacity: 69796,
     svgX: 776,
     svgY: 251,
+    image: stadiumImages['Lincoln Financial Field'],
   },
   {
     id: 8,
@@ -111,6 +122,7 @@ export const venues: Venue[] = [
     capacity: 65878,
     svgX: 828,
     svgY: 229,
+    image: stadiumImages['Gillette Stadium'],
   },
   {
     id: 9,
@@ -123,6 +135,7 @@ export const venues: Venue[] = [
     capacity: 65326,
     svgX: 720,
     svgY: 399,
+    image: stadiumImages['Hard Rock Stadium'],
   },
   {
     id: 10,
@@ -135,6 +148,7 @@ export const venues: Venue[] = [
     capacity: 72220,
     svgX: 535,
     svgY: 356,
+    image: stadiumImages['NRG Stadium'],
   },
   {
     id: 11,
@@ -147,6 +161,7 @@ export const venues: Venue[] = [
     capacity: 72000,
     svgX: 212,
     svgY: 171,
+    image: stadiumImages['Lumen Field'],
   },
   {
     id: 12,
@@ -159,6 +174,7 @@ export const venues: Venue[] = [
     capacity: 54500,
     svgX: 202,
     svgY: 152,
+    image: stadiumImages['BC Place'],
   },
   {
     id: 13,
@@ -171,6 +187,7 @@ export const venues: Venue[] = [
     capacity: 45736,
     svgX: 727,
     svgY: 212,
+    image: stadiumImages['BMO Field'],
   },
   {
     id: 14,
@@ -183,6 +200,7 @@ export const venues: Venue[] = [
     capacity: 87523,
     svgX: 490,
     svgY: 464,
+    image: stadiumImages['Estadio Azteca'],
   },
   {
     id: 15,
@@ -195,6 +213,7 @@ export const venues: Venue[] = [
     capacity: 49850,
     svgX: 439,
     svgY: 450,
+    image: stadiumImages['Estadio Akron'],
   },
   {
     id: 16,
@@ -207,5 +226,6 @@ export const venues: Venue[] = [
     capacity: 53500,
     svgX: 476,
     svgY: 397,
+    image: stadiumImages['Estadio BBVA'],
   },
 ];
