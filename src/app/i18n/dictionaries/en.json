@@ -4,13 +4,34 @@
     "intro": "The 2026 FIFA World Cup is set to be the most expansive and thrilling tournament in history, jointly hosted by the United States, Canada, and Mexico. This guide helps you understand official facts, visualize all host venues on an interactive map, and plan smarter travel across time zones and cities.",
     "factsTitle": "What We Know: Official Facts",
     "facts": [
-      { "label": "Host Countries", "value": "United States, Canada, and Mexico." },
-      { "label": "Tournament Dates", "value": "June 11 to July 19, 2026." },
-      { "label": "Expanded Format", "value": "48 participating nations (up from 32)." },
-      { "label": "Total Matches", "value": "104 matches played across the tournament." },
-      { "label": "Venues", "value": "16 stadiums (11 in the USA, 3 in Mexico, 2 in Canada)." },
-      { "label": "Opening Match", "value": "Estadio Azteca, Mexico City on June 11, 2026." },
-      { "label": "The Final", "value": "MetLife Stadium, New York/New Jersey on July 19, 2026." }
+      {
+        "label": "Host Countries",
+        "value": "United States, Canada, and Mexico."
+      },
+      {
+        "label": "Tournament Dates",
+        "value": "June 11 to July 19, 2026."
+      },
+      {
+        "label": "Expanded Format",
+        "value": "48 participating nations (up from 32)."
+      },
+      {
+        "label": "Total Matches",
+        "value": "104 matches played across the tournament."
+      },
+      {
+        "label": "Venues",
+        "value": "16 stadiums (11 in the USA, 3 in Mexico, 2 in Canada)."
+      },
+      {
+        "label": "Opening Match",
+        "value": "Estadio Azteca, Mexico City on June 11, 2026."
+      },
+      {
+        "label": "The Final",
+        "value": "MetLife Stadium, New York/New Jersey on July 19, 2026."
+      }
     ],
     "hubsTitle": "Explore Our Deep Dive Guides",
     "hubs": [
@@ -35,28 +56,7 @@
         "cta": "Plan Your Trip →",
         "color": "#0033A0"
       }
-    ],
-    "mapTitle": "Interactive Map & How to Use It",
-    "mapBody": "Use the interactive map (above) to understand how far apart the host cities are, group your itinerary by region, and reduce unnecessary cross-continent travel. It is especially useful when following a team across multiple match locations.",
-    "faqTitle": "General FAQ",
-    "faq": [
-      {
-        "q": "When do 2026 World Cup tickets go on sale?",
-        "a": "FIFA has not yet announced the exact date for ticket sales, but they typically become available late in the year preceding the tournament (late 2025)."
-      },
-      {
-        "q": "Where is the 2026 World Cup Final?",
-        "a": "The Final will be held at MetLife Stadium in New York/New Jersey on July 19, 2026."
-      },
-      {
-        "q": "Are all stadiums grass or artificial turf?",
-        "a": "FIFA requires World Cup matches to be played on natural grass. Stadiums that normally use turf will install temporary natural grass pitches."
-      }
-    ],
-    "sourcesLabel": "Sources",
-    "sourcesValue": "Official FIFA announcements, Host City Committees, and regional tourism boards.",
-    "lastUpdatedLabel": "Last Updated",
-    "lastUpdatedValue": "April 15, 2026"
+    ]
   },
   "travelGuide": {
     "metaTitle": "2026 World Cup Travel Guide | Plan Your Trip",
@@ -64,11 +64,26 @@
     "intro": "Because the tournament spans three countries and multiple time zones, travel logistics matter as much as match tickets. Use this guide to plan routes, minimize long-haul transfers, and pick accommodation strategically.",
     "tipsTitle": "Essential Tips for Cross-Continent Travel",
     "tips": [
-      { "label": "Time Zones", "body": "Matches will span Pacific, Mountain, Central, and Eastern time. Double-check kickoff times based on where you sleep." },
-      { "label": "Weather & Seasons", "body": "June–July is summer. Expect heat and humidity in some cities, and cooler evenings in others." },
-      { "label": "Inter-City Travel", "body": "Flights are often the most practical option between regions. Major hubs have frequent connections." },
-      { "label": "Airports & Transit", "body": "Plan match-day transit early and use public transit where possible to avoid traffic congestion." },
-      { "label": "Accommodation", "body": "Book early. Staying near transit lines often beats staying next to the stadium." }
+      {
+        "label": "Time Zones",
+        "body": "Matches will span Pacific, Mountain, Central, and Eastern time. Double-check kickoff times based on where you sleep."
+      },
+      {
+        "label": "Weather & Seasons",
+        "body": "June–July is summer. Expect heat and humidity in some cities, and cooler evenings in others."
+      },
+      {
+        "label": "Inter-City Travel",
+        "body": "Flights are often the most practical option between regions. Major hubs have frequent connections."
+      },
+      {
+        "label": "Airports & Transit",
+        "body": "Plan match-day transit early and use public transit where possible to avoid traffic congestion."
+      },
+      {
+        "label": "Accommodation",
+        "body": "Book early. Staying near transit lines often beats staying next to the stadium."
+      }
     ],
     "lastUpdatedLabel": "Last Updated",
     "lastUpdatedValue": "April 15, 2026",
@@ -85,17 +100,38 @@
     "intro": "The 2026 World Cup expands to 48 teams. Here is how groups, qualification, and the knockout bracket work.",
     "sectionTitle": "Group Stage & Knockout Logic",
     "bullets": [
-      { "label": "Group Stage", "body": "48 teams are split into 12 groups of 4. Each team plays 3 group matches." },
-      { "label": "Progression", "body": "Top 2 in each group advance (24 teams). The 8 best third-place teams also advance (8 teams)." },
-      { "label": "Knockout", "body": "A Round of 32 is added, then Round of 16, Quarter-finals, Semi-finals, and the Final." }
+      {
+        "label": "Group Stage",
+        "body": "48 teams are split into 12 groups of 4. Each team plays 3 group matches."
+      },
+      {
+        "label": "Progression",
+        "body": "Top 2 in each group advance (24 teams). The 8 best third-place teams also advance (8 teams)."
+      },
+      {
+        "label": "Knockout",
+        "body": "A Round of 32 is added, then Round of 16, Quarter-finals, Semi-finals, and the Final."
+      }
     ],
     "lastUpdatedLabel": "Last Updated",
     "lastUpdatedValue": "April 15, 2026",
     "faq": [
-      { "q": "How many teams will play in the 2026 World Cup?", "a": "48 teams will participate for the first time." },
-      { "q": "How many matches will each team play?", "a": "Every team plays at least 3 matches. The Finalists will play 8 matches total." },
-      { "q": "What is the new Round of 32?", "a": "32 teams advance from the group stage, so an extra knockout round is needed before the Round of 16." },
-      { "q": "How are the groups drawn?", "a": "Teams are seeded into pots based on FIFA rankings and drawn into 12 groups with geographic constraints." }
+      {
+        "q": "How many teams will play in the 2026 World Cup?",
+        "a": "48 teams will participate for the first time."
+      },
+      {
+        "q": "How many matches will each team play?",
+        "a": "Every team plays at least 3 matches. The Finalists will play 8 matches total."
+      },
+      {
+        "q": "What is the new Round of 32?",
+        "a": "32 teams advance from the group stage, so an extra knockout round is needed before the Round of 16."
+      },
+      {
+        "q": "How are the groups drawn?",
+        "a": "Teams are seeded into pots based on FIFA rankings and drawn into 12 groups with geographic constraints."
+      }
     ]
   },
   "venues": {
@@ -105,9 +141,18 @@
     "introBody": "The 2026 tournament spans three host nations and 16 stadiums. This page helps you understand where the venues are, why they matter, and how to plan travel around match locations.",
     "faqTitle": "Venues FAQ",
     "faq": [
-      { "q": "Which venue will host the Final?", "a": "The Final will take place at MetLife Stadium in New York/New Jersey on July 19, 2026." },
-      { "q": "Where is the Opening Match?", "a": "Estadio Azteca in Mexico City will host the opening match on June 11, 2026." },
-      { "q": "How many matches will be played in each country?", "a": "The US will host the majority of matches (78), while Canada and Mexico will host 13 matches each." }
+      {
+        "q": "Which venue will host the Final?",
+        "a": "The Final will take place at MetLife Stadium in New York/New Jersey on July 19, 2026."
+      },
+      {
+        "q": "Where is the Opening Match?",
+        "a": "Estadio Azteca in Mexico City will host the opening match on June 11, 2026."
+      },
+      {
+        "q": "How many matches will be played in each country?",
+        "a": "The US will host the majority of matches (78), while Canada and Mexico will host 13 matches each."
+      }
     ],
     "sourcesLabel": "Sources",
     "sourcesValue": "FIFA Official Stadium Announcements.",
@@ -122,9 +167,18 @@
       "introBody": "Estadio Azteca is one of football’s most iconic venues and will host the Opening Match on June 11, 2026. Its altitude and history make it a special destination for fans planning a World Cup trip.",
       "faqTitle": "Estadio Azteca FAQ",
       "faq": [
-        { "q": "What is the capacity of Estadio Azteca?", "a": "For the tournament it is expected to be around 87,523." },
-        { "q": "How do I get to the stadium from downtown Mexico City?", "a": "A common option is the Tren Ligero (light rail) to the Estadio Azteca station, connecting with the Metro system." },
-        { "q": "Is the stadium undergoing renovations?", "a": "It is planned to be upgraded to meet FIFA requirements while preserving its historic identity." }
+        {
+          "q": "What is the capacity of Estadio Azteca?",
+          "a": "For the tournament it is expected to be around 87,523."
+        },
+        {
+          "q": "How do I get to the stadium from downtown Mexico City?",
+          "a": "A common option is the Tren Ligero (light rail) to the Estadio Azteca station, connecting with the Metro system."
+        },
+        {
+          "q": "Is the stadium undergoing renovations?",
+          "a": "It is planned to be upgraded to meet FIFA requirements while preserving its historic identity."
+        }
       ],
       "sourcesLabel": "Sources",
       "sourcesValue": "FIFA, Mexico City host information.",
@@ -132,7 +186,10 @@
       "lastUpdatedValue": "April 15, 2026",
       "schema": {
         "name": "Estadio Azteca",
-        "address": { "addressLocality": "Mexico City", "addressCountry": "MX" },
+        "address": {
+          "addressLocality": "Mexico City",
+          "addressCountry": "MX"
+        },
         "maximumAttendeeCapacity": 87523
       }
     },
@@ -143,9 +200,18 @@
       "introBody": "MetLife Stadium will host the 2026 World Cup Final on July 19, 2026. Its location near New York City and its large capacity make it a top venue for fans planning the ultimate match-day experience.",
       "faqTitle": "MetLife Stadium FAQ",
       "faq": [
-        { "q": "When is the 2026 World Cup Final?", "a": "The Final will be held on July 19, 2026 at MetLife Stadium." },
-        { "q": "What is the capacity of MetLife Stadium?", "a": "Approximately 82,500." },
-        { "q": "Will matches be played on artificial turf?", "a": "No. A temporary natural grass pitch will be installed to meet FIFA requirements." }
+        {
+          "q": "When is the 2026 World Cup Final?",
+          "a": "The Final will be held on July 19, 2026 at MetLife Stadium."
+        },
+        {
+          "q": "What is the capacity of MetLife Stadium?",
+          "a": "Approximately 82,500."
+        },
+        {
+          "q": "Will matches be played on artificial turf?",
+          "a": "No. A temporary natural grass pitch will be installed to meet FIFA requirements."
+        }
       ],
       "sourcesLabel": "Sources",
       "sourcesValue": "FIFA, NY/NJ Host Committee.",

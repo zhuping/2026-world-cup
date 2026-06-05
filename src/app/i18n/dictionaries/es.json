@@ -4,13 +4,34 @@
     "intro": "La Copa Mundial de la FIFA 2026 será la edición más grande y emocionante de la historia, organizada conjuntamente por Estados Unidos, Canadá y México. Esta guía te ayuda a entender los hechos oficiales, ver todas las sedes en un mapa interactivo y planificar mejor el viaje entre zonas horarias y ciudades.",
     "factsTitle": "Lo que sabemos: datos oficiales",
     "facts": [
-      { "label": "Países anfitriones", "value": "Estados Unidos, Canadá y México." },
-      { "label": "Fechas del torneo", "value": "Del 11 de junio al 19 de julio de 2026." },
-      { "label": "Formato ampliado", "value": "48 selecciones participantes (antes 32)." },
-      { "label": "Partidos totales", "value": "104 partidos en todo el torneo." },
-      { "label": "Sedes", "value": "16 estadios (11 en EE. UU., 3 en México, 2 en Canadá)." },
-      { "label": "Partido inaugural", "value": "Estadio Azteca, Ciudad de México, el 11 de junio de 2026." },
-      { "label": "La final", "value": "MetLife Stadium, Nueva York/Nueva Jersey, el 19 de julio de 2026." }
+      {
+        "label": "Países anfitriones",
+        "value": "Estados Unidos, Canadá y México."
+      },
+      {
+        "label": "Fechas del torneo",
+        "value": "Del 11 de junio al 19 de julio de 2026."
+      },
+      {
+        "label": "Formato ampliado",
+        "value": "48 selecciones participantes (antes 32)."
+      },
+      {
+        "label": "Partidos totales",
+        "value": "104 partidos en todo el torneo."
+      },
+      {
+        "label": "Sedes",
+        "value": "16 estadios (11 en EE. UU., 3 en México, 2 en Canadá)."
+      },
+      {
+        "label": "Partido inaugural",
+        "value": "Estadio Azteca, Ciudad de México, el 11 de junio de 2026."
+      },
+      {
+        "label": "La final",
+        "value": "MetLife Stadium, Nueva York/Nueva Jersey, el 19 de julio de 2026."
+      }
     ],
     "hubsTitle": "Explora nuestras guías en profundidad",
     "hubs": [
@@ -35,28 +56,7 @@
         "cta": "Planificar →",
         "color": "#0033A0"
       }
-    ],
-    "mapTitle": "Mapa interactivo y cómo usarlo",
-    "mapBody": "Usa el mapa interactivo (arriba) para entender la distancia entre ciudades sede, agrupar tu itinerario por regiones y reducir traslados innecesarios de costa a costa. Es especialmente útil si quieres seguir a una selección por varias sedes.",
-    "faqTitle": "Preguntas frecuentes",
-    "faq": [
-      {
-        "q": "¿Cuándo salen a la venta las entradas del Mundial 2026?",
-        "a": "La FIFA aún no ha anunciado la fecha exacta. Normalmente se ponen a la venta a finales del año anterior al torneo (finales de 2025)."
-      },
-      {
-        "q": "¿Dónde se juega la final del Mundial 2026?",
-        "a": "La final se jugará en el MetLife Stadium (Nueva York/Nueva Jersey) el 19 de julio de 2026."
-      },
-      {
-        "q": "¿Los estadios serán de césped natural o artificial?",
-        "a": "La FIFA exige que los partidos del Mundial se jueguen sobre césped natural. Los estadios que usan césped artificial instalarán un campo temporal de césped natural."
-      }
-    ],
-    "sourcesLabel": "Fuentes",
-    "sourcesValue": "Anuncios oficiales de la FIFA, comités de ciudades sede y organismos de turismo regional.",
-    "lastUpdatedLabel": "Última actualización",
-    "lastUpdatedValue": "15 de abril de 2026"
+    ]
   },
   "travelGuide": {
     "metaTitle": "Guía de viaje del Mundial 2026 | Planifica tu viaje",
@@ -64,11 +64,26 @@
     "intro": "Como el torneo se disputa en tres países y varias zonas horarias, la logística del viaje importa tanto como las entradas. Usa esta guía para planificar rutas, minimizar traslados largos y elegir alojamiento de forma inteligente.",
     "tipsTitle": "Consejos esenciales para viajar entre sedes",
     "tips": [
-      { "label": "Zonas horarias", "body": "Los partidos abarcan horarios del Pacífico, Montaña, Centro y Este. Comprueba el horario según dónde te alojes." },
-      { "label": "Clima y temporada", "body": "Junio–julio es verano. Espera calor y humedad en algunas ciudades y noches más frescas en otras." },
-      { "label": "Viajes entre ciudades", "body": "Entre regiones, volar suele ser lo más práctico. Los grandes hubs ofrecen muchas conexiones." },
-      { "label": "Aeropuertos y transporte", "body": "Planifica el transporte en día de partido con antelación y usa transporte público cuando sea posible para evitar tráfico." },
-      { "label": "Alojamiento", "body": "Reserva pronto. Alojarse cerca de líneas de transporte suele ser mejor que quedarse junto al estadio." }
+      {
+        "label": "Zonas horarias",
+        "body": "Los partidos abarcan horarios del Pacífico, Montaña, Centro y Este. Comprueba el horario según dónde te alojes."
+      },
+      {
+        "label": "Clima y temporada",
+        "body": "Junio–julio es verano. Espera calor y humedad en algunas ciudades y noches más frescas en otras."
+      },
+      {
+        "label": "Viajes entre ciudades",
+        "body": "Entre regiones, volar suele ser lo más práctico. Los grandes hubs ofrecen muchas conexiones."
+      },
+      {
+        "label": "Aeropuertos y transporte",
+        "body": "Planifica el transporte en día de partido con antelación y usa transporte público cuando sea posible para evitar tráfico."
+      },
+      {
+        "label": "Alojamiento",
+        "body": "Reserva pronto. Alojarse cerca de líneas de transporte suele ser mejor que quedarse junto al estadio."
+      }
     ],
     "lastUpdatedLabel": "Última actualización",
     "lastUpdatedValue": "15 de abril de 2026",
@@ -85,17 +100,38 @@
     "intro": "El Mundial 2026 se amplía a 48 equipos. Aquí se explica cómo funcionan los grupos, la clasificación y el cuadro eliminatorio.",
     "sectionTitle": "Fase de grupos y lógica de eliminatorias",
     "bullets": [
-      { "label": "Fase de grupos", "body": "48 equipos se dividen en 12 grupos de 4. Cada equipo juega 3 partidos de grupo." },
-      { "label": "Clasificación", "body": "Avanzan los 2 primeros de cada grupo (24 equipos) y también los 8 mejores terceros (8 equipos)." },
-      { "label": "Eliminatorias", "body": "Se añade una ronda de 32, luego octavos, cuartos, semifinales y la final." }
+      {
+        "label": "Fase de grupos",
+        "body": "48 equipos se dividen en 12 grupos de 4. Cada equipo juega 3 partidos de grupo."
+      },
+      {
+        "label": "Clasificación",
+        "body": "Avanzan los 2 primeros de cada grupo (24 equipos) y también los 8 mejores terceros (8 equipos)."
+      },
+      {
+        "label": "Eliminatorias",
+        "body": "Se añade una ronda de 32, luego octavos, cuartos, semifinales y la final."
+      }
     ],
     "lastUpdatedLabel": "Última actualización",
     "lastUpdatedValue": "15 de abril de 2026",
     "faq": [
-      { "q": "¿Cuántos equipos jugarán el Mundial 2026?", "a": "Participarán 48 selecciones por primera vez." },
-      { "q": "¿Cuántos partidos jugará cada equipo?", "a": "Cada equipo juega al menos 3. Los finalistas jugarán 8 en total." },
-      { "q": "¿Qué es la nueva ronda de 32?", "a": "Como avanzan 32 equipos desde la fase de grupos, se añade una eliminatoria extra antes de octavos." },
-      { "q": "¿Cómo se hace el sorteo de grupos?", "a": "Los equipos se distribuyen en bombos según el ranking FIFA y se sortean en 12 grupos con restricciones geográficas." }
+      {
+        "q": "¿Cuántos equipos jugarán el Mundial 2026?",
+        "a": "Participarán 48 selecciones por primera vez."
+      },
+      {
+        "q": "¿Cuántos partidos jugará cada equipo?",
+        "a": "Cada equipo juega al menos 3. Los finalistas jugarán 8 en total."
+      },
+      {
+        "q": "¿Qué es la nueva ronda de 32?",
+        "a": "Como avanzan 32 equipos desde la fase de grupos, se añade una eliminatoria extra antes de octavos."
+      },
+      {
+        "q": "¿Cómo se hace el sorteo de grupos?",
+        "a": "Los equipos se distribuyen en bombos según el ranking FIFA y se sortean en 12 grupos con restricciones geográficas."
+      }
     ]
   },
   "venues": {
@@ -105,9 +141,18 @@
     "introBody": "El torneo 2026 se reparte en tres países anfitriones y 16 estadios. Esta página te ayuda a ubicar las sedes, entender su importancia y planificar viajes en función de las ciudades y partidos.",
     "faqTitle": "FAQ de sedes",
     "faq": [
-      { "q": "¿Qué estadio albergará la final?", "a": "La final se jugará en el MetLife Stadium (Nueva York/Nueva Jersey) el 19 de julio de 2026." },
-      { "q": "¿Dónde es el partido inaugural?", "a": "El Estadio Azteca (Ciudad de México) albergará el partido inaugural el 11 de junio de 2026." },
-      { "q": "¿Cuántos partidos se jugarán en cada país?", "a": "EE. UU. albergará la mayoría (78), mientras que Canadá y México albergarán 13 cada uno." }
+      {
+        "q": "¿Qué estadio albergará la final?",
+        "a": "La final se jugará en el MetLife Stadium (Nueva York/Nueva Jersey) el 19 de julio de 2026."
+      },
+      {
+        "q": "¿Dónde es el partido inaugural?",
+        "a": "El Estadio Azteca (Ciudad de México) albergará el partido inaugural el 11 de junio de 2026."
+      },
+      {
+        "q": "¿Cuántos partidos se jugarán en cada país?",
+        "a": "EE. UU. albergará la mayoría (78), mientras que Canadá y México albergarán 13 cada uno."
+      }
     ],
     "sourcesLabel": "Fuentes",
     "sourcesValue": "Anuncios oficiales de estadios de la FIFA.",
@@ -122,9 +167,18 @@
       "introBody": "El Estadio Azteca es uno de los recintos más icónicos del fútbol y albergará el partido inaugural el 11 de junio de 2026. Su altitud y su historia lo convierten en una parada especial para los aficionados.",
       "faqTitle": "FAQ del Estadio Azteca",
       "faq": [
-        { "q": "¿Cuál es la capacidad del Estadio Azteca?", "a": "Para el torneo se espera alrededor de 87.523." },
-        { "q": "¿Cómo llego desde el centro de Ciudad de México?", "a": "Una opción habitual es el Tren Ligero hasta la estación Estadio Azteca, conectando con el Metro." },
-        { "q": "¿El estadio está en remodelación?", "a": "Se prevén mejoras para cumplir requisitos FIFA manteniendo su identidad histórica." }
+        {
+          "q": "¿Cuál es la capacidad del Estadio Azteca?",
+          "a": "Para el torneo se espera alrededor de 87.523."
+        },
+        {
+          "q": "¿Cómo llego desde el centro de Ciudad de México?",
+          "a": "Una opción habitual es el Tren Ligero hasta la estación Estadio Azteca, conectando con el Metro."
+        },
+        {
+          "q": "¿El estadio está en remodelación?",
+          "a": "Se prevén mejoras para cumplir requisitos FIFA manteniendo su identidad histórica."
+        }
       ],
       "sourcesLabel": "Fuentes",
       "sourcesValue": "FIFA e información de sede de Ciudad de México.",
@@ -132,7 +186,10 @@
       "lastUpdatedValue": "15 de abril de 2026",
       "schema": {
         "name": "Estadio Azteca",
-        "address": { "addressLocality": "Mexico City", "addressCountry": "MX" },
+        "address": {
+          "addressLocality": "Mexico City",
+          "addressCountry": "MX"
+        },
         "maximumAttendeeCapacity": 87523
       }
     },
@@ -143,9 +200,18 @@
       "introBody": "El MetLife Stadium albergará la final el 19 de julio de 2026. Su cercanía a Nueva York y su gran capacidad lo convierten en una sede clave para el día más importante del torneo.",
       "faqTitle": "FAQ del MetLife Stadium",
       "faq": [
-        { "q": "¿Cuándo es la final del Mundial 2026?", "a": "La final será el 19 de julio de 2026 en el MetLife Stadium." },
-        { "q": "¿Cuál es la capacidad del MetLife Stadium?", "a": "Aproximadamente 82.500." },
-        { "q": "¿Se jugará sobre césped artificial?", "a": "No. Se instalará césped natural temporal para cumplir las normas FIFA." }
+        {
+          "q": "¿Cuándo es la final del Mundial 2026?",
+          "a": "La final será el 19 de julio de 2026 en el MetLife Stadium."
+        },
+        {
+          "q": "¿Cuál es la capacidad del MetLife Stadium?",
+          "a": "Aproximadamente 82.500."
+        },
+        {
+          "q": "¿Se jugará sobre césped artificial?",
+          "a": "No. Se instalará césped natural temporal para cumplir las normas FIFA."
+        }
       ],
       "sourcesLabel": "Fuentes",
       "sourcesValue": "FIFA y comité anfitrión NY/NJ.",
