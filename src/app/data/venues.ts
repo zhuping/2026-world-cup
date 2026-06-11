@@ -70,7 +70,7 @@ export const venues: Venue[] = [
     capacity: 68500,
     svgX: 218,
     svgY: 276,
-    image: require('@/assets/images/stadiums/Levi\'s Stadium.webp'),
+    image: stadiumImages['Levis Stadium'],
   },
   {
     id: 5,

@@ -3,7 +3,7 @@ import { StaticImageData } from 'next/image';
 import metLifeStadium from '@/assets/images/stadiums/MetLife Stadium.jpg';
 import attStadium from '@/assets/images/stadiums/AT&T Stadium.webp';
 import soFiStadium from '@/assets/images/stadiums/SoFi Stadium.webp';
-import levisStadium from '@/assets/images/stadiums/Levi\'s Stadium.webp';
+import levisStadium from '@/assets/images/stadiums/Levis Stadium.webp';
 import mercedesBenzStadium from '@/assets/images/stadiums/Mercedes-Benz Stadium.webp';
 import arrowheadStadium from '@/assets/images/stadiums/Arrowhead Stadium.webp';
 import lincolnFinancialField from '@/assets/images/stadiums/Lincoln Financial Field.webp';
@@ -21,7 +21,7 @@ export const stadiumImages: Record<string, StaticImageData> = {
   'MetLife Stadium': metLifeStadium,
   'AT&T Stadium': attStadium,
   'SoFi Stadium': soFiStadium,
-  "Levi's Stadium": levisStadium,
+  "Levis Stadium": levisStadium,
   'Mercedes-Benz Stadium': mercedesBenzStadium,
   'Arrowhead Stadium': arrowheadStadium,
   'Lincoln Financial Field': lincolnFinancialField,
