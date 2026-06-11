@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { GroupStage } from './GroupStage';
 import { KnockoutBracket } from './KnockoutBracket';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { groups, knockoutRounds } from '../data/teams';
+import { GROUP_STAGE_START } from '../data/matches';
 
 type TabType = 'group' | 'knockout';
 
@@ -25,18 +27,62 @@ export function Tournament() {
     setActiveTab(tab);
   };
 
+  // Compute real tournament data
+  const hasStarted = useMemo(() => {
+    const now = new Date();
+    const start = new Date(`${GROUP_STAGE_START}T19:00:00Z`);
+    return now >= start;
+  }, []);
+
+  const { completedMatches, qualifiedTeams } = useMemo(() => {
+    if (!hasStarted) return { completedMatches: 0, qualifiedTeams: 0 };
+
+    const totalPlayed = groups.reduce(
+      (sum, g) => sum + g.teams.reduce((s, t) => s + t.played, 0),
+      0
+    );
+    const completedMatches = Math.floor(totalPlayed / 2);
+
+    const qualifiedTeams = groups.reduce((sum, g) => {
+      const allPlayed = g.teams.every((t) => t.played === 3);
+      return sum + (allPlayed ? 2 : 0);
+    }, 0);
+
+    return { completedMatches, qualifiedTeams };
+  }, [hasStarted]);
+
   const groupStatusItems = [
-    { label: t.group.statsTeams, value: '48', color: '#009A44' },
-    { label: t.group.statsGroups, value: '12', color: '#0033A0' },
-    { label: t.group.statsMatches, value: '72', color: '#D72828' },
-    { label: t.group.statsQualifiers, value: '32', color: '#C0A020' },
+    {
+      label: t.tournament.completedLabel,
+      value: hasStarted ? String(completedMatches) : '0',
+      color: '#009A44',
+    },
+    {
+      label: t.tournament.groupsLabel,
+      value: hasStarted ? String(groups.length) : '0',
+      color: '#0033A0',
+    },
+    {
+      label: t.tournament.qualifiedLabel,
+      value: hasStarted ? String(qualifiedTeams) : '0',
+      color: '#D72828',
+    },
   ];
 
+  const getKnockoutStatus = (matches: (typeof knockoutRounds)[0]['matches']) => {
+    if (!hasStarted) return { value: '0', color: '#C0A020' };
+    const allPlayed = matches.every((m) => m.played);
+    const somePlayed = matches.some((m) => m.played);
+    if (allPlayed) return { value: t.tournament.statusDone, color: '#009A44' };
+    if (somePlayed) return { value: t.tournament.statusUpcoming, color: '#D72828' };
+    return { value: t.tournament.statusTBD, color: '#C0A020' };
+  };
+
   const knockoutStatusItems = [
-    { label: t.knockout.roundOf16, value: t.tournament.statusTBD, color: '#C0A020' },
-    { label: t.knockout.quarterFinals, value: t.tournament.statusTBD, color: '#C0A020' },
-    { label: t.knockout.semiFinals, value: t.tournament.statusTBD, color: '#C0A020' },
-    { label: t.knockout.final, value: t.tournament.statusTBD, color: '#C0A020' },
+    { label: t.knockout.roundOf16, ...getKnockoutStatus(knockoutRounds[0].matches) },
+    { label: t.knockout.quarterFinals, ...getKnockoutStatus(knockoutRounds[1].matches) },
+    { label: t.knockout.semiFinals, ...getKnockoutStatus(knockoutRounds[2].matches) },
+    { label: t.knockout.final, ...getKnockoutStatus(knockoutRounds[3].matches) },
   ];
 
   return (
