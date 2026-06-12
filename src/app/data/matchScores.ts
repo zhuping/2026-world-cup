@@ -14,4 +14,11 @@ export const matchScores: Record<string, MatchScore> = {
     updatedAt: '2026-06-12T08:00:00.000Z',
     source: 'ESPN/Xinhua',
   },
+  'm-02': {
+    homeScore: 2,
+    awayScore: 1,
+    status: 'finished',
+    updatedAt: '2026-06-12T06:37:01.403Z',
+    source: 'ESPN',
+  },
 };

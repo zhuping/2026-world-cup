@@ -61,9 +61,9 @@ export const groups: Group[] = [
     name: 'A',
     teams: [
       { ...baseTeam('🇲🇽', '墨西哥', 'Mexico'), played: 1, won: 1, drawn: 0, lost: 0, gf: 2, ga: 0, gd: 2, points: 3 },
+      { ...baseTeam('🇰🇷', '韩国', 'South Korea'), played: 1, won: 1, drawn: 0, lost: 0, gf: 2, ga: 1, gd: 1, points: 3 },
+      { ...baseTeam('🇨🇿', '捷克', 'Czechia'), played: 1, won: 0, drawn: 0, lost: 1, gf: 1, ga: 2, gd: -1, points: 0 },
       { ...baseTeam('🇿🇦', '南非', 'South Africa'), played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 2, gd: -2, points: 0 },
-      baseTeam('🇰🇷', '韩国', 'South Korea'),
-      baseTeam('🇨🇿', '捷克', 'Czechia'),
     ],
   },
   { name: 'B', teams: [baseTeam('🇨🇦', '加拿大', 'Canada'), baseTeam('🇧🇦', '波黑', 'Bosnia & Herzegovina'), baseTeam('🇶🇦', '卡塔尔', 'Qatar'), baseTeam('🇨🇭', '瑞士', 'Switzerland')] },

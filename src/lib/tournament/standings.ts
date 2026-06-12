@@ -3,6 +3,30 @@ import { groups as groupTemplates } from '@/app/data/teams';
 import type { Group, Team } from '@/app/data/teams';
 import type { MatchScore } from '@/lib/scores/types';
 
+const TEAM_NAME_ALIASES: Record<string, string> = {
+  'korea republic': 'south korea',
+  usa: 'united states',
+  'bosnia and herzegovina': 'bosnia herzegovina',
+  'bosnia herzegovina': 'bosnia herzegovina',
+  turkiye: 'turkey',
+  'ir iran': 'iran',
+  'congo dr': 'dr congo',
+  'cote d ivoire': 'cote d ivoire',
+  curacao: 'curacao',
+  'cabo verde': 'cape verde',
+};
+
+function normalizeTeamName(value: string) {
+  const normalized = value
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+
+  return TEAM_NAME_ALIASES[normalized] ?? normalized;
+}
+
 function cloneZeroTeam(team: Team): Team {
   return {
     ...team,
@@ -26,7 +50,7 @@ export function buildGroupsFromScores(scores: Record<string, MatchScore>): Group
   const teamMap = new Map<string, Team>();
   for (const group of groups) {
     for (const team of group.teams) {
-      teamMap.set(team.nameEn, team);
+      teamMap.set(normalizeTeamName(team.nameEn), team);
     }
   }
 
@@ -34,8 +58,8 @@ export function buildGroupsFromScores(scores: Record<string, MatchScore>): Group
     const score = scores[match.id];
     if (!score || score.status !== 'finished') continue;
 
-    const home = teamMap.get(match.homeNameEn);
-    const away = teamMap.get(match.awayNameEn);
+    const home = teamMap.get(normalizeTeamName(match.homeNameEn));
+    const away = teamMap.get(normalizeTeamName(match.awayNameEn));
     if (!home || !away) continue;
 
     home.played += 1;
