@@ -7,26 +7,30 @@ function getMatchStart(date: string, timeUtc: string) {
   return new Date(`${date}T${timeUtc}:00Z`);
 }
 
-function getRecentMatchDates(now = new Date()) {
-  const startedDates = [
-    ...new Set(
-      groupStageMatches
-        .filter((match) => getMatchStart(match.date, match.timeUtc) <= now)
-        .flatMap((match) => {
-          const start = getMatchStart(match.date, match.timeUtc);
-          const utcDate = start.toISOString().slice(0, 10);
-          return [...new Set([match.date, utcDate])];
-        })
-    ),
-  ].sort();
-
-  return startedDates.slice(-2);
+function getPreviousDate(date: string) {
+  const current = new Date(`${date}T00:00:00Z`);
+  current.setUTCDate(current.getUTCDate() - 1);
+  return current.toISOString().slice(0, 10);
 }
 
 function getSyncCandidateDates(match: (typeof groupStageMatches)[number]) {
   const start = getMatchStart(match.date, match.timeUtc);
   const utcDate = start.toISOString().slice(0, 10);
-  return [...new Set([match.date, utcDate])];
+  const previousDate = getPreviousDate(match.date);
+
+  return [...new Set([previousDate, match.date, utcDate])];
+}
+
+function getRecentMatchDates(now = new Date()) {
+  const startedDates = [
+    ...new Set(
+      groupStageMatches
+        .filter((match) => getMatchStart(match.date, match.timeUtc) <= now)
+        .flatMap((match) => getSyncCandidateDates(match))
+    ),
+  ].sort();
+
+  return startedDates.slice(-2);
 }
 
 function getDatesToSync(now = new Date(), existing: ScoreStore) {
