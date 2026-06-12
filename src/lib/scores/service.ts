@@ -57,6 +57,7 @@ export async function getLiveTournamentData() {
 
 export async function syncScores(now = new Date()) {
   const attemptAt = now.toISOString();
+  const hasBlobToken = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
   if (!hasStartedMatch(now)) {
     return {
@@ -65,6 +66,7 @@ export async function syncScores(now = new Date()) {
       reason: 'No matches have started yet.',
       scopeDates: [],
       attemptAt,
+      hasBlobToken,
     };
   }
 
@@ -84,8 +86,17 @@ export async function syncScores(now = new Date()) {
       },
     };
 
-    if (process.env.BLOB_READ_WRITE_TOKEN) {
-      await writeScoreStore(nextStore);
+    let persisted = false;
+    let persistedError: string | null = null;
+
+    if (hasBlobToken) {
+      try {
+        await writeScoreStore(nextStore);
+        persisted = true;
+      } catch (error) {
+        persistedError =
+          error instanceof Error ? error.message : 'Unknown blob write error';
+      }
     }
 
     return {
@@ -95,6 +106,9 @@ export async function syncScores(now = new Date()) {
       updatedAt: existing.updatedAt,
       scopeDates,
       attemptAt,
+      hasBlobToken,
+      persisted,
+      persistedError,
     };
   }
 
@@ -135,18 +149,29 @@ export async function syncScores(now = new Date()) {
     },
   };
 
-  if (process.env.BLOB_READ_WRITE_TOKEN) {
-    await writeScoreStore(nextStore);
+  let persisted = false;
+  let persistedError: string | null = null;
+
+  if (hasBlobToken) {
+    try {
+      await writeScoreStore(nextStore);
+      persisted = true;
+    } catch (error) {
+      persistedError =
+        error instanceof Error ? error.message : 'Unknown blob write error';
+    }
   }
 
   return {
-    ok: errors.length < dates.length,
+    ok: errors.length < dates.length && persistedError === null,
     skipped: false,
     dates,
     scopeDates,
     fetchedCount,
     updatedAt: nextStore.updatedAt,
-    persisted: Boolean(process.env.BLOB_READ_WRITE_TOKEN),
+    hasBlobToken,
+    persisted,
+    persistedError,
     errors,
     attemptAt,
     status: nextStore.sync.lastStatus,
