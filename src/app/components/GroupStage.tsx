@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
-import { groups } from '../data/teams';
+import type { Group } from '../data/teams';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useLiveTournamentData } from '../hooks/useLiveTournamentData';
 import { getTeamName } from '../i18n/teamNames';
 import { GROUP_STAGE_START } from '../data/matches';
 
@@ -10,7 +11,7 @@ function TeamRow({
   rank,
   hasStarted,
 }: {
-  team: typeof groups[0]['teams'][0];
+  team: Group['teams'][number];
   rank: number;
   hasStarted: boolean;
 }) {
@@ -144,7 +145,7 @@ function GroupCard({
   group,
   hasStarted,
 }: {
-  group: typeof groups[0];
+  group: Group;
   hasStarted: boolean;
 }) {
   const { t, lang } = useLanguage();
@@ -329,6 +330,7 @@ function GroupCard({
 export function GroupStage() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const { groups } = useLiveTournamentData();
   const hasStarted = useMemo(() => {
     const now = new Date();
     const start = new Date(`${GROUP_STAGE_START}T19:00:00Z`);

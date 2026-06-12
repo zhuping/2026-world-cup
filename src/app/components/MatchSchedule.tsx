@@ -4,10 +4,11 @@ import { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useLiveTournamentData } from '../hooks/useLiveTournamentData';
 import { groupStageMatches, ScheduleMatch } from '../data/matches';
-import { matchScores } from '../data/matchScores';
 import { venues } from '../data/venues';
 import { getTeamName } from '../i18n/teamNames';
+import type { MatchScore } from '@/lib/scores/types';
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -53,6 +54,51 @@ function getLocalTzLabel(): string {
   const m = Math.abs(offset) % 60;
   const sign = offset >= 0 ? '+' : '-';
   return `UTC${sign}${h}${m ? `:${String(m).padStart(2, '0')}` : ''}`;
+}
+
+function formatSyncTime(value: string | null, lang: string) {
+  if (!value) return null;
+
+  const localeMap: Record<string, string> = {
+    zh: 'zh-CN',
+    en: 'en-US',
+    ja: 'ja-JP',
+    ko: 'ko-KR',
+    pt: 'pt-BR',
+    es: 'es-MX',
+  };
+
+  return new Date(value).toLocaleString(localeMap[lang] ?? 'en-US', {
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}
+
+function getSyncStatusLabel(
+  status: 'idle' | 'success' | 'skipped' | 'partial_error' | 'error',
+  lang: string
+) {
+  const dict = {
+    zh: {
+      idle: '等待同步',
+      success: '同步成功',
+      skipped: '无需更新',
+      partial_error: '部分失败',
+      error: '同步失败',
+    },
+    en: {
+      idle: 'Idle',
+      success: 'Synced',
+      skipped: 'Up to date',
+      partial_error: 'Partial error',
+      error: 'Sync failed',
+    },
+  };
+
+  const key = lang === 'zh' ? 'zh' : 'en';
+  return dict[key][status];
 }
 
 const GROUP_COLORS: Record<string, string> = {
@@ -123,8 +169,9 @@ function TeamDisplay({
   );
 }
 
-function MatchCard({ match, lang, isMobile, tz }: {
+function MatchCard({ match, score, lang, isMobile, tz }: {
   match: ScheduleMatch;
+  score?: MatchScore;
   lang: string;
   isMobile: boolean;
   tz: string;
@@ -132,7 +179,6 @@ function MatchCard({ match, lang, isMobile, tz }: {
   const venue = venues.find(v => v.id === match.venueId);
   const localTime = formatLocalTime(match.date, match.timeUtc);
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
-  const score = matchScores[match.id];
   const hasScore = Boolean(score);
   const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
 
@@ -220,7 +266,7 @@ function MatchCard({ match, lang, isMobile, tz }: {
             textAlign: 'center',
             lineHeight: 1,
           }}>
-            {hasScore ? `${score.homeScore}-${score.awayScore}` : 'VS'}
+            {score ? `${score.homeScore}-${score.awayScore}` : 'VS'}
             {statusLabel && (
               <div style={{
                 fontFamily: "'Rajdhani', sans-serif",
@@ -301,6 +347,7 @@ function MatchCard({ match, lang, isMobile, tz }: {
 export function MatchSchedule() {
   const { t, lang } = useLanguage();
   const isMobile = useIsMobile();
+  const { scores, updatedAt, sync } = useLiveTournamentData();
   const matchDates = useMemo(
     () => [...new Set(groupStageMatches.map(getMatchLocalDate))].sort(),
     []
@@ -330,6 +377,8 @@ export function MatchSchedule() {
   );
 
   const displayDate = formatDisplayDate(selectedDate, lang);
+  const syncTimeLabel = formatSyncTime(sync.lastSuccessAt ?? updatedAt, lang);
+  const syncStatusLabel = getSyncStatusLabel(sync.lastStatus, lang);
 
   // Group matches by UTC time slot for the day summary header
   const matchCount = matchesForDay.length;
@@ -398,6 +447,55 @@ export function MatchSchedule() {
           }}>
             June 11 – June 28, 2026 · 72 matches · 12 groups
           </p>
+
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              marginTop: '12px',
+              padding: '6px 10px',
+              borderRadius: '999px',
+              background:
+                sync.lastStatus === 'error'
+                  ? 'rgba(215,40,40,0.14)'
+                  : sync.lastStatus === 'partial_error'
+                    ? 'rgba(196,114,0,0.16)'
+                    : 'rgba(0,51,160,0.16)',
+              border:
+                sync.lastStatus === 'error'
+                  ? '1px solid rgba(215,40,40,0.35)'
+                  : sync.lastStatus === 'partial_error'
+                    ? '1px solid rgba(196,114,0,0.35)'
+                    : '1px solid rgba(0,51,160,0.35)',
+              maxWidth: '100%',
+            }}
+          >
+            <span
+              style={{
+                width: '7px',
+                height: '7px',
+                borderRadius: '50%',
+                background:
+                  sync.lastStatus === 'error'
+                    ? '#D72828'
+                    : sync.lastStatus === 'partial_error'
+                      ? '#C47200'
+                      : '#009A44',
+                flexShrink: 0,
+              }}
+            />
+            <span
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '11px',
+                color: 'rgba(255,255,255,0.72)',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {lang === 'zh' ? '最近同步' : 'Last sync'}: {syncTimeLabel ?? '--'} · {syncStatusLabel}
+            </span>
+          </div>
         </div>
 
         {/* ── Date Navigator ───────────────────────────────────────────────── */}
@@ -578,6 +676,7 @@ export function MatchSchedule() {
                 <MatchCard
                   key={match.id}
                   match={match}
+                  score={scores[match.id]}
                   lang={lang}
                   isMobile={isMobile}
                   tz={tz}

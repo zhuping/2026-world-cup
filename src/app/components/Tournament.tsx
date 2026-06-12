@@ -4,7 +4,7 @@ import { GroupStage } from './GroupStage';
 import { KnockoutBracket } from './KnockoutBracket';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
-import { groups, knockoutRounds } from '../data/teams';
+import { useLiveTournamentData } from '../hooks/useLiveTournamentData';
 import { GROUP_STAGE_START } from '../data/matches';
 
 type TabType = 'group' | 'knockout';
@@ -12,6 +12,7 @@ type TabType = 'group' | 'knockout';
 export function Tournament() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const { groups, knockoutRounds } = useLiveTournamentData();
   const [activeTab, setActiveTab] = useState<TabType>('group');
   const [direction, setDirection] = useState<1 | -1>(1);
 
