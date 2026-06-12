@@ -1,4 +1,4 @@
-import { list, put } from '@vercel/blob';
+import { get, list, put } from '@vercel/blob';
 import { matchScores } from '@/app/data/matchScores';
 import type { ScoreStore } from './types';
 
@@ -33,10 +33,16 @@ export async function readScoreStore(): Promise<ScoreStore> {
     const blob = blobs.find((item) => item.pathname === SCORE_BLOB_PATH);
     if (!blob) return FALLBACK_STORE;
 
-    const response = await fetch(blob.url, { cache: 'no-store' });
-    if (!response.ok) return FALLBACK_STORE;
+    const result = await get(SCORE_BLOB_PATH, {
+      access: 'private',
+      useCache: false,
+    });
+    if (!result || result.statusCode !== 200) return FALLBACK_STORE;
 
-    const payload = (await response.json()) as ScoreStore;
+    const text = await new Response(result.stream).text();
+    if (!text) return FALLBACK_STORE;
+
+    const payload = JSON.parse(text) as ScoreStore;
     return {
       updatedAt:
         typeof payload?.updatedAt === 'string' ? payload.updatedAt : null,
@@ -84,7 +90,7 @@ export async function writeScoreStore(store: ScoreStore): Promise<void> {
   }
 
   await put(SCORE_BLOB_PATH, JSON.stringify(store, null, 2), {
-    access: 'public',
+    access: 'private',
     addRandomSuffix: false,
     allowOverwrite: true,
     contentType: 'application/json',
