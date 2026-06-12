@@ -23,12 +23,18 @@ function getRecentMatchDates(now = new Date()) {
   return startedDates.slice(-2);
 }
 
+function getSyncCandidateDates(match: (typeof groupStageMatches)[number]) {
+  const start = getMatchStart(match.date, match.timeUtc);
+  const utcDate = start.toISOString().slice(0, 10);
+  return [...new Set([match.date, utcDate])];
+}
+
 function getDatesToSync(now = new Date(), existing: ScoreStore) {
   const targetDates = getRecentMatchDates(now);
 
   return targetDates.filter((date) =>
     groupStageMatches.some((match) => {
-      if (match.date !== date) return false;
+      if (!getSyncCandidateDates(match).includes(date)) return false;
       const current = existing.scores[match.id];
       return !current || current.status !== 'finished';
     })
