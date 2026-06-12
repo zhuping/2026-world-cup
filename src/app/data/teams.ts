@@ -57,7 +57,15 @@ const baseTeam = (flag: string, nameZh: string, nameEn: string): Team => ({
 });
 
 export const groups: Group[] = [
-  { name: 'A', teams: [baseTeam('🇲🇽', '墨西哥', 'Mexico'), baseTeam('🇿🇦', '南非', 'South Africa'), baseTeam('🇰🇷', '韩国', 'South Korea'), baseTeam('🇨🇿', '捷克', 'Czechia')] },
+  {
+    name: 'A',
+    teams: [
+      { ...baseTeam('🇲🇽', '墨西哥', 'Mexico'), played: 1, won: 1, drawn: 0, lost: 0, gf: 2, ga: 0, gd: 2, points: 3 },
+      { ...baseTeam('🇿🇦', '南非', 'South Africa'), played: 1, won: 0, drawn: 0, lost: 1, gf: 0, ga: 2, gd: -2, points: 0 },
+      baseTeam('🇰🇷', '韩国', 'South Korea'),
+      baseTeam('🇨🇿', '捷克', 'Czechia'),
+    ],
+  },
   { name: 'B', teams: [baseTeam('🇨🇦', '加拿大', 'Canada'), baseTeam('🇧🇦', '波黑', 'Bosnia & Herzegovina'), baseTeam('🇶🇦', '卡塔尔', 'Qatar'), baseTeam('🇨🇭', '瑞士', 'Switzerland')] },
   { name: 'C', teams: [baseTeam('🇧🇷', '巴西', 'Brazil'), baseTeam('🇲🇦', '摩洛哥', 'Morocco'), baseTeam('🇭🇹', '海地', 'Haiti'), baseTeam('🏴󠁧󠁢󠁳󠁣󠁴󠁿', '苏格兰', 'Scotland')] },
   { name: 'D', teams: [baseTeam('🇺🇸', '美国', 'USA'), baseTeam('🇵🇾', '巴拉圭', 'Paraguay'), baseTeam('🇦🇺', '澳大利亚', 'Australia'), baseTeam('🇹🇷', '土耳其', 'Turkey')] },

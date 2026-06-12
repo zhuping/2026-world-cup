@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { groupStageMatches, ScheduleMatch } from '../data/matches';
+import { matchScores } from '../data/matchScores';
 import { venues } from '../data/venues';
 import { getTeamName } from '../i18n/teamNames';
 
@@ -131,6 +132,9 @@ function MatchCard({ match, lang, isMobile, tz }: {
   const venue = venues.find(v => v.id === match.venueId);
   const localTime = formatLocalTime(match.date, match.timeUtc);
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
+  const score = matchScores[match.id];
+  const hasScore = Boolean(score);
+  const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
 
   return (
     <motion.div
@@ -208,11 +212,27 @@ function MatchCard({ match, lang, isMobile, tz }: {
 
           <div style={{
             fontFamily: "'Bebas Neue', sans-serif",
-            fontSize: isMobile ? '14px' : '16px',
-            color: 'rgba(255,255,255,0.25)',
+            fontSize: hasScore ? (isMobile ? '18px' : '22px') : (isMobile ? '14px' : '16px'),
+            color: hasScore ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
             letterSpacing: '1px',
             flexShrink: 0,
-          }}>VS</div>
+            minWidth: hasScore ? (isMobile ? '54px' : '68px') : undefined,
+            textAlign: 'center',
+            lineHeight: 1,
+          }}>
+            {hasScore ? `${score.homeScore}-${score.awayScore}` : 'VS'}
+            {statusLabel && (
+              <div style={{
+                fontFamily: "'Rajdhani', sans-serif",
+                fontSize: '10px',
+                color: score?.status === 'live' ? '#FF8C8C' : 'rgba(255,255,255,0.45)',
+                marginTop: '4px',
+                letterSpacing: '1px',
+              }}>
+                {statusLabel}
+              </div>
+            )}
+          </div>
 
           <TeamDisplay flag={match.awayFlag} nameEn={match.awayNameEn} lang={lang} align="right" />
         </div>
