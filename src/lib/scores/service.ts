@@ -8,11 +8,17 @@ function getMatchStart(date: string, timeUtc: string) {
 }
 
 function getRecentMatchDates(now = new Date()) {
-  const startedDates = [...new Set(
-    groupStageMatches
-      .filter((match) => getMatchStart(match.date, match.timeUtc) <= now)
-      .map((match) => match.date)
-  )].sort();
+  const startedDates = [
+    ...new Set(
+      groupStageMatches
+        .filter((match) => getMatchStart(match.date, match.timeUtc) <= now)
+        .flatMap((match) => {
+          const start = getMatchStart(match.date, match.timeUtc);
+          const utcDate = start.toISOString().slice(0, 10);
+          return [...new Set([match.date, utcDate])];
+        })
+    ),
+  ].sort();
 
   return startedDates.slice(-2);
 }

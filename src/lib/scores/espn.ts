@@ -4,13 +4,27 @@ import type { MatchScore, MatchScoreStatus } from './types';
 const SCOREBOARD_BASE_URL =
   'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
 
+const TEAM_NAME_ALIASES: Record<string, string> = {
+  'korea republic': 'south korea',
+  usa: 'united states',
+  'bosnia and herzegovina': 'bosnia herzegovina',
+  turkiye: 'turkey',
+  'ir iran': 'iran',
+  'congo dr': 'dr congo',
+  'cote d ivoire': 'ivory coast',
+  curacao: 'curacao',
+  'cabo verde': 'cape verde',
+};
+
 function normalizeName(value: string) {
-  return value
+  const normalized = value
     .toLowerCase()
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
+
+  return TEAM_NAME_ALIASES[normalized] ?? normalized;
 }
 
 function getStatus(statusName?: string, completed?: boolean): MatchScoreStatus {
