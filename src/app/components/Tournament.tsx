@@ -12,7 +12,7 @@ type TabType = 'group' | 'knockout';
 export function Tournament() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
-  const { groups, knockoutRounds } = useLiveTournamentData();
+  const { groups, scores, knockoutRounds } = useLiveTournamentData();
   const [activeTab, setActiveTab] = useState<TabType>('group');
   const [direction, setDirection] = useState<1 | -1>(1);
 
@@ -38,11 +38,9 @@ export function Tournament() {
   const { completedMatches, qualifiedTeams } = useMemo(() => {
     if (!hasStarted) return { completedMatches: 0, qualifiedTeams: 0 };
 
-    const totalPlayed = groups.reduce(
-      (sum, g) => sum + g.teams.reduce((s, t) => s + t.played, 0),
-      0
-    );
-    const completedMatches = Math.floor(totalPlayed / 2);
+    const completedMatches = Object.values(scores).filter(
+      (score) => score.status === 'finished'
+    ).length;
 
     const qualifiedTeams = groups.reduce((sum, g) => {
       const allPlayed = g.teams.every((t) => t.played === 3);
@@ -50,7 +48,7 @@ export function Tournament() {
     }, 0);
 
     return { completedMatches, qualifiedTeams };
-  }, [hasStarted]);
+  }, [groups, hasStarted, scores]);
 
   const groupStatusItems = [
     {

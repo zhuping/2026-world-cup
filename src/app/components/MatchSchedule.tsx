@@ -537,11 +537,12 @@ export function MatchSchedule() {
             borderRadius: '12px',
             padding: isMobile ? '12px 16px' : '14px 20px',
             display: 'flex',
-            alignItems: 'center',
+            flexDirection: isMobile ? 'column' : 'row',
+            alignItems: isMobile ? 'stretch' : 'center',
             justifyContent: 'space-between',
-            gap: '12px',
+            gap: isMobile ? '12px' : '12px',
           }}>
-            <div>
+            <div style={isMobile ? { minWidth: 0, textAlign: 'center' } : { minWidth: 0 }}>
               <div style={{
                 fontFamily: "'Bebas Neue', sans-serif",
                 fontSize: isMobile ? '20px' : '24px',
@@ -561,55 +562,66 @@ export function MatchSchedule() {
               </div>
             </div>
 
-            {/* Today button */}
-            {todayInRange && selectedDate !== todayStr && (
-              <button
-                onClick={() => { setDirection(todayStr > selectedDate ? 1 : -1); setSelectedDate(todayStr); }}
-                style={{
-                  background: 'rgba(215,40,40,0.2)',
-                  border: '1px solid rgba(215,40,40,0.4)',
-                  borderRadius: '8px',
-                  padding: '5px 12px',
-                  color: '#FF8080',
-                  fontFamily: "'Rajdhani', sans-serif",
-                  fontSize: '12px',
-                  fontWeight: 700,
-                  letterSpacing: '1px',
-                  cursor: 'pointer',
-                  whiteSpace: 'nowrap',
-                  flexShrink: 0,
-                }}
-              >
-                {t.schedule.todayBtn}
-              </button>
-            )}
-
-            {/* Progress indicator */}
             <div style={{
               display: 'flex',
-              gap: '3px',
+              flexDirection: isMobile ? 'column' : 'row',
+              alignItems: isMobile ? 'center' : 'center',
+              justifyContent: isMobile ? 'center' : 'flex-end',
+              gap: isMobile ? '10px' : '12px',
               flexShrink: 0,
-              alignItems: 'center',
             }}>
-              {matchDates.slice(0, 22).map((d, i) => (
-                <div
-                  key={d}
-                  onClick={() => { setDirection(matchDates.indexOf(d) > currentIndex ? 1 : -1); setSelectedDate(d); }}
+              {/* Today button */}
+              {todayInRange && selectedDate !== todayStr && (
+                <button
+                  onClick={() => { setDirection(todayStr > selectedDate ? 1 : -1); setSelectedDate(todayStr); }}
                   style={{
-                    width: isMobile ? '4px' : '5px',
-                    height: isMobile ? '4px' : '5px',
-                    borderRadius: '50%',
-                    background: d === selectedDate
-                      ? '#FFFFFF'
-                      : d < selectedDate
-                      ? 'rgba(0,154,68,0.7)'
-                      : 'rgba(255,255,255,0.15)',
+                    background: 'rgba(215,40,40,0.2)',
+                    border: '1px solid rgba(215,40,40,0.4)',
+                    borderRadius: '8px',
+                    padding: isMobile ? '6px 14px' : '5px 12px',
+                    color: '#FF8080',
+                    fontFamily: "'Rajdhani', sans-serif",
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    letterSpacing: '1px',
                     cursor: 'pointer',
+                    whiteSpace: 'nowrap',
                     flexShrink: 0,
-                    transition: 'background 0.2s',
                   }}
-                />
-              ))}
+                >
+                  {t.schedule.todayBtn}
+                </button>
+              )}
+
+              {/* Progress indicator */}
+              <div style={{
+                display: 'flex',
+                gap: '3px',
+                flexShrink: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexWrap: isMobile ? 'wrap' : 'nowrap',
+              }}>
+                {matchDates.slice(0, 22).map((d) => (
+                  <div
+                    key={d}
+                    onClick={() => { setDirection(matchDates.indexOf(d) > currentIndex ? 1 : -1); setSelectedDate(d); }}
+                    style={{
+                      width: isMobile ? '4px' : '5px',
+                      height: isMobile ? '4px' : '5px',
+                      borderRadius: '50%',
+                      background: d === selectedDate
+                        ? '#FFFFFF'
+                        : d < selectedDate
+                        ? 'rgba(0,154,68,0.7)'
+                        : 'rgba(255,255,255,0.15)',
+                      cursor: 'pointer',
+                      flexShrink: 0,
+                      transition: 'background 0.2s',
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
 
