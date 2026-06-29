@@ -1,4 +1,4 @@
-import { groupStageMatches } from '@/app/data/matches';
+import { scorableMatches } from '@/app/data/matches';
 import type { MatchScore, MatchScoreStatus } from './types';
 
 const SCOREBOARD_BASE_URL =
@@ -42,20 +42,29 @@ function findLocalMatchId(
   eventDate: string,
   homeName: string,
   awayName: string
-): string | null {
+): { id: string; reversed: boolean } | null {
   const date = eventDate.slice(0, 10);
   const home = normalizeName(homeName);
   const away = normalizeName(awayName);
 
-  const match = groupStageMatches.find((item) => {
+  const match = scorableMatches.find((item) => {
     return (
       item.date === date &&
       normalizeName(item.homeNameEn) === home &&
       normalizeName(item.awayNameEn) === away
     );
   });
+  if (match) return { id: match.id, reversed: false };
 
-  return match?.id ?? null;
+  const reversedMatch = scorableMatches.find((item) => {
+    return (
+      item.date === date &&
+      normalizeName(item.homeNameEn) === away &&
+      normalizeName(item.awayNameEn) === home
+    );
+  });
+
+  return reversedMatch ? { id: reversedMatch.id, reversed: true } : null;
 }
 
 export async function fetchEspnScoresByDate(date: string) {
@@ -81,25 +90,31 @@ export async function fetchEspnScoresByDate(date: string) {
         const away = competitors.find((item: any) => item.homeAway === 'away');
         if (!home || !away) continue;
 
-        const matchId = findLocalMatchId(
+        const localMatch = findLocalMatchId(
           event.date,
           home.team?.displayName ?? '',
           away.team?.displayName ?? ''
         );
-        if (!matchId) continue;
+        if (!localMatch) continue;
 
         const homeScore = Number(home.score ?? 0);
         const awayScore = Number(away.score ?? 0);
+        const localHomeScore = localMatch.reversed ? awayScore : homeScore;
+        const localAwayScore = localMatch.reversed ? homeScore : awayScore;
+        const homeWinner = Boolean(home.winner);
+        const awayWinner = Boolean(away.winner);
 
-        scores[matchId] = {
-          homeScore: Number.isFinite(homeScore) ? homeScore : 0,
-          awayScore: Number.isFinite(awayScore) ? awayScore : 0,
+        scores[localMatch.id] = {
+          homeScore: Number.isFinite(localHomeScore) ? localHomeScore : 0,
+          awayScore: Number.isFinite(localAwayScore) ? localAwayScore : 0,
           status: getStatus(
             event?.status?.type?.name,
             event?.status?.type?.completed
           ),
           updatedAt: new Date().toISOString(),
           source: 'espn-scoreboard',
+          homeWinner: localMatch.reversed ? awayWinner : homeWinner,
+          awayWinner: localMatch.reversed ? homeWinner : awayWinner,
         };
       }
 

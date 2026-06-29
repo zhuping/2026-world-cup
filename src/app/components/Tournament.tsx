@@ -13,7 +13,7 @@ export function Tournament() {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
   const { groups, scores, knockoutRounds } = useLiveTournamentData();
-  const [activeTab, setActiveTab] = useState<TabType>('group');
+  const [activeTab, setActiveTab] = useState<TabType>('knockout');
   const [direction, setDirection] = useState<1 | -1>(1);
 
   const tabs = [
@@ -42,13 +42,16 @@ export function Tournament() {
       (score) => score.status === 'finished'
     ).length;
 
-    const qualifiedTeams = groups.reduce((sum, g) => {
+    const groupDerivedQualifiedTeams = groups.reduce((sum, g) => {
       const allPlayed = g.teams.every((t) => t.played === 3);
       return sum + (allPlayed ? 2 : 0);
     }, 0);
 
+    const knockoutDerivedQualifiedTeams = (knockoutRounds[0]?.matches.length ?? 0) * 2;
+    const qualifiedTeams = Math.max(groupDerivedQualifiedTeams, knockoutDerivedQualifiedTeams);
+
     return { completedMatches, qualifiedTeams };
-  }, [groups, hasStarted, scores]);
+  }, [groups, hasStarted, knockoutRounds, scores]);
 
   const groupStatusItems = [
     {
@@ -68,21 +71,37 @@ export function Tournament() {
     },
   ];
 
-  const getKnockoutStatus = (matches: (typeof knockoutRounds)[0]['matches']) => {
+  const getKnockoutStatus = (matches: (typeof knockoutRounds)[0]['matches'], index: number) => {
     if (!hasStarted) return { value: '0', color: '#C0A020' };
     const allPlayed = matches.every((m) => m.played);
     const somePlayed = matches.some((m) => m.played);
+    const hasKnownTeams = matches.some((m) => !m.team1.tbd && !m.team2.tbd);
     if (allPlayed) return { value: t.tournament.statusDone, color: '#009A44' };
-    if (somePlayed) return { value: t.tournament.statusUpcoming, color: '#D72828' };
+    if (somePlayed || (index === 0 && hasKnownTeams)) return { value: t.tournament.statusUpcoming, color: '#D72828' };
     return { value: t.tournament.statusTBD, color: '#C0A020' };
   };
 
-  const knockoutStatusItems = [
-    { label: t.knockout.roundOf16, ...getKnockoutStatus(knockoutRounds[0].matches) },
-    { label: t.knockout.quarterFinals, ...getKnockoutStatus(knockoutRounds[1].matches) },
-    { label: t.knockout.semiFinals, ...getKnockoutStatus(knockoutRounds[2].matches) },
-    { label: t.knockout.final, ...getKnockoutStatus(knockoutRounds[3].matches) },
-  ];
+  const getKnockoutRoundLabel = (index: number) => {
+    switch (index) {
+      case 0:
+        return t.knockout.roundOf32;
+      case 1:
+        return t.knockout.roundOf16;
+      case 2:
+        return t.knockout.quarterFinals;
+      case 3:
+        return t.knockout.semiFinals;
+      case 4:
+        return t.knockout.final;
+      default:
+        return knockoutRounds[index]?.name ?? '';
+    }
+  };
+
+  const knockoutStatusItems = knockoutRounds.map((round, index) => ({
+    label: getKnockoutRoundLabel(index),
+    ...getKnockoutStatus(round.matches, index),
+  }));
 
   return (
     <section
@@ -193,7 +212,7 @@ export function Tournament() {
               exit={{ opacity: 0, x: direction * -36 }}
               transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
             >
-              {activeTab === 'group' ? <GroupStage /> : <KnockoutBracket />}
+              {activeTab === 'group' ? <GroupStage /> : <KnockoutBracket rounds={knockoutRounds} />}
             </motion.div>
           </AnimatePresence>
         </div>

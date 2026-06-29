@@ -81,6 +81,13 @@ export const groups: Group[] = [
 
 const TBD_BRACKET_TEAM: BracketTeam = { flag: '❓', nameZh: '待定', nameEn: 'TBD', tbd: true };
 
+const bracketTeam = (flag: string, nameZh: string, nameEn: string, extra?: Partial<BracketTeam>): BracketTeam => ({
+  flag,
+  nameZh,
+  nameEn,
+  ...extra,
+});
+
 const match = (id: string, extra?: Partial<BracketMatch>): BracketMatch => ({
   id,
   team1: TBD_BRACKET_TEAM,
@@ -90,6 +97,108 @@ const match = (id: string, extra?: Partial<BracketMatch>): BracketMatch => ({
 });
 
 export const knockoutRounds: BracketRound[] = [
+  {
+    name: '三十二强',
+    nameEn: 'Round of 32',
+    matches: [
+      match('r32-74', {
+        team1: bracketTeam('🇩🇪', '德国', 'Germany'),
+        team2: bracketTeam('🇵🇾', '巴拉圭', 'Paraguay'),
+        date: '2026-06-29',
+        venue: 'Gillette Stadium, Boston',
+      }),
+      match('r32-77', {
+        team1: bracketTeam('🇫🇷', '法国', 'France'),
+        team2: bracketTeam('🇸🇪', '瑞典', 'Sweden'),
+        date: '2026-06-30',
+        venue: 'MetLife Stadium, NJ',
+      }),
+      match('r32-73', {
+        team1: bracketTeam('🇨🇦', '加拿大', 'Canada'),
+        team2: bracketTeam('🇿🇦', '南非', 'South Africa'),
+        date: '2026-06-28',
+        venue: 'SoFi Stadium, Los Angeles',
+      }),
+      match('r32-75', {
+        team1: bracketTeam('🇳🇱', '荷兰', 'Netherlands'),
+        team2: bracketTeam('🇲🇦', '摩洛哥', 'Morocco'),
+        date: '2026-06-29',
+        venue: 'Estadio BBVA, Monterrey',
+      }),
+      match('r32-83', {
+        team1: bracketTeam('🇪🇸', '西班牙', 'Spain'),
+        team2: bracketTeam('🇦🇹', '奥地利', 'Austria'),
+        date: '2026-07-02',
+        venue: 'SoFi Stadium, Los Angeles',
+      }),
+      match('r32-84', {
+        team1: bracketTeam('🇵🇹', '葡萄牙', 'Portugal'),
+        team2: bracketTeam('🇭🇷', '克罗地亚', 'Croatia'),
+        date: '2026-07-03',
+        venue: 'BMO Field, Toronto',
+      }),
+      match('r32-81', {
+        team1: bracketTeam('🇧🇪', '比利时', 'Belgium'),
+        team2: bracketTeam('🇸🇳', '塞内加尔', 'Senegal'),
+        date: '2026-07-01',
+        venue: 'Lumen Field, Seattle',
+      }),
+      match('r32-82', {
+        team1: bracketTeam('🇺🇸', '美国', 'USA'),
+        team2: bracketTeam('🇧🇦', '波黑', 'Bosnia & Herzegovina'),
+        date: '2026-07-01',
+        venue: "Levi's Stadium, San Francisco Bay Area",
+      }),
+      match('r32-76', {
+        team1: bracketTeam('🇧🇷', '巴西', 'Brazil'),
+        team2: bracketTeam('🇯🇵', '日本', 'Japan'),
+        date: '2026-06-29',
+        venue: 'NRG Stadium, Houston',
+      }),
+      match('r32-78', {
+        team1: bracketTeam('🇨🇮', '科特迪瓦', "Cote d'Ivoire"),
+        team2: bracketTeam('🇳🇴', '挪威', 'Norway'),
+        date: '2026-06-30',
+        venue: 'AT&T Stadium, Dallas',
+      }),
+      match('r32-79', {
+        team1: bracketTeam('🇲🇽', '墨西哥', 'Mexico'),
+        team2: bracketTeam('🇪🇨', '厄瓜多尔', 'Ecuador'),
+        date: '2026-07-01',
+        venue: 'Estadio Azteca, Mexico City',
+      }),
+      match('r32-80', {
+        team1: bracketTeam('🏴󠁧󠁢󠁥󠁮󠁧󠁿', '英格兰', 'England'),
+        team2: bracketTeam('🇨🇩', '民主刚果', 'DR Congo'),
+        date: '2026-07-01',
+        venue: 'Mercedes-Benz Stadium, Atlanta',
+      }),
+      match('r32-86', {
+        team1: bracketTeam('🇦🇷', '阿根廷', 'Argentina'),
+        team2: bracketTeam('🇨🇻', '佛得角', 'Cape Verde'),
+        date: '2026-07-03',
+        venue: 'Hard Rock Stadium, Miami',
+      }),
+      match('r32-88', {
+        team1: bracketTeam('🇦🇺', '澳大利亚', 'Australia'),
+        team2: bracketTeam('🇪🇬', '埃及', 'Egypt'),
+        date: '2026-07-04',
+        venue: 'AT&T Stadium, Dallas',
+      }),
+      match('r32-85', {
+        team1: bracketTeam('🇨🇭', '瑞士', 'Switzerland'),
+        team2: bracketTeam('🇩🇿', '阿尔及利亚', 'Algeria'),
+        date: '2026-07-03',
+        venue: 'BC Place, Vancouver',
+      }),
+      match('r32-87', {
+        team1: bracketTeam('🇨🇴', '哥伦比亚', 'Colombia'),
+        team2: bracketTeam('🇬🇭', '加纳', 'Ghana'),
+        date: '2026-07-04',
+        venue: 'Arrowhead Stadium, Kansas City',
+      }),
+    ],
+  },
   { name: '十六强', nameEn: 'Round of 16', matches: Array.from({ length: 8 }, (_, i) => match(`r16-${i + 1}`)) },
   { name: '八强', nameEn: 'Quarter Finals', matches: Array.from({ length: 4 }, (_, i) => match(`qf-${i + 1}`)) },
   { name: '四强', nameEn: 'Semi Finals', matches: Array.from({ length: 2 }, (_, i) => match(`sf-${i + 1}`)) },

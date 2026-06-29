@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useLiveTournamentData } from '../hooks/useLiveTournamentData';
-import { groupStageMatches, ScheduleMatch } from '../data/matches';
+import { knockoutScheduleMatches, ScheduleMatch } from '../data/matches';
 import { venues } from '../data/venues';
 import { getTeamName } from '../i18n/teamNames';
 import type { MatchScore } from '@/lib/scores/types';
@@ -111,6 +111,7 @@ const GROUP_COLORS: Record<string, string> = {
 
 function GroupBadge({ group }: { group: string }) {
   const color = GROUP_COLORS[group] ?? '#0033A0';
+  const label = group === 'R32' ? 'R32' : `GRP ${group}`;
   return (
     <div style={{
       background: color,
@@ -123,7 +124,7 @@ function GroupBadge({ group }: { group: string }) {
       whiteSpace: 'nowrap',
       flexShrink: 0,
     }}>
-      GRP {group}
+      {label}
     </div>
   );
 }
@@ -348,9 +349,14 @@ export function MatchSchedule() {
   const { t, lang } = useLanguage();
   const isMobile = useIsMobile();
   const { scores, updatedAt, sync } = useLiveTournamentData();
+  const scheduleMatches = knockoutScheduleMatches;
+  const stageLabel = lang === 'zh' ? '三十二强' : 'Round of 32';
+  const scheduleSummary = lang === 'zh'
+    ? '2026 年 6 月 28 日 – 7 月 4 日 · 16 场 · 淘汰赛'
+    : 'June 28 – July 4, 2026 · 16 matches · Knockout stage';
   const matchDates = useMemo(
-    () => [...new Set(groupStageMatches.map(getMatchLocalDate))].sort(),
-    []
+    () => [...new Set(scheduleMatches.map(getMatchLocalDate))].sort(),
+    [scheduleMatches]
   );
   const [selectedDate, setSelectedDate] = useState(() => getDefaultDate(matchDates));
   const [direction, setDirection] = useState(1);
@@ -372,8 +378,8 @@ export function MatchSchedule() {
   }, [currentIndex]);
 
   const matchesForDay = useMemo(
-    () => groupStageMatches.filter(m => getMatchLocalDate(m) === selectedDate),
-    [selectedDate]
+    () => scheduleMatches.filter(m => getMatchLocalDate(m) === selectedDate),
+    [scheduleMatches, selectedDate]
   );
 
   const displayDate = formatDisplayDate(selectedDate, lang);
@@ -445,7 +451,7 @@ export function MatchSchedule() {
             marginTop: '10px',
             letterSpacing: '0.5px',
           }}>
-            June 11 – June 28, 2026 · 72 matches · 12 groups
+            {scheduleSummary}
           </p>
 
           <div
@@ -558,7 +564,7 @@ export function MatchSchedule() {
                 letterSpacing: '0.3px',
               }}>
                 {t.schedule.matchesCount.replace('{n}', String(matchCount))} ·{' '}
-                {t.schedule.matchdayLabel.replace('{n}', String(matchesForDay[0]?.matchday ?? ''))}
+                {stageLabel}
               </div>
             </div>
 
@@ -725,9 +731,9 @@ export function MatchSchedule() {
           color: 'rgba(255,255,255,0.2)',
           letterSpacing: '0.5px',
         }}>
-          <span>Jun 11</span>
-          <span>Day {currentIndex + 1} / {matchDates.length}</span>
           <span>Jun 28</span>
+          <span>Day {currentIndex + 1} / {matchDates.length}</span>
+          <span>Jul 4</span>
         </div>
       </div>
     </section>

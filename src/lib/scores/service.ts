@@ -1,4 +1,4 @@
-import { groupStageMatches } from '@/app/data/matches';
+import { scorableMatches } from '@/app/data/matches';
 import { fetchEspnScoresByDate } from './espn';
 import { readScoreStore, writeScoreStore } from './storage';
 import type { ScoreStore } from './types';
@@ -13,9 +13,14 @@ function getPreviousDate(date: string) {
   return current.toISOString().slice(0, 10);
 }
 
-function getSyncCandidateDates(match: (typeof groupStageMatches)[number]) {
-  const start = getMatchStart(match.date, match.timeUtc);
-  const utcDate = start.toISOString().slice(0, 10);
+function getMatchSyncStart(match: (typeof scorableMatches)[number]) {
+  return match.timeUtc
+    ? getMatchStart(match.date, match.timeUtc)
+    : new Date(`${match.date}T00:00:00Z`);
+}
+
+function getSyncCandidateDates(match: (typeof scorableMatches)[number]) {
+  const utcDate = getMatchSyncStart(match).toISOString().slice(0, 10);
   const previousDate = getPreviousDate(match.date);
 
   return [...new Set([previousDate, match.date, utcDate])];
@@ -24,8 +29,8 @@ function getSyncCandidateDates(match: (typeof groupStageMatches)[number]) {
 function getRecentMatchDates(now = new Date()) {
   const startedDates = [
     ...new Set(
-      groupStageMatches
-        .filter((match) => getMatchStart(match.date, match.timeUtc) <= now)
+      scorableMatches
+        .filter((match) => getMatchSyncStart(match) <= now)
         .flatMap((match) => getSyncCandidateDates(match))
     ),
   ].sort();
@@ -37,7 +42,7 @@ function getDatesToSync(now = new Date(), existing: ScoreStore) {
   const targetDates = getRecentMatchDates(now);
 
   return targetDates.filter((date) =>
-    groupStageMatches.some((match) => {
+    scorableMatches.some((match) => {
       if (!getSyncCandidateDates(match).includes(date)) return false;
       const current = existing.scores[match.id];
       return !current || current.status !== 'finished';
@@ -46,9 +51,7 @@ function getDatesToSync(now = new Date(), existing: ScoreStore) {
 }
 
 export function hasStartedMatch(now = new Date()) {
-  return groupStageMatches.some(
-    (match) => getMatchStart(match.date, match.timeUtc) <= now
-  );
+  return scorableMatches.some((match) => getMatchSyncStart(match) <= now);
 }
 
 export async function getLiveTournamentData() {

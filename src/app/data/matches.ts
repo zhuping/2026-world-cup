@@ -1,7 +1,7 @@
 export interface ScheduleMatch {
   id: string;
   group: string;
-  matchday: 1 | 2 | 3;
+  matchday: number;
   date: string;       // YYYY-MM-DD (UTC date)
   timeUtc: string;    // HH:MM (UTC)
   homeFlag: string;
@@ -10,6 +10,14 @@ export interface ScheduleMatch {
   awayNameEn: string;
   venueId: number;    // references Venue.id in venues.ts
   simultaneous?: boolean;
+}
+
+export interface ScorableMatch {
+  id: string;
+  date: string;
+  timeUtc?: string;
+  homeNameEn: string;
+  awayNameEn: string;
 }
 
 export const groupStageMatches: ScheduleMatch[] = [
@@ -109,3 +117,35 @@ export const GROUP_STAGE_START = '2026-06-11';
 export const GROUP_STAGE_END   = '2026-06-28';
 
 export const matchDates = [...new Set(groupStageMatches.map(m => m.date))].sort();
+
+export const knockoutScheduleMatches: ScheduleMatch[] = [
+  { id: 'r32-73', group: 'R32', matchday: 32, date: '2026-06-28', timeUtc: '23:00', homeFlag: '🇨🇦', homeNameEn: 'Canada', awayFlag: '🇿🇦', awayNameEn: 'South Africa', venueId: 3 },
+  { id: 'r32-74', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '16:00', homeFlag: '🇩🇪', homeNameEn: 'Germany', awayFlag: '🇵🇾', awayNameEn: 'Paraguay', venueId: 8 },
+  { id: 'r32-76', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '19:00', homeFlag: '🇧🇷', homeNameEn: 'Brazil', awayFlag: '🇯🇵', awayNameEn: 'Japan', venueId: 10 },
+  { id: 'r32-75', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '22:00', homeFlag: '🇳🇱', homeNameEn: 'Netherlands', awayFlag: '🇲🇦', awayNameEn: 'Morocco', venueId: 16 },
+  { id: 'r32-77', group: 'R32', matchday: 32, date: '2026-06-30', timeUtc: '16:00', homeFlag: '🇫🇷', homeNameEn: 'France', awayFlag: '🇸🇪', awayNameEn: 'Sweden', venueId: 1 },
+  { id: 'r32-78', group: 'R32', matchday: 32, date: '2026-06-30', timeUtc: '19:00', homeFlag: '🇨🇮', homeNameEn: "Cote d'Ivoire", awayFlag: '🇳🇴', awayNameEn: 'Norway', venueId: 2 },
+  { id: 'r32-79', group: 'R32', matchday: 32, date: '2026-07-01', timeUtc: '16:00', homeFlag: '🇲🇽', homeNameEn: 'Mexico', awayFlag: '🇪🇨', awayNameEn: 'Ecuador', venueId: 14 },
+  { id: 'r32-80', group: 'R32', matchday: 32, date: '2026-07-01', timeUtc: '19:00', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', homeNameEn: 'England', awayFlag: '🇨🇩', awayNameEn: 'DR Congo', venueId: 5 },
+  { id: 'r32-81', group: 'R32', matchday: 32, date: '2026-07-01', timeUtc: '22:00', homeFlag: '🇧🇪', homeNameEn: 'Belgium', awayFlag: '🇸🇳', awayNameEn: 'Senegal', venueId: 11 },
+  { id: 'r32-82', group: 'R32', matchday: 32, date: '2026-07-02', timeUtc: '01:00', homeFlag: '🇺🇸', homeNameEn: 'USA', awayFlag: '🇧🇦', awayNameEn: 'Bosnia & Herzegovina', venueId: 4 },
+  { id: 'r32-83', group: 'R32', matchday: 32, date: '2026-07-02', timeUtc: '19:00', homeFlag: '🇪🇸', homeNameEn: 'Spain', awayFlag: '🇦🇹', awayNameEn: 'Austria', venueId: 3 },
+  { id: 'r32-85', group: 'R32', matchday: 32, date: '2026-07-03', timeUtc: '16:00', homeFlag: '🇨🇭', homeNameEn: 'Switzerland', awayFlag: '🇩🇿', awayNameEn: 'Algeria', venueId: 12 },
+  { id: 'r32-86', group: 'R32', matchday: 32, date: '2026-07-03', timeUtc: '19:00', homeFlag: '🇦🇷', homeNameEn: 'Argentina', awayFlag: '🇨🇻', awayNameEn: 'Cape Verde', venueId: 9 },
+  { id: 'r32-84', group: 'R32', matchday: 32, date: '2026-07-03', timeUtc: '22:00', homeFlag: '🇵🇹', homeNameEn: 'Portugal', awayFlag: '🇭🇷', awayNameEn: 'Croatia', venueId: 13 },
+  { id: 'r32-87', group: 'R32', matchday: 32, date: '2026-07-04', timeUtc: '19:00', homeFlag: '🇨🇴', homeNameEn: 'Colombia', awayFlag: '🇬🇭', awayNameEn: 'Ghana', venueId: 6 },
+  { id: 'r32-88', group: 'R32', matchday: 32, date: '2026-07-04', timeUtc: '22:00', homeFlag: '🇦🇺', homeNameEn: 'Australia', awayFlag: '🇪🇬', awayNameEn: 'Egypt', venueId: 2 },
+];
+
+export const knockoutStageMatches: ScorableMatch[] = knockoutScheduleMatches.map((match) => ({
+  id: match.id,
+  date: match.date,
+  timeUtc: match.timeUtc,
+  homeNameEn: match.homeNameEn,
+  awayNameEn: match.awayNameEn,
+}));
+
+export const scorableMatches: ScorableMatch[] = [
+  ...groupStageMatches,
+  ...knockoutStageMatches,
+];

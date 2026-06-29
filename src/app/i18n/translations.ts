@@ -63,6 +63,8 @@ export interface Translation {
     statsQualifiersUnit: string;
   };
   knockout: {
+    roundOf32: string;
+    roundOf32En: string;
     roundOf16: string;
     roundOf16En: string;
     quarterFinals: string;
@@ -74,6 +76,7 @@ export interface Translation {
     tbd: string;
     scrollHint: string;
     penalties: string;
+    progressR32: string;
     progressR16: string;
     progressQF: string;
     progressSF: string;
@@ -160,7 +163,7 @@ const zh: Translation = {
     headerGD: '净胜',
     headerPoints: '积分',
     headerRecord: '胜平负',
-    advanceHint: '前2名晋级淘汰赛',
+    advanceHint: '每组前2名与8个成绩最好的第三名晋级32强',
     groupLabel: '第 {name} 组',
     statsTeams: '参赛球队',
     statsTeamsUnit: '支',
@@ -172,6 +175,8 @@ const zh: Translation = {
     statsQualifiersUnit: '队',
   },
   knockout: {
+    roundOf32: '三十二强',
+    roundOf32En: 'Round of 32',
     roundOf16: '十六强',
     roundOf16En: 'Round of 16',
     quarterFinals: '八强',
@@ -183,6 +188,7 @@ const zh: Translation = {
     tbd: '待定',
     scrollHint: '← 左右滑动查看完整赛程 →',
     penalties: '点球',
+    progressR32: '三十二强 (16场)',
     progressR16: '十六强 (8场)',
     progressQF: '八强 (4场)',
     progressSF: '四强 (2场)',
@@ -197,8 +203,8 @@ const zh: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: '小组赛赛程',
-    sectionSubtitle: 'Group Stage Schedule',
+    sectionTitle: '淘汰赛赛程',
+    sectionSubtitle: 'Knockout Stage Schedule',
     matchdayLabel: '第 {n} 轮',
     noMatches: '本日暂无比赛',
     todayBtn: '回到今天',
@@ -269,7 +275,7 @@ const en: Translation = {
     headerGD: 'GD',
     headerPoints: 'Pts',
     headerRecord: 'W-D-L',
-    advanceHint: 'Top 2 advance to Knockout',
+    advanceHint: 'Top 2 plus the 8 best third-placed teams advance to the Round of 32',
     groupLabel: 'Group {name}',
     statsTeams: 'Teams',
     statsTeamsUnit: '',
@@ -281,6 +287,8 @@ const en: Translation = {
     statsQualifiersUnit: '',
   },
   knockout: {
+    roundOf32: 'Round of 32',
+    roundOf32En: 'Round of 32',
     roundOf16: 'Round of 16',
     roundOf16En: 'Round of 16',
     quarterFinals: 'Quarter Finals',
@@ -292,6 +300,7 @@ const en: Translation = {
     tbd: 'TBD',
     scrollHint: '← Scroll to see full bracket →',
     penalties: 'Pen.',
+    progressR32: 'Round of 32 (16)',
     progressR16: 'Round of 16 (8)',
     progressQF: 'Quarter Finals (4)',
     progressSF: 'Semi Finals (2)',
@@ -306,8 +315,8 @@ const en: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: 'Group Stage Schedule',
-    sectionSubtitle: 'Daily Match Schedule',
+    sectionTitle: 'Knockout Stage Schedule',
+    sectionSubtitle: 'Round of 32 Schedule',
     matchdayLabel: 'Matchday {n}',
     noMatches: 'No matches on this day',
     todayBtn: 'Back to today',
@@ -378,7 +387,7 @@ const ja: Translation = {
     headerGD: '得失差',
     headerPoints: 'PT',
     headerRecord: '勝分負',
-    advanceHint: '上位2チームがノックアウトステージへ進出',
+    advanceHint: '各組上位2チームと成績最良の3位8チームがラウンド32へ進出',
     groupLabel: 'グループ {name}',
     statsTeams: '参加チーム',
     statsTeamsUnit: 'チーム',
@@ -390,6 +399,8 @@ const ja: Translation = {
     statsQualifiersUnit: 'チーム',
   },
   knockout: {
+    roundOf32: 'ラウンド32',
+    roundOf32En: 'Round of 32',
     roundOf16: 'ラウンド16',
     roundOf16En: 'Round of 16',
     quarterFinals: '準々決勝',
@@ -401,6 +412,7 @@ const ja: Translation = {
     tbd: '未定',
     scrollHint: '← スクロールしてトーナメント表を表示 →',
     penalties: 'PK',
+    progressR32: 'ラウンド32 (16試合)',
     progressR16: 'ラウンド16 (8試合)',
     progressQF: '準々決勝 (4試合)',
     progressSF: '準決勝 (2試合)',
@@ -415,8 +427,8 @@ const ja: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: 'グループステージ 試合日程',
-    sectionSubtitle: 'Daily Match Schedule',
+    sectionTitle: 'ノックアウトステージ日程',
+    sectionSubtitle: 'Round of 32 Schedule',
     matchdayLabel: '第{n}節',
     noMatches: '本日は試合がありません',
     todayBtn: '今日に戻る',
@@ -487,7 +499,7 @@ const ko: Translation = {
     headerGD: '득실',
     headerPoints: '승점',
     headerRecord: '승무패',
-    advanceHint: '상위 2팀이 결선 토너먼트 진출',
+    advanceHint: '각 조 1, 2위와 성적이 좋은 3위 8팀이 32강에 진출',
     groupLabel: '{name}조',
     statsTeams: '참가 팀',
     statsTeamsUnit: '팀',
@@ -499,6 +511,8 @@ const ko: Translation = {
     statsQualifiersUnit: '팀',
   },
   knockout: {
+    roundOf32: '32강',
+    roundOf32En: 'Round of 32',
     roundOf16: '16강',
     roundOf16En: 'Round of 16',
     quarterFinals: '8강',
@@ -510,6 +524,7 @@ const ko: Translation = {
     tbd: '미정',
     scrollHint: '← 스크롤하여 대진표 전체 보기 →',
     penalties: '승부차기',
+    progressR32: '32강 (16경기)',
     progressR16: '16강 (8경기)',
     progressQF: '8강 (4경기)',
     progressSF: '4강 (2경기)',
@@ -524,8 +539,8 @@ const ko: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: '조별리그 일정',
-    sectionSubtitle: 'Daily Match Schedule',
+    sectionTitle: '결선 토너먼트 일정',
+    sectionSubtitle: 'Round of 32 Schedule',
     matchdayLabel: '{n}라운드',
     noMatches: '오늘은 경기가 없습니다',
     todayBtn: '오늘로 돌아가기',
@@ -596,7 +611,7 @@ const pt: Translation = {
     headerGD: 'SG',
     headerPoints: 'Pts',
     headerRecord: 'V-E-D',
-    advanceHint: 'As 2 primeiras classificam para as eliminatórias',
+    advanceHint: 'As 2 primeiras e os 8 melhores terceiros avançam para a fase de 32',
     groupLabel: 'Grupo {name}',
     statsTeams: 'Seleções',
     statsTeamsUnit: '',
@@ -608,6 +623,8 @@ const pt: Translation = {
     statsQualifiersUnit: '',
   },
   knockout: {
+    roundOf32: 'Fase de 32',
+    roundOf32En: 'Round of 32',
     roundOf16: 'Oitavas de Final',
     roundOf16En: 'Round of 16',
     quarterFinals: 'Quartas de Final',
@@ -619,6 +636,7 @@ const pt: Translation = {
     tbd: 'A definir',
     scrollHint: '← Deslize para ver o chaveamento completo →',
     penalties: 'Pên.',
+    progressR32: 'Fase de 32 (16)',
     progressR16: 'Oitavas (8)',
     progressQF: 'Quartas (4)',
     progressSF: 'Semifinais (2)',
@@ -633,8 +651,8 @@ const pt: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: 'Calendário da Fase de Grupos',
-    sectionSubtitle: 'Daily Match Schedule',
+    sectionTitle: 'Calendário das Eliminatórias',
+    sectionSubtitle: 'Round of 32 Schedule',
     matchdayLabel: 'Rodada {n}',
     noMatches: 'Sem partidas neste dia',
     todayBtn: 'Voltar para hoje',
@@ -705,7 +723,7 @@ const es: Translation = {
     headerGD: 'DG',
     headerPoints: 'Pts',
     headerRecord: 'G-E-P',
-    advanceHint: 'Los 2 primeros avanzan a la fase eliminatoria',
+    advanceHint: 'Los 2 primeros y los 8 mejores terceros avanzan a la ronda de 32',
     groupLabel: 'Grupo {name}',
     statsTeams: 'Selecciones',
     statsTeamsUnit: '',
@@ -717,6 +735,8 @@ const es: Translation = {
     statsQualifiersUnit: '',
   },
   knockout: {
+    roundOf32: 'Ronda de 32',
+    roundOf32En: 'Round of 32',
     roundOf16: 'Octavos de Final',
     roundOf16En: 'Round of 16',
     quarterFinals: 'Cuartos de Final',
@@ -728,6 +748,7 @@ const es: Translation = {
     tbd: 'Por definir',
     scrollHint: '← Desliza para ver el cuadro completo →',
     penalties: 'Pen.',
+    progressR32: 'Ronda de 32 (16)',
     progressR16: 'Octavos (8)',
     progressQF: 'Cuartos (4)',
     progressSF: 'Semifinales (2)',
@@ -742,8 +763,8 @@ const es: Translation = {
     venueLabel: '📍',
   },
   schedule: {
-    sectionTitle: 'Calendario Fase de Grupos',
-    sectionSubtitle: 'Daily Match Schedule',
+    sectionTitle: 'Calendario de Eliminatorias',
+    sectionSubtitle: 'Round of 32 Schedule',
     matchdayLabel: 'Jornada {n}',
     noMatches: 'No hay partidos este día',
     todayBtn: 'Volver a hoy',

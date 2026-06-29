@@ -6,6 +6,8 @@ export interface MatchScore {
   status: MatchScoreStatus;
   updatedAt: string;
   source: string;
+  homeWinner?: boolean;
+  awayWinner?: boolean;
 }
 
 export interface SyncMeta {

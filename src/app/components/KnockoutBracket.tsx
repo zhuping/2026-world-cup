@@ -1,4 +1,4 @@
-import { knockoutRounds, BracketMatch, BracketTeam } from '../data/teams';
+import { knockoutRounds as fallbackKnockoutRounds, BracketMatch, BracketRound, BracketTeam } from '../data/teams';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getTeamName } from '../i18n/teamNames';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -47,8 +47,6 @@ function TeamSlot({ team, score, isWinner, played, penalty }: {
 }
 
 function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: boolean }) {
-  const { t } = useLanguage();
-
   return (
     <div style={{
       background: 'rgba(8,16,40,0.9)',
@@ -75,45 +73,62 @@ function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: 
   );
 }
 
-// Full bracket for desktop
-function DesktopBracket() {
-  const { t } = useLanguage();
-  const r16 = knockoutRounds[0];
-  const qf = knockoutRounds[1];
-  const sf = knockoutRounds[2];
-  const final = knockoutRounds[3];
+function getRoundMeta(t: ReturnType<typeof useLanguage>['t']) {
+  return [
+    { name: t.knockout.roundOf32, nameEn: t.knockout.roundOf32En, progress: t.knockout.progressR32, color: '#7C3AED' },
+    { name: t.knockout.roundOf16, nameEn: t.knockout.roundOf16En, progress: t.knockout.progressR16, color: '#0033A0' },
+    { name: t.knockout.quarterFinals, nameEn: t.knockout.quarterFinalsEn, progress: t.knockout.progressQF, color: '#D72828' },
+    { name: t.knockout.semiFinals, nameEn: t.knockout.semiFinalsEn, progress: t.knockout.progressSF, color: '#009A44' },
+    { name: t.knockout.final, nameEn: t.knockout.finalEn, progress: t.knockout.progressFinal, color: '#C0A020' },
+  ];
+}
 
-  const outerCount = 4;
+type DisplayRound = {
+  name: string;
+  nameEn: string;
+  color: string;
+  matches: BracketMatch[];
+};
+
+const RoundLabel = ({ name, nameEn, color }: { name: string; nameEn: string; color: string }) => (
+  <div style={{ marginBottom: '12px', padding: '4px 14px', background: `${color}15`, border: `1px solid ${color}40`, borderRadius: '16px', alignSelf: 'center' }}>
+    <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '13px', color, letterSpacing: '2px', textAlign: 'center' }}>{name}</div>
+    <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.3)', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>{nameEn}</div>
+  </div>
+);
+
+// Full bracket for desktop
+function DesktopBracket({ rounds }: { rounds: BracketRound[] }) {
+  const { t } = useLanguage();
+  const roundMeta = getRoundMeta(t);
+  const roundCountBeforeFinal = rounds.length - 1;
+  const firstRoundMatchesPerSide = (rounds[0]?.matches.length ?? 0) / 2;
+  const finalRound = rounds[rounds.length - 1];
+
   const unitH = MATCH_H + MATCH_GAP;
-  const totalH = outerCount * unitH - MATCH_GAP;
+  const totalH = firstRoundMatchesPerSide * unitH - MATCH_GAP;
 
   const getRoundPositions = (ri: number) => {
-    const count = outerCount / Math.pow(2, ri);
+    const count = firstRoundMatchesPerSide / Math.pow(2, ri);
     const slotSize = unitH * Math.pow(2, ri);
     return Array.from({ length: count }, (_, i) => i * slotSize + slotSize / 2 - MATCH_H / 2);
   };
 
-  const ROUND_COLORS = ['#0033A0', '#D72828', '#009A44', '#C0A020'];
+  const leftRounds: DisplayRound[] = rounds.slice(0, -1).map((round, ri) => ({
+    name: roundMeta[ri]?.name ?? round.name,
+    nameEn: roundMeta[ri]?.nameEn ?? round.nameEn,
+    color: roundMeta[ri]?.color ?? '#0033A0',
+    matches: round.matches.slice(0, round.matches.length / 2),
+  }));
 
-  const leftRounds = [
-    { name: t.knockout.roundOf16, nameEn: t.knockout.roundOf16En, color: ROUND_COLORS[0], matches: r16.matches.slice(0, 4) },
-    { name: t.knockout.quarterFinals, nameEn: t.knockout.quarterFinalsEn, color: ROUND_COLORS[1], matches: qf.matches.slice(0, 2) },
-    { name: t.knockout.semiFinals, nameEn: t.knockout.semiFinalsEn, color: ROUND_COLORS[2], matches: sf.matches.slice(0, 1) },
-  ];
-  const rightRounds = [
-    { name: t.knockout.roundOf16, nameEn: t.knockout.roundOf16En, color: ROUND_COLORS[0], matches: r16.matches.slice(4, 8) },
-    { name: t.knockout.quarterFinals, nameEn: t.knockout.quarterFinalsEn, color: ROUND_COLORS[1], matches: qf.matches.slice(2, 4) },
-    { name: t.knockout.semiFinals, nameEn: t.knockout.semiFinalsEn, color: ROUND_COLORS[2], matches: sf.matches.slice(1, 2) },
-  ];
+  const rightRounds: DisplayRound[] = rounds.slice(0, -1).map((round, ri) => ({
+    name: roundMeta[ri]?.name ?? round.name,
+    nameEn: roundMeta[ri]?.nameEn ?? round.nameEn,
+    color: roundMeta[ri]?.color ?? '#0033A0',
+    matches: round.matches.slice(round.matches.length / 2),
+  }));
 
-  const RoundLabel = ({ name, nameEn, color }: { name: string; nameEn: string; color: string }) => (
-    <div style={{ marginBottom: '12px', padding: '4px 14px', background: `${color}15`, border: `1px solid ${color}40`, borderRadius: '16px', alignSelf: 'center' }}>
-      <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '13px', color, letterSpacing: '2px', textAlign: 'center' }}>{name}</div>
-      <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.3)', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center' }}>{nameEn}</div>
-    </div>
-  );
-
-  const LeftRoundCol = ({ round, ri }: { round: typeof leftRounds[0]; ri: number }) => {
+  const LeftRoundCol = ({ round, ri }: { round: DisplayRound; ri: number }) => {
     const positions = getRoundPositions(ri);
     const slotSize = unitH * Math.pow(2, ri);
     return (
@@ -138,7 +153,7 @@ function DesktopBracket() {
     );
   };
 
-  const RightRoundCol = ({ round, ri }: { round: typeof rightRounds[0]; ri: number }) => {
+  const RightRoundCol = ({ round, ri }: { round: DisplayRound; ri: number }) => {
     const positions = getRoundPositions(ri);
     const slotSize = unitH * Math.pow(2, ri);
     return (
@@ -165,44 +180,38 @@ function DesktopBracket() {
 
   return (
     <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0', minWidth: 'max-content', padding: '0 16px' }}>
-      {/* Left side */}
-      {leftRounds.map((round, ri) => <LeftRoundCol key={ri} round={round} ri={ri} />)}
+      {leftRounds.map((round, ri) => <LeftRoundCol key={round.nameEn} round={round} ri={ri} />)}
 
-      {/* Final */}
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px' }}>
         <div style={{ height: '51px', marginBottom: '12px' }} />
         <div style={{ position: 'relative', height: `${totalH}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '210px' }}>
           <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', textAlign: 'center', padding: '6px 20px', background: 'rgba(192,160,32,0.12)', border: '1px solid rgba(192,160,32,0.45)', borderRadius: '16px', whiteSpace: 'nowrap' }}>
             <span style={{ fontSize: '14px', marginRight: '4px' }}>🏆</span>
-            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '16px', color: '#C0A020', letterSpacing: '3px' }}>{t.knockout.final}</span>
-            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(192,160,32,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>{t.knockout.finalEn}</div>
+            <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '16px', color: '#C0A020', letterSpacing: '3px' }}>{roundMeta[roundCountBeforeFinal]?.name ?? t.knockout.final}</span>
+            <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(192,160,32,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>{roundMeta[roundCountBeforeFinal]?.nameEn ?? t.knockout.finalEn}</div>
           </div>
-          {/* Connectors */}
           <div style={{ position: 'absolute', top: `${totalH / 2}px`, left: '0', width: '8px', height: '1px', background: 'rgba(255,255,255,0.12)' }} />
           <div style={{ position: 'absolute', top: `${totalH / 2}px`, right: '0', width: '8px', height: '1px', background: 'rgba(255,255,255,0.12)' }} />
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-            <MatchCard match={final.matches[0]} isFinal={true} />
-            {final.matches[0].venue && (
+            <MatchCard match={finalRound.matches[0]} isFinal={true} />
+            {finalRound.matches[0].venue && (
               <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '10px', color: 'rgba(192,160,32,0.6)', textAlign: 'center', maxWidth: '200px' }}>
-                {t.knockout.venueLabel} MetLife Stadium, NJ
+                {t.knockout.venueLabel} {finalRound.matches[0].venue}
               </div>
             )}
           </div>
         </div>
       </div>
 
-      {/* Right side (reverse order) */}
-      {[...rightRounds].reverse().map((round, ri) => <RightRoundCol key={ri} round={round} ri={rightRounds.length - 1 - ri} />)}
+      {[...rightRounds].reverse().map((round, ri) => <RightRoundCol key={round.nameEn} round={round} ri={rightRounds.length - 1 - ri} />)}
     </div>
   );
 }
 
 // Simplified mobile list view
-function MobileBracket() {
+function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
   const { t, lang } = useLanguage();
-  const rounds = [knockoutRounds[0], knockoutRounds[1], knockoutRounds[2], knockoutRounds[3]];
-  const roundNames = [t.knockout.roundOf16, t.knockout.quarterFinals, t.knockout.semiFinals, t.knockout.final];
-  const roundColors = ['#0033A0', '#D72828', '#009A44', '#C0A020'];
+  const roundMeta = getRoundMeta(t);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -210,18 +219,18 @@ function MobileBracket() {
         <div key={round.nameEn}>
           {/* Round label */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-            <div style={{ flex: 1, height: '1px', background: `linear-gradient(90deg, ${roundColors[ri]}, transparent)` }} />
-            <div style={{ padding: '4px 14px', background: `${roundColors[ri]}18`, border: `1px solid ${roundColors[ri]}40`, borderRadius: '16px' }}>
-              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '14px', color: roundColors[ri], letterSpacing: '2px' }}>{roundNames[ri]}</span>
+            <div style={{ flex: 1, height: '1px', background: `linear-gradient(90deg, ${roundMeta[ri]?.color ?? '#0033A0'}, transparent)` }} />
+            <div style={{ padding: '4px 14px', background: `${roundMeta[ri]?.color ?? '#0033A0'}18`, border: `1px solid ${roundMeta[ri]?.color ?? '#0033A0'}40`, borderRadius: '16px' }}>
+              <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '14px', color: roundMeta[ri]?.color ?? '#0033A0', letterSpacing: '2px' }}>{roundMeta[ri]?.name ?? round.name}</span>
             </div>
-            <div style={{ flex: 1, height: '1px', background: `linear-gradient(270deg, ${roundColors[ri]}, transparent)` }} />
+            <div style={{ flex: 1, height: '1px', background: `linear-gradient(270deg, ${roundMeta[ri]?.color ?? '#0033A0'}, transparent)` }} />
           </div>
           {/* Matches */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
             {round.matches.map(match => {
               const t1Name = match.team1.tbd ? t.knockout.tbd : getTeamName(match.team1.nameEn, lang);
               const t2Name = match.team2.tbd ? t.knockout.tbd : getTeamName(match.team2.nameEn, lang);
-              const isFinal = ri === 3;
+              const isFinal = ri === rounds.length - 1;
 
               return (
                 <div key={match.id} style={{
@@ -275,27 +284,35 @@ function MobileBracket() {
   );
 }
 
-export function KnockoutBracket() {
+export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: BracketRound[] }) {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const roundMeta = getRoundMeta(t);
 
-  const progressItems = [
-    { label: t.knockout.progressR16, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
-    { label: t.knockout.progressQF, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
-    { label: t.knockout.progressSF, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
-    { label: t.knockout.progressFinal, value: t.tournament.statusTBD, color: '#C0A020', icon: '⏳' },
-  ];
+  const progressItems = rounds.map((round, index) => {
+    const allPlayed = round.matches.every((match) => match.played);
+    const somePlayed = round.matches.some((match) => match.played);
+    const hasKnownTeams = round.matches.some((match) => !match.team1.tbd && !match.team2.tbd);
+    const inProgress = somePlayed || (index === 0 && hasKnownTeams);
+
+    return {
+      label: roundMeta[index]?.progress ?? round.name,
+      value: allPlayed ? t.tournament.statusDone : inProgress ? t.tournament.statusUpcoming : t.tournament.statusTBD,
+      color: allPlayed ? '#009A44' : inProgress ? '#D72828' : '#C0A020',
+      icon: allPlayed ? '✓' : inProgress ? '▶' : '⏳',
+    };
+  });
 
   return (
     <div>
       {isMobile ? (
         /* Mobile: list view */
-        <MobileBracket />
+        <MobileBracket rounds={rounds} />
       ) : (
         /* Desktop: tree bracket */
         <div>
           <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
-            <DesktopBracket />
+            <DesktopBracket rounds={rounds} />
           </div>
         </div>
       )}

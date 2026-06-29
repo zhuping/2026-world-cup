@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { knockoutRounds } from '@/app/data/teams';
 import { getLiveTournamentData } from '@/lib/scores/service';
+import { buildKnockoutRoundsFromScores } from '@/lib/tournament/knockout';
 import { buildGroupsFromScores } from '@/lib/tournament/standings';
 
 export const dynamic = 'force-dynamic';
@@ -8,6 +8,7 @@ export const dynamic = 'force-dynamic';
 export async function GET() {
   const scoreStore = await getLiveTournamentData();
   const groups = buildGroupsFromScores(scoreStore.scores);
+  const knockoutRounds = buildKnockoutRoundsFromScores(scoreStore.scores);
 
   return NextResponse.json(
     {
