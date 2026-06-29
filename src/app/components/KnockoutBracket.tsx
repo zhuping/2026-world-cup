@@ -1,10 +1,16 @@
 import { knockoutRounds as fallbackKnockoutRounds, BracketMatch, BracketRound, BracketTeam } from '../data/teams';
 import { useLanguage } from '../contexts/LanguageContext';
 import { getTeamName } from '../i18n/teamNames';
-import { useIsMobile } from '../hooks/useIsMobile';
+import { useIsMobile, useMediaQuery } from '../hooks/useIsMobile';
 
 const MATCH_H = 88;
 const MATCH_GAP = 16;
+const MATCH_W = 132;
+const FINAL_MATCH_W = 164;
+const ROUND_COL_W = 146;
+const CONNECTOR_W = 14;
+const CENTER_W = 164;
+const DESKTOP_BRACKET_W = ROUND_COL_W * 8 + CENTER_W;
 
 function TeamSlot({ team, score, isWinner, played, penalty }: {
   team: BracketTeam;
@@ -53,7 +59,7 @@ function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: 
       border: isFinal ? '1px solid rgba(192,160,32,0.55)' : match.played ? '1px solid rgba(0,51,160,0.35)' : '1px solid rgba(255,255,255,0.09)',
       borderRadius: '10px', overflow: 'hidden',
       boxShadow: isFinal ? '0 0 24px rgba(192,160,32,0.18), 0 4px 16px rgba(0,0,0,0.4)' : '0 2px 12px rgba(0,0,0,0.3)',
-      width: isFinal ? '185px' : '158px',
+      width: isFinal ? `${FINAL_MATCH_W}px` : `${MATCH_W}px`,
       position: 'relative',
     }}>
       {isFinal && <div style={{ height: '2px', background: 'linear-gradient(90deg, #D72828, #C0A020, #009A44)' }} />}
@@ -134,15 +140,15 @@ function DesktopBracket({ rounds }: { rounds: BracketRound[] }) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <RoundLabel {...round} />
-        <div style={{ position: 'relative', height: `${totalH}px`, width: '178px' }}>
+        <div style={{ position: 'relative', height: `${totalH}px`, width: `${ROUND_COL_W}px` }}>
           {round.matches.map((match, mi) => (
             <div key={match.id}>
-              <div style={{ position: 'absolute', top: `${positions[mi]}px`, left: '0', right: '20px' }}>
+              <div style={{ position: 'absolute', top: `${positions[mi]}px`, left: '0', right: `${CONNECTOR_W}px` }}>
                 <MatchCard match={match} />
               </div>
               {ri < leftRounds.length - 1 && (
                 <>
-                  <div style={{ position: 'absolute', top: `${positions[mi] + MATCH_H / 2}px`, right: '0', width: '20px', height: '1px', background: 'rgba(255,255,255,0.12)' }} />
+                  <div style={{ position: 'absolute', top: `${positions[mi] + MATCH_H / 2}px`, right: '0', width: `${CONNECTOR_W}px`, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
                   {mi % 2 === 0 && <div style={{ position: 'absolute', right: '0', top: `${positions[mi] + MATCH_H / 2}px`, width: '1px', height: `${slotSize}px`, background: 'rgba(255,255,255,0.12)' }} />}
                 </>
               )}
@@ -159,15 +165,15 @@ function DesktopBracket({ rounds }: { rounds: BracketRound[] }) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
         <RoundLabel {...round} />
-        <div style={{ position: 'relative', height: `${totalH}px`, width: '178px' }}>
+        <div style={{ position: 'relative', height: `${totalH}px`, width: `${ROUND_COL_W}px` }}>
           {round.matches.map((match, mi) => (
             <div key={match.id}>
-              <div style={{ position: 'absolute', top: `${positions[mi]}px`, left: '20px', right: '0' }}>
+              <div style={{ position: 'absolute', top: `${positions[mi]}px`, left: `${CONNECTOR_W}px`, right: '0' }}>
                 <MatchCard match={match} />
               </div>
               {ri < rightRounds.length - 1 && (
                 <>
-                  <div style={{ position: 'absolute', top: `${positions[mi] + MATCH_H / 2}px`, left: '0', width: '20px', height: '1px', background: 'rgba(255,255,255,0.12)' }} />
+                  <div style={{ position: 'absolute', top: `${positions[mi] + MATCH_H / 2}px`, left: '0', width: `${CONNECTOR_W}px`, height: '1px', background: 'rgba(255,255,255,0.12)' }} />
                   {mi % 2 === 0 && <div style={{ position: 'absolute', left: '0', top: `${positions[mi] + MATCH_H / 2}px`, width: '1px', height: `${slotSize}px`, background: 'rgba(255,255,255,0.12)' }} />}
                 </>
               )}
@@ -179,13 +185,13 @@ function DesktopBracket({ rounds }: { rounds: BracketRound[] }) {
   };
 
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0', minWidth: 'max-content', padding: '0 16px' }}>
+    <div style={{ display: 'inline-flex', alignItems: 'flex-start', gap: '0', width: `${DESKTOP_BRACKET_W}px`, maxWidth: '100%' }}>
       {leftRounds.map((round, ri) => <LeftRoundCol key={round.nameEn} round={round} ri={ri} />)}
 
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '0 8px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: `${CENTER_W}px`, flexShrink: 0 }}>
         <div style={{ height: '51px', marginBottom: '12px' }} />
-        <div style={{ position: 'relative', height: `${totalH}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minWidth: '210px' }}>
-          <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', textAlign: 'center', padding: '6px 20px', background: 'rgba(192,160,32,0.12)', border: '1px solid rgba(192,160,32,0.45)', borderRadius: '16px', whiteSpace: 'nowrap' }}>
+        <div style={{ position: 'relative', height: `${totalH}px`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+          <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', textAlign: 'center', padding: '6px 16px', background: 'rgba(192,160,32,0.12)', border: '1px solid rgba(192,160,32,0.45)', borderRadius: '16px', whiteSpace: 'nowrap' }}>
             <span style={{ fontSize: '14px', marginRight: '4px' }}>🏆</span>
             <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '16px', color: '#C0A020', letterSpacing: '3px' }}>{roundMeta[roundCountBeforeFinal]?.name ?? t.knockout.final}</span>
             <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(192,160,32,0.5)', letterSpacing: '1px', textTransform: 'uppercase' }}>{roundMeta[roundCountBeforeFinal]?.nameEn ?? t.knockout.finalEn}</div>
@@ -287,6 +293,7 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
 export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: BracketRound[] }) {
   const { t } = useLanguage();
   const isMobile = useIsMobile();
+  const useListLayout = useMediaQuery('(max-width: 1390px)');
   const roundMeta = getRoundMeta(t);
 
   const progressItems = rounds.map((round, index) => {
@@ -305,13 +312,11 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
 
   return (
     <div>
-      {isMobile ? (
-        /* Mobile: list view */
+      {isMobile || useListLayout ? (
         <MobileBracket rounds={rounds} />
       ) : (
-        /* Desktop: tree bracket */
-        <div>
-          <div style={{ overflowX: 'auto', paddingBottom: '16px' }}>
+        <div style={{ width: '100%', overflow: 'hidden', display: 'flex', justifyContent: 'center', paddingBottom: '8px' }}>
+          <div style={{ width: `${DESKTOP_BRACKET_W}px` }}>
             <DesktopBracket rounds={rounds} />
           </div>
         </div>
@@ -322,8 +327,9 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
         display: 'flex', justifyContent: 'center', gap: '0',
         marginTop: '24px', padding: isMobile ? '12px 8px' : '16px',
         background: 'rgba(10,20,45,0.4)', borderRadius: '12px',
-        border: '1px solid rgba(255,255,255,0.06)', overflowX: 'auto',
-        flexWrap: isMobile ? 'wrap' : 'nowrap',
+        border: '1px solid rgba(255,255,255,0.06)', overflow: 'hidden',
+        flexWrap: isMobile || useListLayout ? 'wrap' : 'nowrap',
+        rowGap: '8px',
       }}>
         {progressItems.map((item, i) => (
           <div key={item.label} style={{ display: 'flex', alignItems: 'center' }}>
@@ -339,12 +345,6 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
         ))}
       </div>
 
-      {/* Scroll hint for desktop */}
-      {!isMobile && (
-        <div style={{ textAlign: 'center', marginTop: '12px' }}>
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: 'rgba(255,255,255,0.2)' }}>{t.knockout.scrollHint}</span>
-        </div>
-      )}
     </div>
   );
 }
