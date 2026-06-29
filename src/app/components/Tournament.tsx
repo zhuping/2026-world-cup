@@ -77,7 +77,8 @@ export function Tournament() {
     const somePlayed = matches.some((m) => m.played);
     const hasKnownTeams = matches.some((m) => !m.team1.tbd && !m.team2.tbd);
     if (allPlayed) return { value: t.tournament.statusDone, color: '#009A44' };
-    if (somePlayed || (index === 0 && hasKnownTeams)) return { value: t.tournament.statusUpcoming, color: '#D72828' };
+    if (somePlayed) return { value: t.tournament.statusLive, color: '#D72828' };
+    if (index === 0 && hasKnownTeams) return { value: t.tournament.statusUpcoming, color: '#D72828' };
     return { value: t.tournament.statusTBD, color: '#C0A020' };
   };
 

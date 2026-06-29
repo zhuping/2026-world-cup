@@ -40,6 +40,7 @@ export interface Translation {
     qualifiedLabel: string;
     qualifiedValue: string;
     statusDone: string;
+    statusLive: string;
     statusUpcoming: string;
     statusTBD: string;
   };
@@ -152,6 +153,7 @@ const zh: Translation = {
     qualifiedLabel: '晋级',
     qualifiedValue: '32队出线',
     statusDone: '已结束',
+    statusLive: '进行中',
     statusUpcoming: '即将进行',
     statusTBD: '待定',
   },
@@ -264,6 +266,7 @@ const en: Translation = {
     qualifiedLabel: 'Qualified',
     qualifiedValue: '32 Teams',
     statusDone: 'Finished',
+    statusLive: 'In Progress',
     statusUpcoming: 'Upcoming',
     statusTBD: 'TBD',
   },
@@ -376,6 +379,7 @@ const ja: Translation = {
     qualifiedLabel: '進出',
     qualifiedValue: '32チーム',
     statusDone: '終了',
+    statusLive: '進行中',
     statusUpcoming: '近日開催',
     statusTBD: '未定',
   },
@@ -488,6 +492,7 @@ const ko: Translation = {
     qualifiedLabel: '진출',
     qualifiedValue: '32팀',
     statusDone: '종료',
+    statusLive: '진행 중',
     statusUpcoming: '예정',
     statusTBD: '미정',
   },
@@ -600,6 +605,7 @@ const pt: Translation = {
     qualifiedLabel: 'Classificados',
     qualifiedValue: '32 Equipes',
     statusDone: 'Encerrado',
+    statusLive: 'Em andamento',
     statusUpcoming: 'Em breve',
     statusTBD: 'A definir',
   },
@@ -712,6 +718,7 @@ const es: Translation = {
     qualifiedLabel: 'Clasificados',
     qualifiedValue: '32 Equipos',
     statusDone: 'Finalizado',
+    statusLive: 'En curso',
     statusUpcoming: 'Próximamente',
     statusTBD: 'Por definir',
   },

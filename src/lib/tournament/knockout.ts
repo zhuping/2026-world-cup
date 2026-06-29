@@ -1,5 +1,5 @@
 import { knockoutRounds } from '@/app/data/teams';
-import type { BracketRound, BracketTeam } from '@/app/data/teams';
+import type { BracketMatch, BracketRound, BracketTeam } from '@/app/data/teams';
 import type { MatchScore } from '@/lib/scores/types';
 
 function applyScore(team: BracketTeam, score: number, winner: boolean): BracketTeam {
@@ -7,6 +7,14 @@ function applyScore(team: BracketTeam, score: number, winner: boolean): BracketT
     ...team,
     score,
     winner,
+  };
+}
+
+function cloneMatch(match: BracketMatch): BracketMatch {
+  return {
+    ...match,
+    team1: { ...match.team1 },
+    team2: { ...match.team2 },
   };
 }
 
@@ -20,22 +28,61 @@ function getWinner(score: MatchScore, side: 'home' | 'away') {
     : score.awayScore > score.homeScore;
 }
 
+function getMatchWinner(match: BracketMatch) {
+  if (!match.played) return null;
+  if (match.team1.winner) return match.team1;
+  if (match.team2.winner) return match.team2;
+  return null;
+}
+
+function advanceWinner(rounds: BracketRound[], roundIndex: number, matchIndex: number) {
+  const nextRound = rounds[roundIndex + 1];
+  const winner = getMatchWinner(rounds[roundIndex].matches[matchIndex]);
+  if (!nextRound || !winner) return;
+
+  const nextMatch = nextRound.matches[Math.floor(matchIndex / 2)];
+  if (!nextMatch) return;
+
+  const nextSlot = matchIndex % 2 === 0 ? 'team1' : 'team2';
+  if (!nextMatch[nextSlot].tbd) return;
+
+  nextMatch[nextSlot] = {
+    flag: winner.flag,
+    nameZh: winner.nameZh,
+    nameEn: winner.nameEn,
+  };
+}
+
 export function buildKnockoutRoundsFromScores(scores: Record<string, MatchScore>): BracketRound[] {
-  return knockoutRounds.map((round) => ({
+  const rounds = knockoutRounds.map((round) => ({
     ...round,
-    matches: round.matches.map((match) => {
+    matches: round.matches.map(cloneMatch),
+  }));
+
+  rounds.forEach((round, roundIndex) => {
+    round.matches = round.matches.map((match, matchIndex) => {
       const score = scores[match.id];
-      if (!score) return match;
+      if (!score) {
+        advanceWinner(rounds, roundIndex, matchIndex);
+        return match;
+      }
 
       const played = score.status === 'finished';
 
-      return {
+      const scoredMatch = {
         ...match,
         played: played || score.status === 'live',
         team1: applyScore(match.team1, score.homeScore, getWinner(score, 'home')),
         team2: applyScore(match.team2, score.awayScore, getWinner(score, 'away')),
         penalty: match.penalty,
       };
-    }),
-  }));
+
+      rounds[roundIndex].matches[matchIndex] = scoredMatch;
+      advanceWinner(rounds, roundIndex, matchIndex);
+
+      return scoredMatch;
+    });
+  });
+
+  return rounds;
 }

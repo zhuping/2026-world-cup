@@ -297,7 +297,7 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
 
     return {
       label: roundMeta[index]?.progress ?? round.name,
-      value: allPlayed ? t.tournament.statusDone : inProgress ? t.tournament.statusUpcoming : t.tournament.statusTBD,
+      value: allPlayed ? t.tournament.statusDone : somePlayed ? t.tournament.statusLive : inProgress ? t.tournament.statusUpcoming : t.tournament.statusTBD,
       color: allPlayed ? '#009A44' : inProgress ? '#D72828' : '#C0A020',
       icon: allPlayed ? '✓' : inProgress ? '▶' : '⏳',
     };
