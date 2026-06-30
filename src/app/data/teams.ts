@@ -109,32 +109,32 @@ export const knockoutRounds: BracketRound[] = [
       match('r32-74', {
         team1: bracketTeam('🇩🇪', '德国', 'Germany'),
         team2: bracketTeam('🇵🇾', '巴拉圭', 'Paraguay'),
-        date: '2026-06-29',
+        date: '2026-06-30',
         venue: 'Gillette Stadium, Boston',
         penaltyScores: { team1: 3, team2: 4 },
       }),
       match('r32-77', {
         team1: bracketTeam('🇫🇷', '法国', 'France'),
         team2: bracketTeam('🇸🇪', '瑞典', 'Sweden'),
-        date: '2026-06-30',
+        date: '2026-07-01',
         venue: 'MetLife Stadium, NJ',
       }),
       match('r32-73', {
         team1: bracketTeam('🇨🇦', '加拿大', 'Canada'),
         team2: bracketTeam('🇿🇦', '南非', 'South Africa'),
-        date: '2026-06-28',
+        date: '2026-06-29',
         venue: 'SoFi Stadium, Los Angeles',
       }),
       match('r32-75', {
         team1: bracketTeam('🇳🇱', '荷兰', 'Netherlands'),
         team2: bracketTeam('🇲🇦', '摩洛哥', 'Morocco'),
-        date: '2026-06-29',
+        date: '2026-06-30',
         venue: 'Estadio BBVA, Monterrey',
       }),
       match('r32-83', {
         team1: bracketTeam('🇪🇸', '西班牙', 'Spain'),
         team2: bracketTeam('🇦🇹', '奥地利', 'Austria'),
-        date: '2026-07-02',
+        date: '2026-07-03',
         venue: 'SoFi Stadium, Los Angeles',
       }),
       match('r32-84', {
@@ -146,25 +146,25 @@ export const knockoutRounds: BracketRound[] = [
       match('r32-81', {
         team1: bracketTeam('🇧🇪', '比利时', 'Belgium'),
         team2: bracketTeam('🇸🇳', '塞内加尔', 'Senegal'),
-        date: '2026-07-01',
+        date: '2026-07-02',
         venue: 'Lumen Field, Seattle',
       }),
       match('r32-82', {
         team1: bracketTeam('🇺🇸', '美国', 'USA'),
         team2: bracketTeam('🇧🇦', '波黑', 'Bosnia & Herzegovina'),
-        date: '2026-07-01',
+        date: '2026-07-02',
         venue: "Levi's Stadium, San Francisco Bay Area",
       }),
       match('r32-76', {
         team1: bracketTeam('🇧🇷', '巴西', 'Brazil'),
         team2: bracketTeam('🇯🇵', '日本', 'Japan'),
-        date: '2026-06-29',
+        date: '2026-06-30',
         venue: 'NRG Stadium, Houston',
       }),
       match('r32-78', {
         team1: bracketTeam('🇨🇮', '科特迪瓦', "Cote d'Ivoire"),
         team2: bracketTeam('🇳🇴', '挪威', 'Norway'),
-        date: '2026-06-30',
+        date: '2026-07-01',
         venue: 'AT&T Stadium, Dallas',
       }),
       match('r32-79', {
@@ -176,13 +176,13 @@ export const knockoutRounds: BracketRound[] = [
       match('r32-80', {
         team1: bracketTeam('🏴󠁧󠁢󠁥󠁮󠁧󠁿', '英格兰', 'England'),
         team2: bracketTeam('🇨🇩', '民主刚果', 'DR Congo'),
-        date: '2026-07-01',
+        date: '2026-07-02',
         venue: 'Mercedes-Benz Stadium, Atlanta',
       }),
       match('r32-86', {
         team1: bracketTeam('🇦🇷', '阿根廷', 'Argentina'),
         team2: bracketTeam('🇨🇻', '佛得角', 'Cape Verde'),
-        date: '2026-07-03',
+        date: '2026-07-04',
         venue: 'Hard Rock Stadium, Miami',
       }),
       match('r32-88', {
