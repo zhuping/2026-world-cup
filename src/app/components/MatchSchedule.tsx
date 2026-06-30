@@ -64,14 +64,17 @@ const fallbackPenaltyScores = new Map(
     .map((match) => [match.id, match.penaltyScores!])
 );
 
-function getPenaltyScoreLabel(matchId: string, score: MatchScore | undefined, label: string) {
-  if (!score || score.homeScore !== score.awayScore) return null;
+function getScoreLabel(matchId: string, score: MatchScore | undefined) {
+  if (!score) return 'VS';
+  if (score.homeScore !== score.awayScore) return `${score.homeScore}-${score.awayScore}`;
 
   const homePenaltyScore = score.homePenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team1;
   const awayPenaltyScore = score.awayPenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team2;
-  if (homePenaltyScore === undefined || awayPenaltyScore === undefined) return null;
+  if (homePenaltyScore === undefined || awayPenaltyScore === undefined) {
+    return `${score.homeScore}-${score.awayScore}`;
+  }
 
-  return `${label} ${homePenaltyScore}-${awayPenaltyScore}`;
+  return `（${homePenaltyScore}）${score.homeScore}-${score.awayScore}（${awayPenaltyScore}）`;
 }
 
 function formatSyncTime(value: string | null, lang: string) {
@@ -200,11 +203,7 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
   const hasScore = Boolean(score);
   const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
-  const penaltyScoreLabel = getPenaltyScoreLabel(
-    match.id,
-    score,
-    lang === 'zh' ? '点球' : 'Pen.'
-  );
+  const scoreLabel = getScoreLabel(match.id, score);
 
   return (
     <motion.div
@@ -284,25 +283,14 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
             fontFamily: "'Bebas Neue', sans-serif",
             fontSize: hasScore ? (isMobile ? '18px' : '22px') : (isMobile ? '14px' : '16px'),
             color: hasScore ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
-            letterSpacing: '1px',
+            letterSpacing: hasScore ? '0.5px' : '1px',
             flexShrink: 0,
-            minWidth: hasScore ? (isMobile ? '62px' : '78px') : undefined,
+            minWidth: hasScore ? (isMobile ? '88px' : '112px') : undefined,
             textAlign: 'center',
             lineHeight: 1,
+            whiteSpace: 'nowrap',
           }}>
-            {score ? `${score.homeScore}-${score.awayScore}` : 'VS'}
-            {penaltyScoreLabel && (
-              <div style={{
-                fontFamily: "'Inter', sans-serif",
-                fontSize: '10px',
-                color: 'rgba(0,154,68,0.85)',
-                marginTop: '4px',
-                letterSpacing: '0',
-                whiteSpace: 'nowrap',
-              }}>
-                {penaltyScoreLabel}
-              </div>
-            )}
+            {scoreLabel}
             {statusLabel && (
               <div style={{
                 fontFamily: "'Rajdhani', sans-serif",

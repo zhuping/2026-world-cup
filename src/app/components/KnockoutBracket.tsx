@@ -12,20 +12,16 @@ const CONNECTOR_W = 14;
 const CENTER_W = 164;
 const DESKTOP_BRACKET_W = ROUND_COL_W * 8 + CENTER_W;
 
-function getPenaltyLabel(match: BracketMatch, label: string) {
-  if (!match.played) return null;
-  const team1Penalty = match.team1.penaltyScore ?? match.penaltyScores?.team1;
-  const team2Penalty = match.team2.penaltyScore ?? match.penaltyScores?.team2;
-  if (team1Penalty === undefined || team2Penalty === undefined) return null;
-  return `${label} ${team1Penalty}-${team2Penalty}`;
+function formatTeamScore(score: number, penaltyScore: number | undefined) {
+  if (penaltyScore === undefined) return String(score);
+  return `${score}（${penaltyScore}）`;
 }
 
-function TeamSlot({ team, score, isWinner, played, penalty }: {
+function TeamSlot({ team, score, isWinner, played }: {
   team: BracketTeam;
   score?: number;
   isWinner?: boolean;
   played?: boolean;
-  penalty?: string;
 }) {
   const { lang, t } = useLanguage();
   const displayName = team.tbd
@@ -50,10 +46,9 @@ function TeamSlot({ team, score, isWinner, played, penalty }: {
       </div>
       {played && score !== undefined && (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', flexShrink: 0 }}>
-          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '19px', color: isWinner ? '#FFFFFF' : 'rgba(255,255,255,0.35)', letterSpacing: '1px', lineHeight: 1 }}>{score}</span>
-          {penalty && isWinner && (
-            <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.5)', lineHeight: 1 }}>({t.knockout.penalties} {penalty})</span>
-          )}
+          <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: team.penaltyScore !== undefined ? '15px' : '19px', color: isWinner ? '#FFFFFF' : 'rgba(255,255,255,0.35)', letterSpacing: team.penaltyScore !== undefined ? '0' : '1px', lineHeight: 1, whiteSpace: 'nowrap' }}>
+            {formatTeamScore(score, team.penaltyScore)}
+          </span>
         </div>
       )}
     </div>
@@ -61,9 +56,6 @@ function TeamSlot({ team, score, isWinner, played, penalty }: {
 }
 
 function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: boolean }) {
-  const { t } = useLanguage();
-  const penaltyLabel = getPenaltyLabel(match, t.knockout.penalties);
-
   return (
     <div style={{
       background: 'rgba(8,16,40,0.9)',
@@ -77,15 +69,13 @@ function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: 
       {!isFinal && match.played && <div style={{ height: '2px', background: 'linear-gradient(90deg, #0033A0, transparent)' }} />}
       {!isFinal && !match.played && <div style={{ height: '2px', background: 'linear-gradient(90deg, #009A44, transparent)' }} />}
 
-      <TeamSlot team={match.team1} score={match.team1.score} isWinner={match.team1.winner} played={match.played} penalty={match.penalty} />
+      <TeamSlot team={match.team1} score={match.team1.score} isWinner={match.team1.winner} played={match.played} />
       <div style={{ height: '1px', background: 'rgba(255,255,255,0.07)', margin: '0 8px' }} />
       <TeamSlot team={match.team2} score={match.team2.score} isWinner={match.team2.winner} played={match.played} />
 
-      {(match.date || penaltyLabel) && (
+      {match.date && (
         <div style={{ padding: '4px 10px', background: 'rgba(0,0,0,0.25)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '10px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>
-            {[match.date, penaltyLabel].filter(Boolean).join(' · ')}
-          </span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '10px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>{match.date}</span>
         </div>
       )}
     </div>
@@ -250,7 +240,6 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
               const t1Name = match.team1.tbd ? t.knockout.tbd : getTeamName(match.team1.nameEn, lang);
               const t2Name = match.team2.tbd ? t.knockout.tbd : getTeamName(match.team2.nameEn, lang);
               const isFinal = ri === rounds.length - 1;
-              const penaltyLabel = getPenaltyLabel(match, t.knockout.penalties);
 
               return (
                 <div key={match.id} style={{
@@ -270,10 +259,9 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
                     <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '15px', fontWeight: 700, flex: 1, color: match.team1.winner ? '#fff' : 'rgba(255,255,255,0.78)' }}>{t1Name}</span>
                     {match.played && match.team1.score !== undefined && (
                       <div style={{ textAlign: 'right' }}>
-                        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', color: match.team1.winner ? '#fff' : 'rgba(255,255,255,0.35)', letterSpacing: '1px' }}>{match.team1.score}</span>
-                        {match.penalty && match.team1.winner && (
-                          <div style={{ fontFamily: "'Inter', sans-serif", fontSize: '9px', color: 'rgba(255,255,255,0.45)' }}>({t.knockout.penalties} {match.penalty})</div>
-                        )}
+                        <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: match.team1.penaltyScore !== undefined ? '18px' : '22px', color: match.team1.winner ? '#fff' : 'rgba(255,255,255,0.35)', letterSpacing: match.team1.penaltyScore !== undefined ? '0' : '1px', whiteSpace: 'nowrap' }}>
+                          {formatTeamScore(match.team1.score, match.team1.penaltyScore)}
+                        </span>
                       </div>
                     )}
                   </div>
@@ -285,15 +273,15 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
                     <span style={{ fontSize: '18px', width: '24px' }}>{match.team2.tbd ? '❓' : match.team2.flag}</span>
                     <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: '15px', fontWeight: 700, flex: 1, color: match.team2.winner ? '#fff' : 'rgba(255,255,255,0.78)' }}>{t2Name}</span>
                     {match.played && match.team2.score !== undefined && (
-                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '22px', color: match.team2.winner ? '#fff' : 'rgba(255,255,255,0.35)', letterSpacing: '1px' }}>{match.team2.score}</span>
+                      <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: match.team2.penaltyScore !== undefined ? '18px' : '22px', color: match.team2.winner ? '#fff' : 'rgba(255,255,255,0.35)', letterSpacing: match.team2.penaltyScore !== undefined ? '0' : '1px', whiteSpace: 'nowrap' }}>
+                        {formatTeamScore(match.team2.score, match.team2.penaltyScore)}
+                      </span>
                     )}
                   </div>
 
-                  {(match.date || penaltyLabel || isFinal) && (
+                  {(match.date || isFinal) && (
                     <div style={{ padding: '5px 12px', background: 'rgba(0,0,0,0.25)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>
-                        {[match.date, penaltyLabel].filter(Boolean).join(' · ')}
-                      </span>
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>{match.date}</span>
                     </div>
                   )}
                 </div>

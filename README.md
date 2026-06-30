@@ -7,7 +7,7 @@
 
 - 前端页面展示世界杯赛程、积分榜、淘汰赛结构、多语言内容
 - 服务端 API 统一输出实时比赛数据
-- 定时从 ESPN 非官方比分接口抓取最新比赛结果
+- 定时从 ESPN 非官方比分接口抓取最新比赛结果，包括淘汰赛点球字段
 - 使用 Vercel Blob 持久化历史比分
 - 前端按分钟轮询获取最新比分与积分变化
 - 使用 GitHub Actions 替代 Vercel 付费 Cron
@@ -93,6 +93,8 @@ flowchart TD
   Vercel Blob 读写实现
 - `src/lib/tournament/standings.ts`
   根据比分动态计算小组积分表
+- `src/lib/tournament/knockout.ts`
+  根据比分动态合成淘汰赛比分、胜者、点球与晋级队伍
 - `src/app/data/matches.ts`
   本地赛程主数据
 - `src/app/data/matchScores.ts`
@@ -154,13 +156,26 @@ flowchart TD
 - 比分一更新，积分表自动更新
 - 页面逻辑和数据逻辑解耦
 
-### 5.4 前端展示的降级策略
+### 5.4 淘汰赛展示方案
+
+淘汰赛结构以 `teams.ts` 中的 `knockoutRounds` 作为基础模板，但页面实际展示会通过 `/api/live-data` 返回的动态 `knockoutRounds`：
+
+- `buildKnockoutRoundsFromScores()` 将实时比分写入对应淘汰赛场次
+- 根据 `homeWinner` / `awayWinner` 或比分自动标记胜者
+- 胜者会自动进入下一轮对应槽位，替换 `TBD`
+- 点球大战会写入每队的 `penaltyScore`
+- 赛程模块和淘汰赛图都使用内嵌格式展示点球，例如 `1（3）`、`1（4）`
+
+这样做的目的，是让淘汰赛卡片不再需要手工维护下一轮球队；只要比分同步成功，晋级队伍和点球信息都会自动体现在前端。
+
+### 5.5 前端展示的降级策略
 
 当比赛未开始或实时数据不可用时，前端遵循以下规则：
 
 - 比赛未开始时，比分显示为 `0:0` 或对应未开赛态
 - 积分表全部按 `0` 展示，不显示伪造数据
 - 若服务端接口失败，退回本地 `matchScores.ts` 与 `teams.ts`
+- 淘汰赛点球数据优先使用实时比分字段；若字段缺失，可使用 `teams.ts` 中的 `penaltyScores` 作为兜底
 
 这保证了页面在任何时候都有可展示内容，但不会因为外部接口波动导致整站失效。
 
@@ -189,7 +204,7 @@ flowchart TD
 
 - 读取当前比分存储
 - 动态构建小组积分表
-- 返回淘汰赛静态结构
+- 动态构建淘汰赛结构，包括比分、胜者、点球和下一轮晋级队伍
 - 禁止缓存，确保前端始终拿到最新值
 
 返回内容主要包括：
@@ -243,7 +258,7 @@ flowchart TD
 4. 读取当前 Blob 中的历史比分
 5. 计算需要同步的比赛日期
 6. 调 ESPN Scoreboard 接口拉取比分
-7. 将结果映射到本地比赛 ID
+7. 将结果映射到本地比赛 ID，并保存胜负与点球字段
 8. 合并到比分存储中
 9. 写回 Vercel Blob
 10. 前端轮询 `/api/live-data` 后获得最新数据
@@ -259,6 +274,7 @@ flowchart TD
 
 - 只同步最近已开赛的比赛日
 - 只针对尚未 `finished` 的比赛做重点刷新
+- 对淘汰赛中“已结束、比分打平、缺少点球字段”的比赛继续回填
 
 这是在免费方案下更稳妥的折中。
 
@@ -303,6 +319,30 @@ flowchart TD
 
 如果没有这一步，即使抓到比分，也可能无法正确映射到本地比赛和积分榜。
 
+### 7.5 点球数据同步
+
+淘汰赛点球数据属于比分状态的一部分，随同定时任务一起更新。
+
+当前 `MatchScore` 支持以下字段：
+
+- `homeScore`
+- `awayScore`
+- `homeWinner`
+- `awayWinner`
+- `homePenaltyScore`
+- `awayPenaltyScore`
+
+同步层会尝试从 ESPN 返回的多个可能字段中读取点球结果，例如：
+
+- `shootoutScore`
+- `penaltyScore`
+- `penaltyKickScore`
+- `penalties`
+
+如果 ESPN 的字段名发生变化，需要优先检查 `src/lib/scores/espn.ts` 中的点球字段读取逻辑。
+
+有一个特别规则：如果某场淘汰赛已经被标记为 `finished`，但它是平局且缺少 `homePenaltyScore` / `awayPenaltyScore`，同步服务仍会重新抓取该比赛日期，用于补齐点球数据。这样可以避免“代码新增点球字段后，旧的完场比赛永远不会被重新同步”的问题。
+
 ## 8. 存储方案
 
 ### 8.1 为什么使用 Vercel Blob
@@ -337,6 +377,7 @@ flowchart TD
 
 - `scores` 是以 `matchId` 为 key 的比分字典
 - `sync` 用于记录最近一次同步元信息
+- 淘汰赛点球会作为 `homePenaltyScore` / `awayPenaltyScore` 存在 `scores[matchId]` 中
 
 ### 8.3 私有 Blob 的处理方式
 
@@ -561,7 +602,16 @@ Authorization: Bearer <CRON_SECRET>
 - 队名是否存在 alias 不一致问题
 - 前端轮询是否已经触发下一次刷新
 
-#### 4. 某场比赛 ESPN 明明有数据，本地却没映射到
+#### 4. 淘汰赛点球没有显示
+
+优先排查：
+
+- `/api/live-data` 的 `scores[matchId]` 是否包含 `homePenaltyScore` 和 `awayPenaltyScore`
+- 如果比分已经是 `finished`，该场是否满足“淘汰赛 + 平局 + 缺点球字段”的回填条件
+- ESPN 返回字段是否不在当前兼容列表内
+- `teams.ts` 是否需要临时补充 `penaltyScores` 作为兜底
+
+#### 5. 某场比赛 ESPN 明明有数据，本地却没映射到
 
 优先排查：
 
@@ -611,12 +661,14 @@ AdSense 脚本已直接输出在布局的 `head` 中，而不是完全依赖 hyd
 - `teams.ts` 提供小组与淘汰赛基础模板
 - `Blob` 中的 `history.json` 是生产环境的实时比分状态
 - `standings.ts` 根据比分推导积分，而不是手工维护排名
+- `knockout.ts` 根据比分推导淘汰赛胜者、点球和下一轮晋级球队
 
 这意味着：
 
 - 赛程是“事实框架”
 - 比分是“动态状态”
 - 积分榜是“计算结果”
+- 淘汰赛晋级也是“计算结果”
 
 这样分层后，数据职责更清晰，也更容易维护。
 

@@ -38,6 +38,18 @@ function getRecentMatchDates(now = new Date()) {
   return startedDates.slice(-2);
 }
 
+function isKnockoutMatch(matchId: string) {
+  return /^(r32|r16|qf|sf|final)/.test(matchId);
+}
+
+function needsPenaltyScoreBackfill(matchId: string, current: ScoreStore['scores'][string] | undefined) {
+  if (!current || current.status !== 'finished') return false;
+  if (!isKnockoutMatch(matchId)) return false;
+  if (current.homeScore !== current.awayScore) return false;
+
+  return current.homePenaltyScore === undefined || current.awayPenaltyScore === undefined;
+}
+
 function getDatesToSync(now = new Date(), existing: ScoreStore) {
   const targetDates = getRecentMatchDates(now);
 
@@ -45,7 +57,7 @@ function getDatesToSync(now = new Date(), existing: ScoreStore) {
     scorableMatches.some((match) => {
       if (!getSyncCandidateDates(match).includes(date)) return false;
       const current = existing.scores[match.id];
-      return !current || current.status !== 'finished';
+      return !current || current.status !== 'finished' || needsPenaltyScoreBackfill(match.id, current);
     })
   );
 }
