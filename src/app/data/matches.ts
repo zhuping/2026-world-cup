@@ -122,7 +122,7 @@ export const knockoutScheduleMatches: ScheduleMatch[] = [
   { id: 'r32-73', group: 'R32', matchday: 32, date: '2026-06-28', timeUtc: '23:00', homeFlag: '🇨🇦', homeNameEn: 'Canada', awayFlag: '🇿🇦', awayNameEn: 'South Africa', venueId: 3 },
   { id: 'r32-74', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '16:00', homeFlag: '🇩🇪', homeNameEn: 'Germany', awayFlag: '🇵🇾', awayNameEn: 'Paraguay', venueId: 8 },
   { id: 'r32-76', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '19:00', homeFlag: '🇧🇷', homeNameEn: 'Brazil', awayFlag: '🇯🇵', awayNameEn: 'Japan', venueId: 10 },
-  { id: 'r32-75', group: 'R32', matchday: 32, date: '2026-06-29', timeUtc: '22:00', homeFlag: '🇳🇱', homeNameEn: 'Netherlands', awayFlag: '🇲🇦', awayNameEn: 'Morocco', venueId: 16 },
+  { id: 'r32-75', group: 'R32', matchday: 32, date: '2026-06-30', timeUtc: '02:00', homeFlag: '🇳🇱', homeNameEn: 'Netherlands', awayFlag: '🇲🇦', awayNameEn: 'Morocco', venueId: 16 },
   { id: 'r32-77', group: 'R32', matchday: 32, date: '2026-06-30', timeUtc: '16:00', homeFlag: '🇫🇷', homeNameEn: 'France', awayFlag: '🇸🇪', awayNameEn: 'Sweden', venueId: 1 },
   { id: 'r32-78', group: 'R32', matchday: 32, date: '2026-06-30', timeUtc: '19:00', homeFlag: '🇨🇮', homeNameEn: "Cote d'Ivoire", awayFlag: '🇳🇴', awayNameEn: 'Norway', venueId: 2 },
   { id: 'r32-79', group: 'R32', matchday: 32, date: '2026-07-01', timeUtc: '16:00', homeFlag: '🇲🇽', homeNameEn: 'Mexico', awayFlag: '🇪🇨', awayNameEn: 'Ecuador', venueId: 14 },
