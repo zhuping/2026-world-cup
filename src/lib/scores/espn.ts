@@ -38,6 +38,15 @@ function getStatus(statusName?: string, completed?: boolean): MatchScoreStatus {
   return 'scheduled';
 }
 
+function getOptionalNumber(...values: unknown[]) {
+  for (const value of values) {
+    if (value === undefined || value === null || value === '') continue;
+    const numeric = Number(value);
+    if (Number.isFinite(numeric)) return numeric;
+  }
+  return undefined;
+}
+
 function findLocalMatchId(
   eventDate: string,
   homeName: string,
@@ -103,6 +112,20 @@ export async function fetchEspnScoresByDate(date: string) {
         const localAwayScore = localMatch.reversed ? homeScore : awayScore;
         const homeWinner = Boolean(home.winner);
         const awayWinner = Boolean(away.winner);
+        const homePenaltyScore = getOptionalNumber(
+          home.shootoutScore,
+          home.penaltyScore,
+          home.penaltyKickScore,
+          home.penalties
+        );
+        const awayPenaltyScore = getOptionalNumber(
+          away.shootoutScore,
+          away.penaltyScore,
+          away.penaltyKickScore,
+          away.penalties
+        );
+        const localHomePenaltyScore = localMatch.reversed ? awayPenaltyScore : homePenaltyScore;
+        const localAwayPenaltyScore = localMatch.reversed ? homePenaltyScore : awayPenaltyScore;
 
         scores[localMatch.id] = {
           homeScore: Number.isFinite(localHomeScore) ? localHomeScore : 0,
@@ -115,6 +138,8 @@ export async function fetchEspnScoresByDate(date: string) {
           source: 'espn-scoreboard',
           homeWinner: localMatch.reversed ? awayWinner : homeWinner,
           awayWinner: localMatch.reversed ? homeWinner : awayWinner,
+          homePenaltyScore: localHomePenaltyScore,
+          awayPenaltyScore: localAwayPenaltyScore,
         };
       }
 

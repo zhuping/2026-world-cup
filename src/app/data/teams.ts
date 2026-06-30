@@ -22,6 +22,7 @@ export interface BracketTeam {
   nameZh: string;
   nameEn: string;
   score?: number;
+  penaltyScore?: number;
   winner?: boolean;
   tbd?: boolean;
 }
@@ -34,6 +35,10 @@ export interface BracketMatch {
   venue?: string;
   played?: boolean;
   penalty?: string;
+  penaltyScores?: {
+    team1: number;
+    team2: number;
+  };
 }
 
 export interface BracketRound {
@@ -106,6 +111,7 @@ export const knockoutRounds: BracketRound[] = [
         team2: bracketTeam('🇵🇾', '巴拉圭', 'Paraguay'),
         date: '2026-06-29',
         venue: 'Gillette Stadium, Boston',
+        penaltyScores: { team1: 3, team2: 4 },
       }),
       match('r32-77', {
         team1: bracketTeam('🇫🇷', '法国', 'France'),

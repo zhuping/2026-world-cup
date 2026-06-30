@@ -2,11 +2,17 @@ import { knockoutRounds } from '@/app/data/teams';
 import type { BracketMatch, BracketRound, BracketTeam } from '@/app/data/teams';
 import type { MatchScore } from '@/lib/scores/types';
 
-function applyScore(team: BracketTeam, score: number, winner: boolean): BracketTeam {
+function applyScore(
+  team: BracketTeam,
+  score: number,
+  winner: boolean,
+  penaltyScore?: number
+): BracketTeam {
   return {
     ...team,
     score,
     winner,
+    penaltyScore,
   };
 }
 
@@ -68,13 +74,19 @@ export function buildKnockoutRoundsFromScores(scores: Record<string, MatchScore>
       }
 
       const played = score.status === 'finished';
+      const team1PenaltyScore = score.homePenaltyScore ?? match.penaltyScores?.team1;
+      const team2PenaltyScore = score.awayPenaltyScore ?? match.penaltyScores?.team2;
 
       const scoredMatch = {
         ...match,
         played: played || score.status === 'live',
-        team1: applyScore(match.team1, score.homeScore, getWinner(score, 'home')),
-        team2: applyScore(match.team2, score.awayScore, getWinner(score, 'away')),
+        team1: applyScore(match.team1, score.homeScore, getWinner(score, 'home'), team1PenaltyScore),
+        team2: applyScore(match.team2, score.awayScore, getWinner(score, 'away'), team2PenaltyScore),
         penalty: match.penalty,
+        penaltyScores:
+          team1PenaltyScore !== undefined && team2PenaltyScore !== undefined
+            ? { team1: team1PenaltyScore, team2: team2PenaltyScore }
+            : match.penaltyScores,
       };
 
       rounds[roundIndex].matches[matchIndex] = scoredMatch;

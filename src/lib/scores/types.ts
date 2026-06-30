@@ -8,6 +8,8 @@ export interface MatchScore {
   source: string;
   homeWinner?: boolean;
   awayWinner?: boolean;
+  homePenaltyScore?: number;
+  awayPenaltyScore?: number;
 }
 
 export interface SyncMeta {

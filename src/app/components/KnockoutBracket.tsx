@@ -12,6 +12,14 @@ const CONNECTOR_W = 14;
 const CENTER_W = 164;
 const DESKTOP_BRACKET_W = ROUND_COL_W * 8 + CENTER_W;
 
+function getPenaltyLabel(match: BracketMatch, label: string) {
+  if (!match.played) return null;
+  const team1Penalty = match.team1.penaltyScore ?? match.penaltyScores?.team1;
+  const team2Penalty = match.team2.penaltyScore ?? match.penaltyScores?.team2;
+  if (team1Penalty === undefined || team2Penalty === undefined) return null;
+  return `${label} ${team1Penalty}-${team2Penalty}`;
+}
+
 function TeamSlot({ team, score, isWinner, played, penalty }: {
   team: BracketTeam;
   score?: number;
@@ -53,6 +61,9 @@ function TeamSlot({ team, score, isWinner, played, penalty }: {
 }
 
 function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: boolean }) {
+  const { t } = useLanguage();
+  const penaltyLabel = getPenaltyLabel(match, t.knockout.penalties);
+
   return (
     <div style={{
       background: 'rgba(8,16,40,0.9)',
@@ -70,9 +81,11 @@ function MatchCard({ match, isFinal = false }: { match: BracketMatch; isFinal?: 
       <div style={{ height: '1px', background: 'rgba(255,255,255,0.07)', margin: '0 8px' }} />
       <TeamSlot team={match.team2} score={match.team2.score} isWinner={match.team2.winner} played={match.played} />
 
-      {match.date && (
+      {(match.date || penaltyLabel) && (
         <div style={{ padding: '4px 10px', background: 'rgba(0,0,0,0.25)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '10px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>{match.date}</span>
+          <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '10px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>
+            {[match.date, penaltyLabel].filter(Boolean).join(' · ')}
+          </span>
         </div>
       )}
     </div>
@@ -237,6 +250,7 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
               const t1Name = match.team1.tbd ? t.knockout.tbd : getTeamName(match.team1.nameEn, lang);
               const t2Name = match.team2.tbd ? t.knockout.tbd : getTeamName(match.team2.nameEn, lang);
               const isFinal = ri === rounds.length - 1;
+              const penaltyLabel = getPenaltyLabel(match, t.knockout.penalties);
 
               return (
                 <div key={match.id} style={{
@@ -275,9 +289,11 @@ function MobileBracket({ rounds }: { rounds: BracketRound[] }) {
                     )}
                   </div>
 
-                  {(match.date || isFinal) && (
+                  {(match.date || penaltyLabel || isFinal) && (
                     <div style={{ padding: '5px 12px', background: 'rgba(0,0,0,0.25)', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: isFinal ? 'rgba(192,160,32,0.8)' : 'rgba(255,255,255,0.3)' }}>{match.date}</span>
+                      <span style={{ fontFamily: "'Inter', sans-serif", fontSize: '11px', color: isFinal ? 'rgba(192,160,32,0.8)' : match.played ? 'rgba(0,154,68,0.7)' : 'rgba(255,255,255,0.3)' }}>
+                        {[match.date, penaltyLabel].filter(Boolean).join(' · ')}
+                      </span>
                     </div>
                   )}
                 </div>

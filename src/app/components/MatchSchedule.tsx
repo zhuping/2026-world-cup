@@ -6,6 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useLiveTournamentData } from '../hooks/useLiveTournamentData';
 import { knockoutScheduleMatches, ScheduleMatch } from '../data/matches';
+import { knockoutRounds } from '../data/teams';
 import { venues } from '../data/venues';
 import { getTeamName } from '../i18n/teamNames';
 import type { MatchScore } from '@/lib/scores/types';
@@ -54,6 +55,23 @@ function getLocalTzLabel(): string {
   const m = Math.abs(offset) % 60;
   const sign = offset >= 0 ? '+' : '-';
   return `UTC${sign}${h}${m ? `:${String(m).padStart(2, '0')}` : ''}`;
+}
+
+const fallbackPenaltyScores = new Map(
+  knockoutRounds
+    .flatMap((round) => round.matches)
+    .filter((match) => match.penaltyScores)
+    .map((match) => [match.id, match.penaltyScores!])
+);
+
+function getPenaltyScoreLabel(matchId: string, score: MatchScore | undefined, label: string) {
+  if (!score || score.homeScore !== score.awayScore) return null;
+
+  const homePenaltyScore = score.homePenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team1;
+  const awayPenaltyScore = score.awayPenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team2;
+  if (homePenaltyScore === undefined || awayPenaltyScore === undefined) return null;
+
+  return `${label} ${homePenaltyScore}-${awayPenaltyScore}`;
 }
 
 function formatSyncTime(value: string | null, lang: string) {
@@ -182,6 +200,11 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
   const hasScore = Boolean(score);
   const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
+  const penaltyScoreLabel = getPenaltyScoreLabel(
+    match.id,
+    score,
+    lang === 'zh' ? '点球' : 'Pen.'
+  );
 
   return (
     <motion.div
@@ -263,11 +286,23 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
             color: hasScore ? '#FFFFFF' : 'rgba(255,255,255,0.25)',
             letterSpacing: '1px',
             flexShrink: 0,
-            minWidth: hasScore ? (isMobile ? '54px' : '68px') : undefined,
+            minWidth: hasScore ? (isMobile ? '62px' : '78px') : undefined,
             textAlign: 'center',
             lineHeight: 1,
           }}>
             {score ? `${score.homeScore}-${score.awayScore}` : 'VS'}
+            {penaltyScoreLabel && (
+              <div style={{
+                fontFamily: "'Inter', sans-serif",
+                fontSize: '10px',
+                color: 'rgba(0,154,68,0.85)',
+                marginTop: '4px',
+                letterSpacing: '0',
+                whiteSpace: 'nowrap',
+              }}>
+                {penaltyScoreLabel}
+              </div>
+            )}
             {statusLabel && (
               <div style={{
                 fontFamily: "'Rajdhani', sans-serif",
