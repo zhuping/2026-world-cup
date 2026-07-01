@@ -1,4 +1,5 @@
 import { knockoutRounds } from '@/app/data/teams';
+import { knockoutStageMatches } from '@/app/data/matches';
 import type { BracketMatch, BracketRound, BracketTeam } from '@/app/data/teams';
 import type { MatchScore } from '@/lib/scores/types';
 
@@ -22,6 +23,12 @@ function cloneMatch(match: BracketMatch): BracketMatch {
     team1: { ...match.team1 },
     team2: { ...match.team2 },
   };
+}
+
+function hasMatchStarted(matchId: string, now = new Date()) {
+  const match = knockoutStageMatches.find((item) => item.id === matchId);
+  if (!match) return false;
+  return new Date(`${match.date}T${match.timeUtc}:00Z`) <= now;
 }
 
 function getWinner(score: MatchScore, side: 'home' | 'away') {
@@ -68,7 +75,7 @@ export function buildKnockoutRoundsFromScores(scores: Record<string, MatchScore>
   rounds.forEach((round, roundIndex) => {
     round.matches = round.matches.map((match, matchIndex) => {
       const score = scores[match.id];
-      if (!score || score.status === 'scheduled') {
+      if (!score || (score.status === 'scheduled' && !hasMatchStarted(match.id))) {
         advanceWinner(rounds, roundIndex, matchIndex);
         return match;
       }

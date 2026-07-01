@@ -36,6 +36,10 @@ function formatLocalTime(date: string, timeUtc: string): string {
   return dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
+function hasMatchStarted(match: ScheduleMatch, now = new Date()) {
+  return new Date(`${match.date}T${match.timeUtc}:00Z`) <= now;
+}
+
 function formatDisplayDate(dateStr: string, lang: string): string {
   const localeMap: Record<string, string> = {
     zh: 'zh-CN', en: 'en-US', ja: 'ja-JP', ko: 'ko-KR', pt: 'pt-BR', es: 'es-MX',
@@ -64,12 +68,12 @@ const fallbackPenaltyScores = new Map(
     .map((match) => [match.id, match.penaltyScores!])
 );
 
-function getScoreLabel(matchId: string, score: MatchScore | undefined) {
-  if (!score || score.status === 'scheduled') return 'VS';
+function getScoreLabel(match: ScheduleMatch, score: MatchScore | undefined) {
+  if (!score || (score.status === 'scheduled' && !hasMatchStarted(match))) return 'VS';
   if (score.homeScore !== score.awayScore) return `${score.homeScore}-${score.awayScore}`;
 
-  const homePenaltyScore = score.homePenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team1;
-  const awayPenaltyScore = score.awayPenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team2;
+  const homePenaltyScore = score.homePenaltyScore ?? fallbackPenaltyScores.get(match.id)?.team1;
+  const awayPenaltyScore = score.awayPenaltyScore ?? fallbackPenaltyScores.get(match.id)?.team2;
   if (homePenaltyScore === undefined || awayPenaltyScore === undefined) {
     return `${score.homeScore}-${score.awayScore}`;
   }
@@ -201,9 +205,10 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
   const venue = venues.find(v => v.id === match.venueId);
   const localTime = formatLocalTime(match.date, match.timeUtc);
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
-  const hasScore = score?.status === 'live' || score?.status === 'finished';
+  const hasStarted = hasMatchStarted(match);
+  const hasScore = score?.status === 'live' || score?.status === 'finished' || (score?.status === 'scheduled' && hasStarted);
   const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
-  const scoreLabel = getScoreLabel(match.id, score);
+  const scoreLabel = getScoreLabel(match, score);
 
   return (
     <motion.div
