@@ -65,7 +65,7 @@ const fallbackPenaltyScores = new Map(
 );
 
 function getScoreLabel(matchId: string, score: MatchScore | undefined) {
-  if (!score) return 'VS';
+  if (!score || score.status === 'scheduled') return 'VS';
   if (score.homeScore !== score.awayScore) return `${score.homeScore}-${score.awayScore}`;
 
   const homePenaltyScore = score.homePenaltyScore ?? fallbackPenaltyScores.get(matchId)?.team1;
@@ -201,7 +201,7 @@ function MatchCard({ match, score, lang, isMobile, tz }: {
   const venue = venues.find(v => v.id === match.venueId);
   const localTime = formatLocalTime(match.date, match.timeUtc);
   const countryEmoji = venue?.country === 'USA' ? '🇺🇸' : venue?.country === 'Canada' ? '🇨🇦' : '🇲🇽';
-  const hasScore = Boolean(score);
+  const hasScore = score?.status === 'live' || score?.status === 'finished';
   const statusLabel = score?.status === 'finished' ? 'FT' : score?.status === 'live' ? 'LIVE' : null;
   const scoreLabel = getScoreLabel(match.id, score);
 

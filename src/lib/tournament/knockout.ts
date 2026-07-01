@@ -26,9 +26,9 @@ function cloneMatch(match: BracketMatch): BracketMatch {
 
 function getWinner(score: MatchScore, side: 'home' | 'away') {
   const explicitWinner = side === 'home' ? score.homeWinner : score.awayWinner;
+  if (score.status !== 'finished') return false;
   if (typeof explicitWinner === 'boolean') return explicitWinner;
 
-  if (score.status !== 'finished') return false;
   return side === 'home'
     ? score.homeScore > score.awayScore
     : score.awayScore > score.homeScore;
@@ -68,7 +68,7 @@ export function buildKnockoutRoundsFromScores(scores: Record<string, MatchScore>
   rounds.forEach((round, roundIndex) => {
     round.matches = round.matches.map((match, matchIndex) => {
       const score = scores[match.id];
-      if (!score) {
+      if (!score || score.status === 'scheduled') {
         advanceWinner(rounds, roundIndex, matchIndex);
         return match;
       }
