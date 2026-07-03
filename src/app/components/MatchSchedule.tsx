@@ -21,7 +21,11 @@ function formatLocalDateKey(date: Date): string {
 }
 
 function getMatchLocalDate(match: ScheduleMatch): string {
-  return formatLocalDateKey(new Date(`${match.date}T${match.timeUtc}:00Z`));
+  return formatLocalDateKey(new Date(getMatchStartMs(match)));
+}
+
+function getMatchStartMs(match: ScheduleMatch): number {
+  return new Date(`${match.date}T${match.timeUtc}:00Z`).getTime();
 }
 
 function getDefaultDate(matchDates: string[]): string {
@@ -37,7 +41,7 @@ function formatLocalTime(date: string, timeUtc: string): string {
 }
 
 function hasMatchStarted(match: ScheduleMatch, now = new Date()) {
-  return new Date(`${match.date}T${match.timeUtc}:00Z`) <= now;
+  return getMatchStartMs(match) <= now.getTime();
 }
 
 function formatDisplayDate(dateStr: string, lang: string): string {
@@ -406,7 +410,9 @@ export function MatchSchedule() {
   }, [currentIndex]);
 
   const matchesForDay = useMemo(
-    () => scheduleMatches.filter(m => getMatchLocalDate(m) === selectedDate),
+    () => scheduleMatches
+      .filter(m => getMatchLocalDate(m) === selectedDate)
+      .sort((a, b) => getMatchStartMs(a) - getMatchStartMs(b)),
     [scheduleMatches, selectedDate]
   );
 
