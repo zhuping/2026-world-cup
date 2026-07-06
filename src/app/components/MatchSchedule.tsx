@@ -382,10 +382,10 @@ export function MatchSchedule() {
   const isMobile = useIsMobile();
   const { scores, updatedAt, sync } = useLiveTournamentData();
   const scheduleMatches = knockoutScheduleMatches;
-  const stageLabel = lang === 'zh' ? '三十二强' : 'Round of 32';
+  const stageLabel = lang === 'zh' ? '十六强' : 'Round of 16';
   const scheduleSummary = lang === 'zh'
-    ? '2026 年 6 月 28 日 – 7 月 4 日 · 16 场 · 淘汰赛'
-    : 'June 28 – July 4, 2026 · 16 matches · Knockout stage';
+    ? '2026 年 7 月 4 日 – 7 月 7 日 · 8 场 · 淘汰赛'
+    : 'July 4 – July 7, 2026 · 8 matches · Knockout stage';
   const matchDates = useMemo(
     () => [...new Set(scheduleMatches.map(getMatchLocalDate))].sort(),
     [scheduleMatches]

@@ -99,6 +99,14 @@ type DisplayRound = {
   matches: BracketMatch[];
 };
 
+function hasKnownTeams(round: BracketRound | undefined) {
+  return Boolean(round?.matches.some((match) => !match.team1.tbd && !match.team2.tbd));
+}
+
+function hasRoundStarted(round: BracketRound, now = new Date()) {
+  return round.matches.some((match) => match.date && new Date(`${match.date}T00:00:00Z`) <= now);
+}
+
 const RoundLabel = ({ name, nameEn, color }: { name: string; nameEn: string; color: string }) => (
   <div style={{ marginBottom: '12px', padding: '4px 14px', background: `${color}15`, border: `1px solid ${color}40`, borderRadius: '16px', alignSelf: 'center' }}>
     <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '13px', color, letterSpacing: '2px', textAlign: 'center' }}>{name}</div>
@@ -303,14 +311,15 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
   const progressItems = rounds.map((round, index) => {
     const allPlayed = round.matches.every((match) => match.played);
     const somePlayed = round.matches.some((match) => match.played);
-    const hasKnownTeams = round.matches.some((match) => !match.team1.tbd && !match.team2.tbd);
-    const inProgress = somePlayed || (index === 0 && hasKnownTeams);
+    const roundDone = allPlayed || hasKnownTeams(rounds[index + 1]);
+    const inProgress = !roundDone && (somePlayed || hasRoundStarted(round));
+    const upcoming = !roundDone && !inProgress && hasKnownTeams(round);
 
     return {
       label: roundMeta[index]?.progress ?? round.name,
-      value: allPlayed ? t.tournament.statusDone : somePlayed ? t.tournament.statusLive : inProgress ? t.tournament.statusUpcoming : t.tournament.statusTBD,
-      color: allPlayed ? '#009A44' : inProgress ? '#D72828' : '#C0A020',
-      icon: allPlayed ? '✓' : inProgress ? '▶' : '⏳',
+      value: roundDone ? t.tournament.statusDone : inProgress ? t.tournament.statusLive : upcoming ? t.tournament.statusUpcoming : t.tournament.statusTBD,
+      color: roundDone ? '#009A44' : inProgress || upcoming ? '#D72828' : '#C0A020',
+      icon: roundDone ? '✓' : inProgress || upcoming ? '▶' : '⏳',
     };
   });
 

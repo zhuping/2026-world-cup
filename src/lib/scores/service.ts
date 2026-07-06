@@ -38,6 +38,24 @@ function getRecentMatchDates(now = new Date()) {
   return startedDates.slice(-2);
 }
 
+function getPendingMatchDates(now: Date, existing: ScoreStore) {
+  return [
+    ...new Set(
+      scorableMatches
+        .filter((match) => getMatchSyncStart(match) <= now)
+        .filter((match) => {
+          const current = existing.scores[match.id];
+          return !current || current.status !== 'finished' || needsPenaltyScoreBackfill(match.id, current);
+        })
+        .flatMap((match) => getSyncCandidateDates(match))
+    ),
+  ].sort();
+}
+
+function getDatesToCheck(now: Date, existing: ScoreStore) {
+  return [...new Set([...getRecentMatchDates(now), ...getPendingMatchDates(now, existing)])].sort();
+}
+
 function isKnockoutMatch(matchId: string) {
   return /^(r32|r16|qf|sf|final)/.test(matchId);
 }
@@ -51,7 +69,7 @@ function needsPenaltyScoreBackfill(matchId: string, current: ScoreStore['scores'
 }
 
 function getDatesToSync(now = new Date(), existing: ScoreStore) {
-  const targetDates = getRecentMatchDates(now);
+  const targetDates = getDatesToCheck(now, existing);
 
   return targetDates.filter((date) =>
     scorableMatches.some((match) => {
@@ -86,7 +104,7 @@ export async function syncScores(now = new Date()) {
   }
 
   const existing = await readScoreStore();
-  const scopeDates = getRecentMatchDates(now);
+  const scopeDates = getDatesToCheck(now, existing);
   const dates = getDatesToSync(now, existing);
   if (dates.length === 0) {
     const nextStore: ScoreStore = {
