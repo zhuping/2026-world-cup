@@ -311,7 +311,7 @@ export function KnockoutBracket({ rounds = fallbackKnockoutRounds }: { rounds?: 
   const progressItems = rounds.map((round, index) => {
     const allPlayed = round.matches.every((match) => match.played);
     const somePlayed = round.matches.some((match) => match.played);
-    const roundDone = allPlayed || hasKnownTeams(rounds[index + 1]);
+    const roundDone = allPlayed;
     const inProgress = !roundDone && (somePlayed || hasRoundStarted(round));
     const upcoming = !roundDone && !inProgress && hasKnownTeams(round);
 
