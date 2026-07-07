@@ -111,7 +111,7 @@ export async function syncScores(now = new Date()) {
       ...existing,
       sync: {
         lastAttemptAt: attemptAt,
-        lastSuccessAt: existing.sync.lastSuccessAt ?? existing.updatedAt,
+        lastSuccessAt: attemptAt,
         lastStatus: 'skipped',
         lastError: null,
         lastSyncedDates: scopeDates,

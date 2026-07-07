@@ -429,7 +429,7 @@ export function MatchSchedule() {
   );
 
   const displayDate = formatDisplayDate(selectedDate, lang);
-  const syncTimeLabel = formatSyncTime(sync.lastSuccessAt ?? updatedAt, lang);
+  const syncTimeLabel = formatSyncTime(sync.lastAttemptAt ?? sync.lastSuccessAt ?? updatedAt, lang);
   const syncStatusLabel = getSyncStatusLabel(sync.lastStatus, lang);
 
   // Group matches by UTC time slot for the day summary header
