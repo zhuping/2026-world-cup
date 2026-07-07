@@ -57,6 +57,15 @@ function formatDisplayDate(dateStr: string, lang: string): string {
   });
 }
 
+function formatScheduleRange(start: string, end: string, count: number, lang: string) {
+  const [startYear, startMonth, startDay] = start.split('-').map(Number);
+  const [, endMonth, endDay] = end.split('-').map(Number);
+
+  return lang === 'zh'
+    ? `${startYear} 年 ${startMonth} 月 ${startDay} 日 – ${endMonth} 月 ${endDay} 日 · ${count} 场 · 淘汰赛`
+    : `${new Date(startYear, startMonth - 1, startDay).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} – ${new Date(startYear, endMonth - 1, endDay).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}, ${startYear} · ${count} matches · Knockout stage`;
+}
+
 function getLocalTzLabel(): string {
   const offset = -new Date().getTimezoneOffset();
   const h = Math.floor(Math.abs(offset) / 60);
@@ -383,12 +392,15 @@ export function MatchSchedule() {
   const { scores, updatedAt, sync } = useLiveTournamentData();
   const scheduleMatches = knockoutScheduleMatches;
   const stageLabel = lang === 'zh' ? '十六强' : 'Round of 16';
-  const scheduleSummary = lang === 'zh'
-    ? '2026 年 7 月 4 日 – 7 月 7 日 · 8 场 · 淘汰赛'
-    : 'July 4 – July 7, 2026 · 8 matches · Knockout stage';
   const matchDates = useMemo(
     () => [...new Set(scheduleMatches.map(getMatchLocalDate))].sort(),
     [scheduleMatches]
+  );
+  const scheduleSummary = formatScheduleRange(
+    matchDates[0],
+    matchDates[matchDates.length - 1],
+    scheduleMatches.length,
+    lang
   );
   const [selectedDate, setSelectedDate] = useState(() => getDefaultDate(matchDates));
   const [direction, setDirection] = useState(1);
