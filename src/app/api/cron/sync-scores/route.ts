@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { syncScores } from '@/lib/scores/service';
 
 export const dynamic = 'force-dynamic';
 
@@ -15,16 +14,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
   }
 
-  try {
-    const result = await syncScores();
-    return NextResponse.json(result);
-  } catch (error) {
-    return NextResponse.json(
-      {
-        ok: false,
-        error: error instanceof Error ? error.message : 'Unknown sync error',
-      },
-      { status: 500 }
-    );
-  }
+  return NextResponse.json(
+    {
+      ok: false,
+      error: 'Score sync moved to GitHub Actions committed public/live-data.json.',
+    },
+    { status: 410 }
+  );
 }

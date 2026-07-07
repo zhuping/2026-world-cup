@@ -5,6 +5,9 @@ on:
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: sync-match-scores
   cancel-in-progress: true
@@ -13,23 +16,24 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger score sync endpoint
-        env:
-          SYNC_URL: ${{ secrets.SCORE_SYNC_URL }}
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Sync ESPN scores
+        run: node scripts/sync-live-data.mjs
+
+      - name: Commit live data
         run: |
-          if [ -z "$SYNC_URL" ]; then
-            echo "Missing SCORE_SYNC_URL secret"
-            exit 1
+          if git diff --quiet -- public/live-data.json; then
+            echo "No live data changes"
+            exit 0
           fi
 
-          if [ -z "$CRON_SECRET" ]; then
-            echo "Missing CRON_SECRET secret"
-            exit 1
-          fi
-
-          response=$(curl --silent --show-error --fail \
-            --header "Authorization: Bearer $CRON_SECRET" \
-            "$SYNC_URL")
-
-          echo "$response"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/live-data.json
+          git commit -m "chore: sync live scores [skip ci]"
+          git push
