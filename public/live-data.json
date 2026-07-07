@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T18:24:36.809Z",
+  "updatedAt": "2026-07-07T20:25:24.959Z",
   "scores": {
     "m-01": {
       "homeScore": 2,
@@ -839,7 +839,7 @@
       "homeScore": 1,
       "awayScore": 0,
       "status": "finished",
-      "updatedAt": "2026-07-07T18:24:36.934Z",
+      "updatedAt": "2026-07-07T20:25:25.067Z",
       "source": "espn-scoreboard",
       "homeWinner": true,
       "awayWinner": false
@@ -848,7 +848,7 @@
       "homeScore": 4,
       "awayScore": 1,
       "status": "finished",
-      "updatedAt": "2026-07-07T18:24:36.934Z",
+      "updatedAt": "2026-07-07T20:25:25.067Z",
       "source": "espn-scoreboard",
       "homeWinner": true,
       "awayWinner": false
@@ -857,7 +857,7 @@
       "homeScore": 3,
       "awayScore": 2,
       "status": "finished",
-      "updatedAt": "2026-07-07T18:24:36.956Z",
+      "updatedAt": "2026-07-07T20:25:25.092Z",
       "source": "espn-scoreboard",
       "homeWinner": true,
       "awayWinner": false
@@ -866,15 +866,15 @@
       "homeScore": 0,
       "awayScore": 0,
       "status": "scheduled",
-      "updatedAt": "2026-07-07T18:24:36.956Z",
+      "updatedAt": "2026-07-07T20:25:25.092Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
       "awayWinner": false
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-07T18:24:36.809Z",
-    "lastSuccessAt": "2026-07-07T18:24:36.809Z",
+    "lastAttemptAt": "2026-07-07T20:25:24.959Z",
+    "lastSuccessAt": "2026-07-07T20:25:24.959Z",
     "lastStatus": "success",
     "lastError": null,
     "lastSyncedDates": [
