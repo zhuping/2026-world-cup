@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T03:41:53.303Z",
+  "updatedAt": "2026-07-07T05:09:48.433Z",
   "scores": {
     "m-01": {
       "homeScore": 2,
@@ -839,7 +839,7 @@
       "homeScore": 1,
       "awayScore": 0,
       "status": "finished",
-      "updatedAt": "2026-07-07T03:42:06.240Z",
+      "updatedAt": "2026-07-07T05:09:48.622Z",
       "source": "espn-scoreboard",
       "homeWinner": true,
       "awayWinner": false
@@ -848,7 +848,7 @@
       "homeScore": 4,
       "awayScore": 1,
       "status": "finished",
-      "updatedAt": "2026-07-07T03:42:06.240Z",
+      "updatedAt": "2026-07-07T05:09:48.622Z",
       "source": "espn-scoreboard",
       "homeWinner": true,
       "awayWinner": false
@@ -857,7 +857,7 @@
       "homeScore": 0,
       "awayScore": 0,
       "status": "scheduled",
-      "updatedAt": "2026-07-07T03:42:06.403Z",
+      "updatedAt": "2026-07-07T05:09:48.640Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
       "awayWinner": false
@@ -866,47 +866,21 @@
       "homeScore": 0,
       "awayScore": 0,
       "status": "scheduled",
-      "updatedAt": "2026-07-07T03:42:06.403Z",
+      "updatedAt": "2026-07-07T05:09:48.640Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
       "awayWinner": false
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-07T03:41:53.303Z",
-    "lastSuccessAt": "2026-07-07T03:41:53.303Z",
+    "lastAttemptAt": "2026-07-07T05:09:48.433Z",
+    "lastSuccessAt": "2026-07-07T05:09:48.433Z",
     "lastStatus": "success",
     "lastError": null,
     "lastSyncedDates": [
-      "2026-06-10",
-      "2026-06-11",
-      "2026-06-12",
-      "2026-06-13",
-      "2026-06-14",
-      "2026-06-15",
-      "2026-06-16",
-      "2026-06-17",
-      "2026-06-18",
-      "2026-06-19",
-      "2026-06-20",
-      "2026-06-21",
-      "2026-06-22",
-      "2026-06-23",
-      "2026-06-24",
-      "2026-06-25",
-      "2026-06-26",
-      "2026-06-27",
-      "2026-06-28",
-      "2026-06-29",
-      "2026-06-30",
-      "2026-07-01",
-      "2026-07-02",
-      "2026-07-03",
-      "2026-07-04",
-      "2026-07-05",
       "2026-07-06",
       "2026-07-07"
     ],
-    "lastFetchedCount": 96
+    "lastFetchedCount": 4
   }
 }
