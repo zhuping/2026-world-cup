@@ -259,7 +259,36 @@ export const knockoutRounds: BracketRound[] = [
       }),
     ],
   },
-  { name: '八强', nameEn: 'Quarter Finals', matches: Array.from({ length: 4 }, (_, i) => match(`qf-${i + 1}`)) },
+  {
+    name: '八强',
+    nameEn: 'Quarter Finals',
+    matches: [
+      match('qf-1', {
+        team1: bracketTeam('🇫🇷', '法国', 'France'),
+        team2: bracketTeam('🇲🇦', '摩洛哥', 'Morocco'),
+        date: '2026-07-10',
+        venue: 'Gillette Stadium, Boston',
+      }),
+      match('qf-2', {
+        team1: bracketTeam('🇪🇸', '西班牙', 'Spain'),
+        team2: bracketTeam('🇧🇪', '比利时', 'Belgium'),
+        date: '2026-07-11',
+        venue: 'SoFi Stadium, Los Angeles',
+      }),
+      match('qf-3', {
+        team1: bracketTeam('🇳🇴', '挪威', 'Norway'),
+        team2: bracketTeam('🏴󠁧󠁢󠁥󠁮󠁧󠁿', '英格兰', 'England'),
+        date: '2026-07-12',
+        venue: 'Hard Rock Stadium, Miami',
+      }),
+      match('qf-4', {
+        team1: bracketTeam('🇦🇷', '阿根廷', 'Argentina'),
+        team2: bracketTeam('🇨🇭', '瑞士', 'Switzerland'),
+        date: '2026-07-12',
+        venue: 'Arrowhead Stadium, Kansas City',
+      }),
+    ],
+  },
   { name: '四强', nameEn: 'Semi Finals', matches: Array.from({ length: 2 }, (_, i) => match(`sf-${i + 1}`)) },
   { name: '决赛', nameEn: 'Final', matches: [match('final', { venue: 'MetLife Stadium, NJ', date: '2026-07-19' })] },
 ];

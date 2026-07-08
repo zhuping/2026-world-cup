@@ -138,14 +138,10 @@ export const roundOf32ScheduleMatches: ScheduleMatch[] = [
 ];
 
 export const knockoutScheduleMatches: ScheduleMatch[] = [
-  { id: 'r16-2', group: 'R16', matchday: 16, date: '2026-07-04', timeUtc: '17:00', homeFlag: '🇨🇦', homeNameEn: 'Canada', awayFlag: '🇲🇦', awayNameEn: 'Morocco', venueId: 10 },
-  { id: 'r16-1', group: 'R16', matchday: 16, date: '2026-07-04', timeUtc: '21:00', homeFlag: '🇵🇾', homeNameEn: 'Paraguay', awayFlag: '🇫🇷', awayNameEn: 'France', venueId: 7 },
-  { id: 'r16-5', group: 'R16', matchday: 16, date: '2026-07-05', timeUtc: '20:00', homeFlag: '🇧🇷', homeNameEn: 'Brazil', awayFlag: '🇳🇴', awayNameEn: 'Norway', venueId: 1 },
-  { id: 'r16-6', group: 'R16', matchday: 16, date: '2026-07-06', timeUtc: '01:00', homeFlag: '🇲🇽', homeNameEn: 'Mexico', awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayNameEn: 'England', venueId: 16 },
-  { id: 'r16-3', group: 'R16', matchday: 16, date: '2026-07-06', timeUtc: '19:00', homeFlag: '🇪🇸', homeNameEn: 'Spain', awayFlag: '🇵🇹', awayNameEn: 'Portugal', venueId: 2 },
-  { id: 'r16-4', group: 'R16', matchday: 16, date: '2026-07-07', timeUtc: '00:00', homeFlag: '🇧🇪', homeNameEn: 'Belgium', awayFlag: '🇺🇸', awayNameEn: 'USA', venueId: 11 },
-  { id: 'r16-7', group: 'R16', matchday: 16, date: '2026-07-07', timeUtc: '16:00', homeFlag: '🇦🇷', homeNameEn: 'Argentina', awayFlag: '🇪🇬', awayNameEn: 'Egypt', venueId: 5 },
-  { id: 'r16-8', group: 'R16', matchday: 16, date: '2026-07-07', timeUtc: '20:00', homeFlag: '🇨🇭', homeNameEn: 'Switzerland', awayFlag: '🇨🇴', awayNameEn: 'Colombia', venueId: 12 },
+  { id: 'qf-1', group: 'QF', matchday: 8, date: '2026-07-09', timeUtc: '20:00', homeFlag: '🇫🇷', homeNameEn: 'France', awayFlag: '🇲🇦', awayNameEn: 'Morocco', venueId: 8 },
+  { id: 'qf-2', group: 'QF', matchday: 8, date: '2026-07-10', timeUtc: '19:00', homeFlag: '🇪🇸', homeNameEn: 'Spain', awayFlag: '🇧🇪', awayNameEn: 'Belgium', venueId: 3 },
+  { id: 'qf-3', group: 'QF', matchday: 8, date: '2026-07-11', timeUtc: '21:00', homeFlag: '🇳🇴', homeNameEn: 'Norway', awayFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', awayNameEn: 'England', venueId: 9 },
+  { id: 'qf-4', group: 'QF', matchday: 8, date: '2026-07-12', timeUtc: '01:00', homeFlag: '🇦🇷', homeNameEn: 'Argentina', awayFlag: '🇨🇭', awayNameEn: 'Switzerland', venueId: 6 },
 ];
 
 export const knockoutStageMatches: ScorableMatch[] = [
