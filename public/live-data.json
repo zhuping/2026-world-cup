@@ -911,8 +911,8 @@
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-12T16:31:17.930Z",
-    "lastSuccessAt": "2026-07-12T16:31:17.930Z",
+    "lastAttemptAt": "2026-07-12T17:38:46.879Z",
+    "lastSuccessAt": "2026-07-12T17:38:46.879Z",
     "lastStatus": "skipped",
     "lastError": null,
     "lastSyncedDates": [
