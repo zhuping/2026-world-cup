@@ -289,6 +289,23 @@ export const knockoutRounds: BracketRound[] = [
       }),
     ],
   },
-  { name: '四强', nameEn: 'Semi Finals', matches: Array.from({ length: 2 }, (_, i) => match(`sf-${i + 1}`)) },
+  {
+    name: '四强',
+    nameEn: 'Semi Finals',
+    matches: [
+      match('sf-1', {
+        team1: bracketTeam('🇫🇷', '法国', 'France'),
+        team2: bracketTeam('🇪🇸', '西班牙', 'Spain'),
+        date: '2026-07-15',
+        venue: 'AT&T Stadium, Dallas',
+      }),
+      match('sf-2', {
+        team1: bracketTeam('🏴󠁧󠁢󠁥󠁮󠁧󠁿', '英格兰', 'England'),
+        team2: bracketTeam('🇦🇷', '阿根廷', 'Argentina'),
+        date: '2026-07-16',
+        venue: 'Mercedes-Benz Stadium, Atlanta',
+      }),
+    ],
+  },
   { name: '决赛', nameEn: 'Final', matches: [match('final', { venue: 'MetLife Stadium, NJ', date: '2026-07-19' })] },
 ];

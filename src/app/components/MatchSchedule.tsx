@@ -391,7 +391,7 @@ export function MatchSchedule() {
   const isMobile = useIsMobile();
   const { scores, updatedAt, sync } = useLiveTournamentData();
   const scheduleMatches = knockoutScheduleMatches;
-  const stageLabel = lang === 'zh' ? '八强' : 'Quarter Finals';
+  const stageLabel = lang === 'zh' ? '半决赛' : 'Semi Finals';
   const matchDates = useMemo(
     () => [...new Set(scheduleMatches.map(getMatchLocalDate))].sort(),
     [scheduleMatches]
