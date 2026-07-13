@@ -911,17 +911,14 @@
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-13T03:18:51.822Z",
-    "lastSuccessAt": "2026-07-13T03:18:51.822Z",
-    "lastStatus": "success",
+    "lastAttemptAt": "2026-07-13T04:47:03.020Z",
+    "lastSuccessAt": "2026-07-13T04:47:03.020Z",
+    "lastStatus": "skipped",
     "lastError": null,
     "lastSyncedDates": [
-      "2026-07-08",
-      "2026-07-09",
-      "2026-07-10",
-      "2026-07-11",
-      "2026-07-12"
+      "2026-07-03",
+      "2026-07-04"
     ],
-    "lastFetchedCount": 4
+    "lastFetchedCount": 0
   }
 }
