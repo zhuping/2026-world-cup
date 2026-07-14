@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-14T22:26:20.534Z",
+  "updatedAt": "2026-07-14T23:26:27.792Z",
   "scores": {
     "m-01": {
       "homeScore": 2,
@@ -913,15 +913,15 @@
       "homeScore": 0,
       "awayScore": 2,
       "status": "finished",
-      "updatedAt": "2026-07-14T22:26:20.937Z",
+      "updatedAt": "2026-07-14T23:26:27.947Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
       "awayWinner": true
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-14T22:26:20.534Z",
-    "lastSuccessAt": "2026-07-14T22:26:20.534Z",
+    "lastAttemptAt": "2026-07-14T23:26:27.792Z",
+    "lastSuccessAt": "2026-07-14T23:26:27.792Z",
     "lastStatus": "success",
     "lastError": null,
     "lastSyncedDates": [
