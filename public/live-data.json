@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-15T20:42:51.414Z",
+  "updatedAt": "2026-07-15T21:41:14.636Z",
   "scores": {
     "m-01": {
       "homeScore": 2,
@@ -913,24 +913,24 @@
       "homeScore": 0,
       "awayScore": 2,
       "status": "finished",
-      "updatedAt": "2026-07-15T20:42:51.531Z",
+      "updatedAt": "2026-07-15T21:41:14.952Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
       "awayWinner": true
     },
     "sf-2": {
       "homeScore": 1,
-      "awayScore": 0,
-      "status": "scheduled",
-      "updatedAt": "2026-07-15T20:42:51.562Z",
+      "awayScore": 2,
+      "status": "finished",
+      "updatedAt": "2026-07-15T21:41:15.002Z",
       "source": "espn-scoreboard",
       "homeWinner": false,
-      "awayWinner": false
+      "awayWinner": true
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-15T20:42:51.414Z",
-    "lastSuccessAt": "2026-07-15T20:42:51.414Z",
+    "lastAttemptAt": "2026-07-15T21:41:14.636Z",
+    "lastSuccessAt": "2026-07-15T21:41:14.636Z",
     "lastStatus": "success",
     "lastError": null,
     "lastSyncedDates": [
