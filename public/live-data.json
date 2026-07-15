@@ -929,14 +929,14 @@
     }
   },
   "sync": {
-    "lastAttemptAt": "2026-07-15T21:41:14.636Z",
-    "lastSuccessAt": "2026-07-15T21:41:14.636Z",
-    "lastStatus": "success",
+    "lastAttemptAt": "2026-07-15T22:41:33.490Z",
+    "lastSuccessAt": "2026-07-15T22:41:33.490Z",
+    "lastStatus": "skipped",
     "lastError": null,
     "lastSyncedDates": [
       "2026-07-14",
       "2026-07-15"
     ],
-    "lastFetchedCount": 2
+    "lastFetchedCount": 0
   }
 }
