@@ -140,6 +140,7 @@ export const roundOf32ScheduleMatches: ScheduleMatch[] = [
 export const knockoutScheduleMatches: ScheduleMatch[] = [
   { id: 'sf-1', group: 'SF', matchday: 4, date: '2026-07-14', timeUtc: '19:00', homeFlag: '🇫🇷', homeNameEn: 'France', awayFlag: '🇪🇸', awayNameEn: 'Spain', venueId: 2 },
   { id: 'sf-2', group: 'SF', matchday: 4, date: '2026-07-15', timeUtc: '19:00', homeFlag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', homeNameEn: 'England', awayFlag: '🇦🇷', awayNameEn: 'Argentina', venueId: 5 },
+  { id: 'final', group: 'FINAL', matchday: 5, date: '2026-07-19', timeUtc: '19:00', homeFlag: '🇪🇸', homeNameEn: 'Spain', awayFlag: '🇦🇷', awayNameEn: 'Argentina', venueId: 1 },
 ];
 
 export const knockoutStageMatches: ScorableMatch[] = [

@@ -57,13 +57,12 @@ function formatDisplayDate(dateStr: string, lang: string): string {
   });
 }
 
-function formatScheduleRange(start: string, end: string, count: number, lang: string) {
-  const [startYear, startMonth, startDay] = start.split('-').map(Number);
-  const [, endMonth, endDay] = end.split('-').map(Number);
+function formatScheduleSummary(date: string, lang: string) {
+  const [year, month, day] = date.split('-').map(Number);
 
   return lang === 'zh'
-    ? `${startYear} 年 ${startMonth} 月 ${startDay} 日 – ${endMonth} 月 ${endDay} 日 · ${count} 场 · 淘汰赛`
-    : `${new Date(startYear, startMonth - 1, startDay).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })} – ${new Date(startYear, endMonth - 1, endDay).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}, ${startYear} · ${count} matches · Knockout stage`;
+    ? `${year} 年 ${month} 月 ${day} 日 · 1 场 · 决赛`
+    : `${new Date(year, month - 1, day).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}, ${year} · 1 match · Final`;
 }
 
 function getLocalTzLabel(): string {
@@ -145,11 +144,13 @@ const GROUP_COLORS: Record<string, string> = {
   I: '#6B1B1B', J: '#1B3E7A', K: '#3D7A1B', L: '#7A5E1B',
 };
 
+const finalScheduleMatches = knockoutScheduleMatches.filter((match) => match.id === 'final');
+
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 function GroupBadge({ group }: { group: string }) {
   const color = GROUP_COLORS[group] ?? '#0033A0';
-  const label = group === 'R32' ? 'R32' : `GRP ${group}`;
+  const label = group === 'FINAL' ? 'FINAL' : group === 'R32' ? 'R32' : `GRP ${group}`;
   return (
     <div style={{
       background: color,
@@ -390,18 +391,13 @@ export function MatchSchedule() {
   const { t, lang } = useLanguage();
   const isMobile = useIsMobile();
   const { scores, updatedAt, sync } = useLiveTournamentData();
-  const scheduleMatches = knockoutScheduleMatches;
-  const stageLabel = lang === 'zh' ? '半决赛' : 'Semi Finals';
+  const scheduleMatches = finalScheduleMatches;
+  const stageLabel = lang === 'zh' ? '决赛' : 'Final';
   const matchDates = useMemo(
     () => [...new Set(scheduleMatches.map(getMatchLocalDate))].sort(),
     [scheduleMatches]
   );
-  const scheduleSummary = formatScheduleRange(
-    matchDates[0],
-    matchDates[matchDates.length - 1],
-    scheduleMatches.length,
-    lang
-  );
+  const scheduleSummary = formatScheduleSummary(matchDates[0], lang);
   const [selectedDate, setSelectedDate] = useState(() => getDefaultDate(matchDates));
   const [direction, setDirection] = useState(1);
   const tz = getLocalTzLabel();
@@ -750,37 +746,6 @@ export function MatchSchedule() {
           </motion.div>
         </AnimatePresence>
 
-        {/* ── Day progress bar ─────────────────────────────────────────────── */}
-        <div style={{
-          marginTop: '32px',
-          height: '2px',
-          background: 'rgba(255,255,255,0.06)',
-          borderRadius: '2px',
-          overflow: 'hidden',
-        }}>
-          <motion.div
-            animate={{ width: `${((currentIndex + 1) / matchDates.length) * 100}%` }}
-            transition={{ duration: 0.4, ease: 'easeInOut' }}
-            style={{
-              height: '100%',
-              background: 'linear-gradient(90deg, #0033A0, #009A44)',
-              borderRadius: '2px',
-            }}
-          />
-        </div>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginTop: '6px',
-          fontFamily: "'Inter', sans-serif",
-          fontSize: '10px',
-          color: 'rgba(255,255,255,0.2)',
-          letterSpacing: '0.5px',
-        }}>
-          <span>Jun 28</span>
-          <span>Day {currentIndex + 1} / {matchDates.length}</span>
-          <span>Jul 4</span>
-        </div>
       </div>
     </section>
   );
